@@ -50,6 +50,30 @@ Rules:
 - Focus on actionable marketing insights, not generic company news."""
 
 
+PREFERRED_MODELS = [
+    "gemini-2.5-flash",
+    "gemini-2.5-pro",
+    "gemini-2.0-flash-001",
+    "gemini-2.0-flash-lite",
+    "gemini-1.5-flash",
+    "gemini-1.5-flash-latest",
+]
+
+
+def _pick_model(client: genai.Client) -> str:
+    """Return the first available generative model from the preferred list."""
+    try:
+        available = {m.name.split("/")[-1] for m in client.models.list()}
+        for name in PREFERRED_MODELS:
+            if name in available:
+                print(f"[INFO] Using model: {name}")
+                return name
+    except Exception as exc:
+        print(f"[WARN] Could not list models: {exc}")
+    # Fallback: try preferred names in order without listing
+    return PREFERRED_MODELS[0]
+
+
 def summarize_all(
     collected: dict,
     keywords_config: dict,
@@ -57,6 +81,7 @@ def summarize_all(
     api_key: str,
 ) -> dict:
     client = genai.Client(api_key=api_key)
+    model = _pick_model(client)
 
     results: dict = {}
     regions = ("global", "asia", "korea")
@@ -93,7 +118,7 @@ def summarize_all(
             prompt = _build_prompt(cat["name"], region, articles, is_first_issue)
             try:
                 response = client.models.generate_content(
-                    model="gemini-2.0-flash",
+                    model=model,
                     contents=prompt,
                 )
                 raw = response.text.strip()
