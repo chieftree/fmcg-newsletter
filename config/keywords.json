@@ -1,0 +1,130 @@
+{
+  "categories": {
+    "viral_social": {
+      "name": "Viral on Social Media",
+      "name_kr": "바이럴 소셜 미디어",
+      "icon": "🔥",
+      "color": "#ec4899",
+      "conditional": false,
+      "global_only": false,
+      "queries": {
+        "global": [
+          "FMCG brand viral TikTok",
+          "food brand Instagram trending campaign",
+          "CPG brand YouTube viral marketing",
+          "consumer goods social media surge engagement"
+        ],
+        "asia": [
+          "Asia food brand viral TikTok Instagram",
+          "APAC FMCG social media trending",
+          "Asia Pacific brand viral campaign 2025"
+        ],
+        "korea": [
+          "한국 식품 브랜드 인스타그램 바이럴",
+          "Korea FMCG TikTok viral marketing",
+          "한국 소비재 소셜미디어 마케팅"
+        ]
+      }
+    },
+    "sales_surge": {
+      "name": "Sales Surge Brands",
+      "name_kr": "매출 급증 브랜드",
+      "icon": "📈",
+      "color": "#10b981",
+      "conditional": false,
+      "global_only": false,
+      "queries": {
+        "global": [
+          "FMCG brand sales growth surge 2025",
+          "CPG revenue increase market share gain",
+          "consumer goods brand online offline sales growth"
+        ],
+        "asia": [
+          "Asia FMCG sales growth brand",
+          "food beverage brand revenue Asia 2025",
+          "APAC consumer goods market share growth"
+        ],
+        "korea": [
+          "한국 FMCG 매출 성장 브랜드",
+          "한국 소비재 브랜드 시장 성장",
+          "Korea consumer goods revenue growth online offline"
+        ]
+      }
+    },
+    "award_campaigns": {
+      "name": "Award-Winning Campaigns",
+      "name_kr": "수상 마케팅 성공 사례",
+      "icon": "🏆",
+      "color": "#f59e0b",
+      "conditional": true,
+      "global_only": false,
+      "queries": {
+        "global": [
+          "FMCG marketing campaign Cannes Lions award",
+          "consumer goods Effie award campaign",
+          "CPG brand Clio award marketing"
+        ],
+        "asia": [
+          "Asia Pacific Effie award FMCG brand",
+          "APAC marketing award consumer goods campaign",
+          "Spikes Asia award FMCG brand"
+        ],
+        "korea": [
+          "대한민국광고대상 FMCG 식품",
+          "Korea marketing award consumer goods brand",
+          "한국 광고 마케팅 대상 소비재"
+        ]
+      }
+    },
+    "byron_sharp": {
+      "name": "Byron Sharp & Laws of Growth",
+      "name_kr": "바이런 샤프 & 성장의 법칙",
+      "icon": "🎓",
+      "color": "#6366f1",
+      "conditional": false,
+      "global_only": true,
+      "queries": {
+        "global": [
+          "Byron Sharp marketing research 2025",
+          "Laws of Growth brand marketing",
+          "distinctive brand assets marketing strategy",
+          "mental availability physical availability FMCG",
+          "Ehrenberg-Bass Institute research",
+          "brand salience reach marketing effectiveness"
+        ]
+      }
+    },
+    "mars_snacking": {
+      "name": "Mars Snacking Brand News",
+      "name_kr": "마즈 스낵킹 브랜드 뉴스",
+      "icon": "🍫",
+      "color": "#dc2626",
+      "conditional": false,
+      "global_only": false,
+      "queries": {
+        "global": [
+          "Mars Snacking brand news marketing",
+          "Snickers brand campaign marketing",
+          "MMs brand marketing news",
+          "Twix campaign brand news",
+          "Pringles brand news Kellanova",
+          "Extra gum Orbit gum brand news",
+          "Bounty Milky Way Mars chocolate brand"
+        ],
+        "asia": [
+          "Mars chocolate Asia Pacific brand",
+          "Pringles Asia marketing campaign",
+          "Snickers Asia brand news",
+          "Kellanova Asia FMCG"
+        ],
+        "korea": [
+          "스니커즈 한국 마케팅",
+          "프링글스 한국 브랜드",
+          "엠앤엠즈 코리아",
+          "켈레노바 한국",
+          "마즈 한국 스낵"
+        ]
+      }
+    }
+  }
+}

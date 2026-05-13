@@ -1,0 +1,14 @@
+{
+  "subscribers": [
+    {
+      "email": "chieftree@gmail.com",
+      "name": "David",
+      "active": true
+    },
+    {
+      "email": "david.jung@effem.com",
+      "name": "David Jung",
+      "active": true
+    }
+  ]
+}
