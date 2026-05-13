@@ -1,7 +1,8 @@
 import json
 import time
 
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 
 
 REGION_LABELS = {
@@ -55,8 +56,7 @@ def summarize_all(
     is_first_issue: bool,
     api_key: str,
 ) -> dict:
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    client = genai.Client(api_key=api_key)
 
     results: dict = {}
     regions = ("global", "asia", "korea")
@@ -92,7 +92,10 @@ def summarize_all(
 
             prompt = _build_prompt(cat["name"], region, articles, is_first_issue)
             try:
-                response = model.generate_content(prompt)
+                response = client.models.generate_content(
+                    model="gemini-2.0-flash",
+                    contents=prompt,
+                )
                 raw = response.text.strip()
                 if raw.startswith("```"):
                     raw = raw.split("```")[1]
