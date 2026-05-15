@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FMCG Marketing Intelligence — Friday Issue — May 15, 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f4f8;color:#1a202c;line-height:1.6}
+a{color:#4f46e5;text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Header */
+.site-header{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 60%,#0f3460 100%);color:#fff;padding:32px 24px 0}
+.header-inner{max-width:1100px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:8px}
+.site-title{font-size:clamp(20px,4vw,28px);font-weight:700;letter-spacing:-0.5px}
+.site-subtitle{font-size:13px;opacity:.7;margin-top:4px}
+
+/* Language toggle */
+.lang-toggle{display:flex;gap:8px}
+.lang-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;cursor:pointer;transition:all .2s}
+.lang-btn.active,.lang-btn:hover{background:rgba(255,255,255,.9);color:#1a1a2e}
+
+/* Region tabs */
+.region-tabs{display:flex;gap:0;margin-top:24px;border-bottom:none}
+.region-tab{background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.7);padding:12px 24px;font-size:14px;font-weight:500;cursor:pointer;border-radius:8px 8px 0 0;transition:all .2s;margin-right:4px}
+.region-tab.active,.region-tab:hover{background:#fff;color:#1a1a2e}
+
+/* Content area */
+.content-area{max-width:1100px;margin:0 auto;padding:32px 24px 64px}
+.region-panel{display:none}
+.region-panel.active{display:block}
+
+/* Issue label */
+.issue-label{background:#fff;border-radius:0 0 12px 12px;padding:12px 24px;display:inline-block;font-size:13px;color:#64748b;margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.first-issue-badge{background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;margin-left:8px;vertical-align:middle}
+
+/* Category section */
+.category-section{background:#fff;border-radius:12px;padding:24px;margin-bottom:24px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.cat-header{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:2px solid #e2e8f0;margin-bottom:16px}
+.cat-icon{font-size:22px}
+.cat-header h3{font-size:16px;font-weight:700;color:#1e293b}
+.global-badge{font-size:10px;font-weight:600;background:#6366f1;color:#fff;padding:2px 7px;border-radius:10px;margin-left:8px;vertical-align:middle}
+
+/* Section insight */
+.section-insight{font-size:13px;color:#475569;background:#f8fafc;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-style:italic;border-left:3px solid #e2e8f0}
+
+/* Article grid */
+.articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.article-card{border-left:3px solid #ccc;padding:14px 16px;background:#fafafa;border-radius:0 8px 8px 0;transition:box-shadow .2s}
+.article-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.1);background:#fff}
+.article-date{font-size:11px;color:#94a3b8;display:block;margin-bottom:6px}
+.article-card h4{font-size:14px;font-weight:600;color:#1e293b;margin-bottom:6px;line-height:1.4}
+.article-card p{font-size:13px;color:#475569;margin-bottom:10px;line-height:1.6}
+.metric{font-size:12px;font-weight:600;color:#0f766e;background:#f0fdf4;display:inline-block;padding:3px 8px;border-radius:6px;margin-bottom:8px}
+.source-link{font-size:12px;color:#4f46e5;font-weight:500;display:block;margin-top:6px}
+
+/* No updates */
+.no-updates{font-size:13px;color:#94a3b8;font-style:italic;padding:8px 0}
+
+/* Footer */
+.site-footer{background:#1a1a2e;color:rgba(255,255,255,.5);text-align:center;padding:32px 24px;font-size:13px}
+.site-footer a{color:rgba(255,255,255,.7)}
+
+@media(max-width:600px){
+  .header-top{flex-direction:column}
+  .articles-grid{grid-template-columns:1fr}
+  .region-tab{padding:10px 14px;font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div>
+        <div class="site-title">FMCG Marketing Intelligence</div>
+        <div class="site-subtitle">
+          <span class="en-content">Global · Asia · Korea — Curated weekly for FMCG marketers</span>
+          <span class="kr-content" style="display:none">글로벌 · 아시아 · 한국 — FMCG 마케터를 위한 주간 큐레이션</span>
+        </div>
+      </div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">🌐 English</button>
+        <button class="lang-btn" id="btn-kr" onclick="setLang('kr')">🇰🇷 한국어</button>
+      </div>
+    </div>
+    <div class="region-tabs">
+      <button class="region-tab active" data-region="global" onclick="setRegion('global')">🌍 Global</button>
+      <button class="region-tab" data-region="asia" onclick="setRegion('asia')">🌏 Asia</button>
+      <button class="region-tab" data-region="korea" onclick="setRegion('korea')">Korea</button>
+    </div>
+  </div>
+</header>
+
+<div class="content-area">
+  <div class="issue-label">
+    <span class="en-content">Friday Issue — May 15, 2026</span>
+    <span class="kr-content" style="display:none">2026-05-15 주간</span>
+    
+  </div>
+
+  <div class="region-panel active" id="panel-global">
+    
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#ec4899">
+      <span class="cat-icon">🔥</span>
+      <h3><span class="en-content">Viral on Social Media</span><span class="kr-content" style="display:none">바이럴 소셜 미디어</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#10b981">
+      <span class="cat-icon">📈</span>
+      <h3><span class="en-content">Brand Activation &amp; Sales Surge</span><span class="kr-content" style="display:none">브랜드 액티베이션 &amp; 매출 급증</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#6366f1">
+      <span class="cat-icon">🎓</span>
+      <h3><span class="en-content">Byron Sharp &amp; Laws of Growth</span><span class="kr-content" style="display:none">바이런 샤프 &amp; 성장의 법칙</span><span class="global-badge">Global</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#dc2626">
+      <span class="cat-icon">🍫</span>
+      <h3><span class="en-content">Mars &amp; Kellanova Brand News</span><span class="kr-content" style="display:none">마즈 &amp; 켈레노바 브랜드 뉴스</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  </div>
+  <div class="region-panel" id="panel-asia">
+    
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#ec4899">
+      <span class="cat-icon">🔥</span>
+      <h3><span class="en-content">Viral on Social Media</span><span class="kr-content" style="display:none">바이럴 소셜 미디어</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Social media continues to be a powerful driver for emerging FMCG trends in Asia, particularly in experiential beverages and specialized personal care, underscoring the importance of visual appeal and digital engagement in product strategy.</span><span class="kr-content" style="display:none">아시아에서 소셜 미디어는 경험적 음료 및 특수 퍼스널 케어 분야에서 새로운 FMCG 트렌드를 이끄는 강력한 동인이며, 제품 전략에서 시각적 매력과 디지털 참여의 중요성을 강조합니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#ec4899">
+      <span class="article-date">2026-05-13</span>
+      <div class="en-content">
+        <h4>Textural Drinks &amp; Dessert-Beverage Hybrids Reshaping Summer Fast-Food Culture</h4>
+        <p>This article highlights the emergence of textural drinks and dessert-beverage hybrids as a significant trend, especially impacting summer fast-food culture. These innovative beverages often gain rapid popularity through visual appeal on social media, indicating a shift in consumer preferences towards novel and experiential refreshment options. FMCG brands should consider developing similar products to capitalize on this trend.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>식감 음료 및 디저트-음료 하이브리드가 여름 패스트푸드 문화를 재편 중</h4>
+        <p>이 기사는 식감 음료와 디저트-음료 하이브리드가 여름 패스트푸드 문화에 큰 영향을 미치며 중요한 트렌드로 부상하고 있음을 강조합니다. 이러한 혁신적인 음료는 종종 소셜 미디어에서 시각적 매력을 통해 빠르게 인기를 얻으며, 소비자 선호도가 새롭고 경험적인 상쾌함으로 변화하고 있음을 보여줍니다. FMCG 브랜드는 이 트렌드를 활용하기 위해 유사한 제품 개발을 고려해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMiwAFBVV95cUxQa2djUkdWT2V6dEh1R1NSeEwzOE02SXFMM25XUTZockZLMEp1QXlGWUNHYTUxb2YxaTdqOUhnUWhTRUo5Tk42ZEppV1ktQ2pmX3RqeHNrSWlxY0g1ZGRNWFhHNy1OeDZ0RzdpbTlfZ0ZNU0JtamtvcDRqMTRaQkJtN1hUa1lPazBWa05NRmx6UEpBVTdmM2hJTW1MVDBNZ09DREQyQlQ0N00waTBIWFk2aDlkUzBIRWFyRFBFNjRnR3Y?oc=5" target="_blank" rel="noopener">InsightTrendsWorld →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#ec4899">
+      <span class="article-date">2026-05-15</span>
+      <div class="en-content">
+        <h4>Asia-Pacific Market Sees Rising Trend for Clarifying Scalp Scrubs</h4>
+        <p>The Asia-Pacific market is experiencing a growing trend in clarifying scalp scrubs, driven by increased consumer awareness of scalp health and targeted hair care solutions. This product category, often popularized through beauty routines shared on social media, presents a significant opportunity for personal care FMCG brands to innovate and expand their offerings. Market analysis indicates sustained growth in this niche.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>아시아-태평양 시장, 두피 스크럽 수요 증가 추세</h4>
+        <p>아시아-태평양 시장에서는 두피 건강에 대한 소비자 인식 증가와 맞춤형 헤어 케어 솔루션에 힘입어 두피 스크럽의 트렌드가 확산되고 있습니다. 소셜 미디어에서 공유되는 뷰티 루틴을 통해 인기를 얻는 이 제품 카테고리는 퍼스널 케어 FMCG 브랜드에게 혁신하고 제품군을 확장할 중요한 기회를 제공합니다. 시장 분석은 이 틈새 시장의 지속적인 성장을 시사합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMiwAFBVV95cUxNVEh2ZDMwWFZfalhhQW95YUJnQkxkalk4Nkswa3gyQ3FGSWhmZUNtZjluX0VDbkUyR2Z2c1J4d2NpOUNXSENRendPY0tmVFFidGw0YVN5WUlleHZ0ME9HSTZnZF9ZLVk3ZFJ2RmYzTDRYdU9KblU5MEFDNkw0bVZHampEdEVmNy1nam90dVRjcEpXeHVEWVhPdFpteThBTmVaR2szd1p6dmdLcDhjejNudXlhcDJlWm5venZCWVlCUm8?oc=5" target="_blank" rel="noopener">IndexBox →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#ec4899">
+      <span class="article-date">2026-05-14</span>
+      <div class="en-content">
+        <h4>Volumizing Hair Mousse Market Gains Traction in Asia-Pacific</h4>
+        <p>The Asia-Pacific region is showing increased demand for volumizing hair mousse, reflecting a broader interest in hair styling and aesthetic trends. This product category benefits from social media platforms where users share styling tutorials and showcase desired hair volumes, driving consumer interest. FMCG companies in personal care should leverage this trend with targeted product development and digital marketing campaigns.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>아시아-태평양 시장, 볼륨 헤어 무스 시장 성장세</h4>
+        <p>아시아-태평양 지역에서는 헤어 스타일링 및 미적 트렌드에 대한 광범위한 관심을 반영하여 볼륨 헤어 무스에 대한 수요가 증가하고 있습니다. 이 제품 카테고리는 사용자들이 스타일링 튜토리얼을 공유하고 원하는 헤어 볼륨을 선보이는 소셜 미디어 플랫폼의 혜택을 받고 있으며, 이는 소비자 관심을 유도합니다. 퍼스널 케어 FMCG 기업은 목표 제품 개발 및 디지털 마케팅 캠페인을 통해 이 트렌드를 활용해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMiwAFBVV95cUxNLXhyczVrS2VJWDludjVEcFh2a1pfOU9WOHJGYnNoaElPS3E3N2c3WlE1dHVCRER2Wk9MdUV3OTZ3SVV2NnFKcmVEUWlJaWJGcHVRREptaURDVVM5VGViaktPWm5uQ3ZWeEVTaEIyVktNN2pCZDNaOGIxQmpWdmFUcThPRjJxU1lRc0xhTkJWZU1zaElheHlBY2dqZ1Nuelh5ZGJ3dXZEaGphb2dPOG9BbjIzOTg5cWtuckptSHNWV3E?oc=5" target="_blank" rel="noopener">IndexBox →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#10b981">
+      <span class="cat-icon">📈</span>
+      <h3><span class="en-content">Brand Activation &amp; Sales Surge</span><span class="kr-content" style="display:none">브랜드 액티베이션 &amp; 매출 급증</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#dc2626">
+      <span class="cat-icon">🍫</span>
+      <h3><span class="en-content">Mars &amp; Kellanova Brand News</span><span class="kr-content" style="display:none">마즈 &amp; 켈레노바 브랜드 뉴스</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  </div>
+  <div class="region-panel" id="panel-korea">
+    
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#ec4899">
+      <span class="cat-icon">🔥</span>
+      <h3><span class="en-content">Viral on Social Media</span><span class="kr-content" style="display:none">바이럴 소셜 미디어</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#10b981">
+      <span class="cat-icon">📈</span>
+      <h3><span class="en-content">Brand Activation &amp; Sales Surge</span><span class="kr-content" style="display:none">브랜드 액티베이션 &amp; 매출 급증</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#dc2626">
+      <span class="cat-icon">🍫</span>
+      <h3><span class="en-content">Mars &amp; Kellanova Brand News</span><span class="kr-content" style="display:none">마즈 &amp; 켈레노바 브랜드 뉴스</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>
+    <span class="en-content">FMCG Marketing Intelligence Newsletter — Auto-generated weekly</span>
+    <span class="kr-content" style="display:none">FMCG 마케팅 인텔리전스 뉴스레터 — 매주 자동 생성</span>
+  </p>
+</footer>
+
+<script>
+(function(){
+  function setLang(lang){
+    document.querySelectorAll('.en-content').forEach(function(el){
+      el.style.display = lang==='en' ? '' : 'none';
+    });
+    document.querySelectorAll('.kr-content').forEach(function(el){
+      el.style.display = lang==='kr' ? '' : 'none';
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(el){
+      el.classList.remove('active');
+    });
+    var btn = document.getElementById('btn-'+lang);
+    if(btn) btn.classList.add('active');
+    try{ localStorage.setItem('fmcg_lang', lang); }catch(e){}
+  }
+
+  function setRegion(region){
+    document.querySelectorAll('.region-panel').forEach(function(el){
+      el.classList.remove('active');
+    });
+    var panel = document.getElementById('panel-'+region);
+    if(panel) panel.classList.add('active');
+    document.querySelectorAll('.region-tab').forEach(function(el){
+      el.classList.remove('active');
+    });
+    var tab = document.querySelector('.region-tab[data-region="'+region+'"]');
+    if(tab) tab.classList.add('active');
+    try{ localStorage.setItem('fmcg_region', region); }catch(e){}
+  }
+
+  window.setLang = setLang;
+  window.setRegion = setRegion;
+
+  var lang = 'en';
+  var region = 'global';
+  try{
+    lang = localStorage.getItem('fmcg_lang') || 'en';
+    region = localStorage.getItem('fmcg_region') || 'global';
+  }catch(e){}
+  setLang(lang);
+  setRegion(region);
+})();
+</script>
+</body>
+</html>
