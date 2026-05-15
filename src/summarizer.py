@@ -116,30 +116,43 @@ def summarize_all(
                 continue
 
             prompt = _build_prompt(cat["name"], region, articles, is_first_issue)
-            try:
-                response = client.models.generate_content(
-                    model=model,
-                    contents=prompt,
-                )
-                raw = response.text.strip()
-                if raw.startswith("```"):
-                    raw = raw.split("```")[1]
-                    if raw.startswith("json"):
-                        raw = raw[4:]
-                    raw = raw.strip()
-                region_data = json.loads(raw)
-                results[cat_key]["regions"][region] = region_data
-                print(f"[INFO] Summarized {cat_key}/{region}: "
-                      f"has_content={region_data.get('has_content')} "
-                      f"items={len(region_data.get('items', []))}")
-            except Exception as exc:
-                print(f"[WARN] Gemini error for {cat_key}/{region}: {exc}")
+            region_data = None
+            for attempt in range(4):  # up to 4 attempts
+                try:
+                    response = client.models.generate_content(
+                        model=model,
+                        contents=prompt,
+                    )
+                    raw = response.text.strip()
+                    if raw.startswith("```"):
+                        raw = raw.split("```")[1]
+                        if raw.startswith("json"):
+                            raw = raw[4:]
+                        raw = raw.strip()
+                    region_data = json.loads(raw)
+                    print(f"[INFO] Summarized {cat_key}/{region}: "
+                          f"has_content={region_data.get('has_content')} "
+                          f"items={len(region_data.get('items', []))}")
+                    break
+                except Exception as exc:
+                    msg = str(exc)
+                    if "503" in msg or "UNAVAILABLE" in msg or "429" in msg:
+                        wait = 15 * (2 ** attempt)
+                        print(f"[WARN] Gemini {cat_key}/{region} attempt {attempt+1} — retrying in {wait}s: {msg[:80]}")
+                        time.sleep(wait)
+                    else:
+                        print(f"[WARN] Gemini error for {cat_key}/{region}: {msg[:120]}")
+                        break
+
+            if region_data is None:
                 results[cat_key]["regions"][region] = {
                     "has_content": False, "items": [],
                     "section_insight_en": "Data temporarily unavailable.",
                     "section_insight_kr": "데이터를 일시적으로 사용할 수 없습니다.",
                 }
+            else:
+                results[cat_key]["regions"][region] = region_data
 
-            time.sleep(1)
+            time.sleep(2)
 
     return results
