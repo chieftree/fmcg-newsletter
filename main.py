@@ -41,15 +41,16 @@ def main() -> None:
     history     = _load(CONFIG_DIR / "sent_history.json")
 
     is_first_issue = history["last_sent"] is None
-    lookback_days  = 365 if is_first_issue else 7
+    lookback_days  = 365 if is_first_issue else 4
     issue_date     = datetime.utcnow().strftime("%Y-%m-%d")
 
     if is_first_issue:
         issue_label = "Launch Issue: Year in Review 2025–2026"
     else:
-        # e.g. "Week of May 12, 2026"
         dt = datetime.strptime(issue_date, "%Y-%m-%d")
-        issue_label = f"Week of {dt.strftime('%B %-d, %Y')}" if os.name != "nt" else f"Week of {dt.strftime('%B %d, %Y').replace(' 0', ' ')}"
+        day_name = dt.strftime("%A")  # Monday / Thursday
+        date_str = dt.strftime("%B %d, %Y").replace(" 0", " ")
+        issue_label = f"{day_name} Issue — {date_str}"
 
     print(f"[INFO] Issue: {issue_label}  |  lookback={lookback_days}d")
 

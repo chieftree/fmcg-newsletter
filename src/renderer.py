@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-CATEGORY_ORDER = ["viral_social", "sales_surge", "award_campaigns", "byron_sharp", "mars_snacking"]
+CATEGORY_ORDER = ["viral_social", "brand_activation", "award_campaigns", "byron_sharp", "mars_snacking"]
 
 REGION_LABELS = {
     "global": ("🌍 Global", "🌍 글로벌"),
@@ -371,23 +371,17 @@ def render_email(summarized: dict, issue_date: str, issue_label: str, web_url: s
   <tr>
     <td style="background:#fff;padding:24px 32px;">
       <p style="font-size:14px;color:#475569;margin:0 0 20px;">
-        This week's FMCG marketing intelligence is ready. Read the full interactive newsletter with
-        English / 한국어 toggle and Global · Asia · Korea views below.
+        Your FMCG marketing intelligence briefing is ready — covering Global, Asia, and Korea.
+        Click below to read the full newsletter with English / 한국어 toggle.
       </p>
 
-      <!-- CTA buttons -->
+      <!-- Single CTA -->
       <table cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
         <tr>
-          <td style="padding-right:8px;">
-            <a href="{_esc(web_url)}?lang=en"
-               style="display:inline-block;background:#4f46e5;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">
-              🌐 Read in English
-            </a>
-          </td>
           <td>
-            <a href="{_esc(web_url)}?lang=kr"
-               style="display:inline-block;background:#1e293b;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">
-              🇰🇷 한국어로 읽기
+            <a href="{_esc(web_url)}"
+               style="display:inline-block;background:#4f46e5;color:#fff;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;">
+              Read Full Newsletter →
             </a>
           </td>
         </tr>
@@ -395,7 +389,7 @@ def render_email(summarized: dict, issue_date: str, issue_label: str, web_url: s
 
       <!-- Preview -->
       <p style="font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin:0 0 8px;">
-        This week's highlights
+        This issue's highlights
       </p>
       <table width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #e2e8f0;">
         {category_rows}
@@ -407,7 +401,7 @@ def render_email(summarized: dict, issue_date: str, issue_label: str, web_url: s
   <tr>
     <td style="background:#1a1a2e;border-radius:0 0 12px 12px;padding:20px 32px;text-align:center;">
       <p style="color:rgba(255,255,255,.5);font-size:12px;margin:0;">
-        FMCG Marketing Intelligence · Auto-generated weekly
+        FMCG Marketing Intelligence · Published Monday &amp; Thursday
       </p>
     </td>
   </tr>

@@ -1,4 +1,37 @@
 {
+  "rss_sources": {
+    "global": [
+      {"url": "https://www.marketingweek.com/feed/",           "name": "Marketing Week"},
+      {"url": "https://www.thedrum.com/rss.xml",               "name": "The Drum"},
+      {"url": "https://www.adweek.com/feed/",                  "name": "Adweek"},
+      {"url": "https://adage.com/rss.xml",                     "name": "Ad Age"},
+      {"url": "https://www.campaignlive.co.uk/rss",            "name": "Campaign UK"}
+    ],
+    "asia": [
+      {"url": "https://www.marketing-interactive.com/feed/",   "name": "Marketing Interactive"},
+      {"url": "https://www.campaignasia.com/rss",              "name": "Campaign Asia"}
+    ],
+    "korea": []
+  },
+
+  "youtube_queries": {
+    "viral_social": {
+      "global": ["FMCG brand viral TikTok Instagram marketing", "food brand viral social media campaign"],
+      "asia":   ["Asia FMCG brand viral social media 2025"],
+      "korea":  ["한국 식품 브랜드 유튜브 바이럴 마케팅"]
+    },
+    "brand_activation": {
+      "global": ["FMCG brand pop-up store consumer activation event", "food brand experiential marketing"],
+      "asia":   ["Asia brand pop-up event consumer activation"],
+      "korea":  ["팝업 스토어 식품 브랜드 소비자 체험"]
+    },
+    "mars_snacking": {
+      "global": ["Snickers M&Ms Pringles Skittles marketing campaign", "Kellanova brand Kellogg commercial"],
+      "asia":   ["Mars chocolate Pringles Asia brand campaign"],
+      "korea":  ["스니커즈 프링글스 켈로그 마즈 한국 광고"]
+    }
+  },
+
   "categories": {
     "viral_social": {
       "name": "Viral on Social Media",
@@ -9,48 +42,54 @@
       "global_only": false,
       "queries": {
         "global": [
-          "FMCG brand viral TikTok",
+          "FMCG brand viral TikTok marketing",
           "food brand Instagram trending campaign",
-          "CPG brand YouTube viral marketing",
-          "consumer goods social media surge engagement"
+          "CPG brand YouTube viral",
+          "consumer goods social media surge"
         ],
         "asia": [
           "Asia food brand viral TikTok Instagram",
           "APAC FMCG social media trending",
-          "Asia Pacific brand viral campaign 2025"
+          "Asia Pacific brand viral campaign"
         ],
         "korea": [
           "한국 식품 브랜드 인스타그램 바이럴",
           "Korea FMCG TikTok viral marketing",
-          "한국 소비재 소셜미디어 마케팅"
+          "한국 소비재 소셜미디어 마케팅 사례"
         ]
       }
     },
-    "sales_surge": {
-      "name": "Sales Surge Brands",
-      "name_kr": "매출 급증 브랜드",
+
+    "brand_activation": {
+      "name": "Brand Activation & Sales Surge",
+      "name_kr": "브랜드 액티베이션 & 매출 급증",
       "icon": "📈",
       "color": "#10b981",
       "conditional": false,
       "global_only": false,
       "queries": {
         "global": [
-          "FMCG brand sales growth surge 2025",
-          "CPG revenue increase market share gain",
-          "consumer goods brand online offline sales growth"
+          "FMCG brand pop-up store consumer activation",
+          "food brand experiential marketing event",
+          "CPG brand sales growth surge",
+          "consumer goods revenue increase market share",
+          "brand activation retail launch event"
         ],
         "asia": [
-          "Asia FMCG sales growth brand",
-          "food beverage brand revenue Asia 2025",
-          "APAC consumer goods market share growth"
+          "Asia FMCG pop-up store brand activation",
+          "food beverage brand sales growth Asia",
+          "APAC consumer goods brand event launch",
+          "Asia Pacific brand experiential marketing"
         ],
         "korea": [
-          "한국 FMCG 매출 성장 브랜드",
-          "한국 소비재 브랜드 시장 성장",
-          "Korea consumer goods revenue growth online offline"
+          "한국 FMCG 팝업 스토어 브랜드 행사",
+          "한국 식품 브랜드 소비자 체험 이벤트",
+          "Korea consumer goods brand activation sales growth",
+          "한국 소비재 매출 성장 오프라인 행사"
         ]
       }
     },
+
     "award_campaigns": {
       "name": "Award-Winning Campaigns",
       "name_kr": "수상 마케팅 성공 사례",
@@ -66,16 +105,17 @@
         ],
         "asia": [
           "Asia Pacific Effie award FMCG brand",
-          "APAC marketing award consumer goods campaign",
+          "APAC marketing award consumer goods",
           "Spikes Asia award FMCG brand"
         ],
         "korea": [
-          "대한민국광고대상 FMCG 식품",
+          "대한민국광고대상 FMCG 식품 소비재",
           "Korea marketing award consumer goods brand",
-          "한국 광고 마케팅 대상 소비재"
+          "한국 광고 마케팅 대상 소비재 수상"
         ]
       }
     },
+
     "byron_sharp": {
       "name": "Byron Sharp & Laws of Growth",
       "name_kr": "바이런 샤프 & 성장의 법칙",
@@ -85,44 +125,55 @@
       "global_only": true,
       "queries": {
         "global": [
-          "Byron Sharp marketing research 2025",
+          "Byron Sharp marketing research",
           "Laws of Growth brand marketing",
           "distinctive brand assets marketing strategy",
           "mental availability physical availability FMCG",
           "Ehrenberg-Bass Institute research",
-          "brand salience reach marketing effectiveness"
+          "brand salience penetration marketing effectiveness",
+          "double jeopardy law brand loyalty"
         ]
       }
     },
+
     "mars_snacking": {
-      "name": "Mars Snacking Brand News",
-      "name_kr": "마즈 스낵킹 브랜드 뉴스",
+      "name": "Mars & Kellanova Brand News",
+      "name_kr": "마즈 & 켈레노바 브랜드 뉴스",
       "icon": "🍫",
       "color": "#dc2626",
       "conditional": false,
       "global_only": false,
       "queries": {
         "global": [
-          "Mars Snacking brand news marketing",
-          "Snickers brand campaign marketing",
-          "MMs brand marketing news",
-          "Twix campaign brand news",
-          "Pringles brand news Kellanova",
-          "Extra gum Orbit gum brand news",
-          "Bounty Milky Way Mars chocolate brand"
+          "Snickers brand marketing campaign news",
+          "M&Ms MMs brand campaign marketing",
+          "Twix brand marketing news",
+          "Skittles brand marketing campaign",
+          "Starburst brand news marketing",
+          "Eclipse gum Doublemint Airwaves brand news",
+          "Pringles brand marketing Kellanova",
+          "Kind bar BeKind brand news marketing",
+          "Kellogg cereal brand Special K Corn Flakes news",
+          "Cesar dog food Sheba cat food brand news",
+          "Mars Snacking brand news",
+          "Kellanova brand marketing news"
         ],
         "asia": [
-          "Mars chocolate Asia Pacific brand",
-          "Pringles Asia marketing campaign",
-          "Snickers Asia brand news",
-          "Kellanova Asia FMCG"
+          "Snickers M&Ms Pringles Asia marketing campaign",
+          "Mars chocolate Kellanova Asia brand news",
+          "Kellogg cereal brand Asia Pacific",
+          "Skittles Twix Asia brand campaign",
+          "Cesar Sheba pet food Asia marketing"
         ],
         "korea": [
-          "스니커즈 한국 마케팅",
-          "프링글스 한국 브랜드",
-          "엠앤엠즈 코리아",
-          "켈레노바 한국",
-          "마즈 한국 스낵"
+          "스니커즈 엠앤엠즈 트윅스 한국 마케팅",
+          "프링글스 한국 브랜드 뉴스",
+          "스키틀즈 스타버스트 한국",
+          "이클립스 에어웨이브스 더블민트 한국",
+          "켈로그 시리얼 한국 브랜드",
+          "비카인드 카인드바 한국",
+          "시저 쉬바 펫푸드 한국",
+          "마즈 켈레노바 한국 뉴스"
         ]
       }
     }
