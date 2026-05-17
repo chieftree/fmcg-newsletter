@@ -15,6 +15,14 @@ REGION_CONFIG = {
     "korea":  ("ko",    "KR", "KR:ko"),
 }
 
+YOUTUBE_THRESHOLDS = {
+    "viral_social":     {"min_views": 500_000, "min_subs": 50_000},
+    "brand_activation": {"min_views":  50_000, "min_subs": 50_000},
+    "award_campaigns":  {"min_views":  50_000, "min_subs": 50_000},
+    "byron_sharp":      {"min_views":  10_000, "min_subs": 50_000},
+    "mars_snacking":    {"min_views": 100_000, "min_subs": 50_000},
+}
+
 FMCG_RELEVANCE_KEYWORDS = [
     "brand", "marketing", "campaign", "consumer", "fmcg", "cpg", "food",
     "snack", "beverage", "retail", "sales", "launch", "product", "viral",
@@ -150,15 +158,17 @@ def _fetch_premium_rss(rss_sources: list, lookback_days: int,
 # ── YouTube Data API ───────────────────────────────────────────────────────────
 
 def _search_youtube(queries: list, api_key: str, lookback_days: int,
-                    seen_hashes: set, seen_titles: set) -> list:
+                    seen_hashes: set, seen_titles: set,
+                    min_views: int = 10_000, min_subs: int = 50_000) -> list:
     if not api_key:
         return []
 
-    articles = []
     published_after = (
         datetime.now(timezone.utc) - timedelta(days=lookback_days)
     ).strftime("%Y-%m-%dT%H:%M:%SZ")
 
+    # Step 1: Collect candidate videos from search
+    candidates = []
     for query in queries:
         try:
             resp = requests.get(
@@ -167,7 +177,7 @@ def _search_youtube(queries: list, api_key: str, lookback_days: int,
                     "part": "snippet",
                     "q": query,
                     "type": "video",
-                    "maxResults": 5,
+                    "maxResults": 10,
                     "order": "relevance",
                     "relevanceLanguage": "en",
                     "publishedAfter": published_after,
@@ -179,39 +189,87 @@ def _search_youtube(queries: list, api_key: str, lookback_days: int,
             if "error" in data:
                 print(f"[WARN] YouTube API error: {data['error'].get('message', '')}")
                 break
-
             for item in data.get("items", []):
                 snippet = item.get("snippet", {})
                 video_id = item.get("id", {}).get("videoId", "")
                 if not video_id:
                     continue
-
-                title = snippet.get("title", "").strip()
-                description = snippet.get("description", "")[:300]
-                link = f"https://www.youtube.com/watch?v={video_id}"
-                date_str = snippet.get("publishedAt", "")[:10]
-                channel = snippet.get("channelTitle", "YouTube")
-
-                title_key = re.sub(r"\W+", "", title.lower())[:60]
-                h = _url_hash(link)
-                if h in seen_hashes or title_key in seen_titles:
-                    continue
-
-                seen_hashes.add(h)
-                seen_titles.add(title_key)
-                articles.append({
-                    "title": title,
-                    "url": link,
-                    "description": description,
-                    "hash": h,
-                    "date": date_str,
-                    "source_type": "youtube",
-                    "source_name": channel,
+                candidates.append({
+                    "video_id": video_id,
+                    "title": snippet.get("title", "").strip(),
+                    "description": snippet.get("description", "")[:300],
+                    "date": snippet.get("publishedAt", "")[:10],
+                    "channel_id": snippet.get("channelId", ""),
+                    "channel_title": snippet.get("channelTitle", "YouTube"),
                 })
         except Exception as exc:
             print(f"[WARN] YouTube search failed — query='{query}': {exc}")
-
         time.sleep(0.5)
+
+    if not candidates:
+        return []
+
+    # Step 2: Batch fetch video view counts
+    video_stats: dict = {}
+    video_ids = list({c["video_id"] for c in candidates})
+    for i in range(0, len(video_ids), 50):
+        batch = video_ids[i:i + 50]
+        try:
+            resp = requests.get(
+                "https://www.googleapis.com/youtube/v3/videos",
+                params={"part": "statistics", "id": ",".join(batch), "key": api_key},
+                timeout=10,
+            )
+            for item in resp.json().get("items", []):
+                video_stats[item["id"]] = int(
+                    item.get("statistics", {}).get("viewCount", 0)
+                )
+        except Exception as exc:
+            print(f"[WARN] YouTube video stats fetch failed: {exc}")
+
+    # Step 3: Batch fetch channel subscriber counts
+    channel_stats: dict = {}
+    channel_ids = list({c["channel_id"] for c in candidates if c["channel_id"]})
+    for i in range(0, len(channel_ids), 50):
+        batch = channel_ids[i:i + 50]
+        try:
+            resp = requests.get(
+                "https://www.googleapis.com/youtube/v3/channels",
+                params={"part": "statistics", "id": ",".join(batch), "key": api_key},
+                timeout=10,
+            )
+            for item in resp.json().get("items", []):
+                channel_stats[item["id"]] = int(
+                    item.get("statistics", {}).get("subscriberCount", 0)
+                )
+        except Exception as exc:
+            print(f"[WARN] YouTube channel stats fetch failed: {exc}")
+
+    # Step 4: Filter by thresholds and deduplicate
+    articles = []
+    for c in candidates:
+        views = video_stats.get(c["video_id"], 0)
+        subs = channel_stats.get(c["channel_id"], 0)
+        if views < min_views or subs < min_subs:
+            continue
+
+        link = f"https://www.youtube.com/watch?v={c['video_id']}"
+        title_key = re.sub(r"\W+", "", c["title"].lower())[:60]
+        h = _url_hash(link)
+        if h in seen_hashes or title_key in seen_titles:
+            continue
+
+        seen_hashes.add(h)
+        seen_titles.add(title_key)
+        articles.append({
+            "title": c["title"],
+            "url": link,
+            "description": c["description"],
+            "hash": h,
+            "date": c["date"],
+            "source_type": "youtube",
+            "source_name": c["channel_title"],
+        })
 
     return articles
 
@@ -272,9 +330,12 @@ def collect_all(keywords_config: dict, lookback_days: int, sent_urls: list) -> d
                 seen_h.add(_url_hash(a["url"]))
 
             # 3. YouTube
+            yt_thresh = YOUTUBE_THRESHOLDS.get(cat_key, {"min_views": 50_000, "min_subs": 50_000})
             yt = _search_youtube(
                 yt_queries.get(region, []),
                 youtube_api_key, lookback_days, seen_h, seen_t,
+                min_views=yt_thresh["min_views"],
+                min_subs=yt_thresh["min_subs"],
             )
 
             merged = (gnews + premium + yt)[:25]
