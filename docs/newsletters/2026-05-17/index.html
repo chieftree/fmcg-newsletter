@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FMCG Marketing Intelligence — Sunday Issue — May 17, 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f4f8;color:#1a202c;line-height:1.6}
+a{color:#4f46e5;text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Header */
+.site-header{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 60%,#0f3460 100%);color:#fff;padding:32px 24px 0}
+.header-inner{max-width:1100px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:8px}
+.site-title{font-size:clamp(20px,4vw,28px);font-weight:700;letter-spacing:-0.5px}
+.site-subtitle{font-size:13px;opacity:.7;margin-top:4px}
+
+/* Language toggle */
+.lang-toggle{display:flex;gap:8px}
+.lang-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;cursor:pointer;transition:all .2s}
+.lang-btn.active,.lang-btn:hover{background:rgba(255,255,255,.9);color:#1a1a2e}
+
+/* Region tabs */
+.region-tabs{display:flex;gap:0;margin-top:24px;border-bottom:none}
+.region-tab{background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.7);padding:12px 24px;font-size:14px;font-weight:500;cursor:pointer;border-radius:8px 8px 0 0;transition:all .2s;margin-right:4px}
+.region-tab.active,.region-tab:hover{background:#fff;color:#1a1a2e}
+
+/* Content area */
+.content-area{max-width:1100px;margin:0 auto;padding:32px 24px 64px}
+.region-panel{display:none}
+.region-panel.active{display:block}
+
+/* Issue label */
+.issue-label{background:#fff;border-radius:0 0 12px 12px;padding:12px 24px;display:inline-block;font-size:13px;color:#64748b;margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.first-issue-badge{background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;margin-left:8px;vertical-align:middle}
+
+/* Category section */
+.category-section{background:#fff;border-radius:12px;padding:24px;margin-bottom:24px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.cat-header{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:2px solid #e2e8f0;margin-bottom:16px}
+.cat-icon{font-size:22px}
+.cat-header h3{font-size:16px;font-weight:700;color:#1e293b}
+.global-badge{font-size:10px;font-weight:600;background:#6366f1;color:#fff;padding:2px 7px;border-radius:10px;margin-left:8px;vertical-align:middle}
+
+/* Section insight */
+.section-insight{font-size:13px;color:#475569;background:#f8fafc;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-style:italic;border-left:3px solid #e2e8f0}
+
+/* Article grid */
+.articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.article-card{border-left:3px solid #ccc;padding:14px 16px;background:#fafafa;border-radius:0 8px 8px 0;transition:box-shadow .2s}
+.article-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.1);background:#fff}
+.article-date{font-size:11px;color:#94a3b8;display:block;margin-bottom:6px}
+.article-card h4{font-size:14px;font-weight:600;color:#1e293b;margin-bottom:6px;line-height:1.4}
+.article-card p{font-size:13px;color:#475569;margin-bottom:10px;line-height:1.6}
+.metric{font-size:12px;font-weight:600;color:#0f766e;background:#f0fdf4;display:inline-block;padding:3px 8px;border-radius:6px;margin-bottom:8px}
+.source-link{font-size:12px;color:#4f46e5;font-weight:500;display:block;margin-top:6px}
+
+/* No updates */
+.no-updates{font-size:13px;color:#94a3b8;font-style:italic;padding:8px 0}
+
+/* Footer */
+.site-footer{background:#1a1a2e;color:rgba(255,255,255,.5);text-align:center;padding:32px 24px;font-size:13px}
+.site-footer a{color:rgba(255,255,255,.7)}
+
+@media(max-width:600px){
+  .header-top{flex-direction:column}
+  .articles-grid{grid-template-columns:1fr}
+  .region-tab{padding:10px 14px;font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div>
+        <div class="site-title">FMCG Marketing Intelligence</div>
+        <div class="site-subtitle">
+          <span class="en-content">Global · Asia · Korea — Curated weekly for FMCG marketers</span>
+          <span class="kr-content" style="display:none">글로벌 · 아시아 · 한국 — FMCG 마케터를 위한 주간 큐레이션</span>
+        </div>
+      </div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">🌐 English</button>
+        <button class="lang-btn" id="btn-kr" onclick="setLang('kr')">🇰🇷 한국어</button>
+      </div>
+    </div>
+    <div class="region-tabs">
+      <button class="region-tab active" data-region="global" onclick="setRegion('global')">🌍 Global</button>
+      <button class="region-tab" data-region="asia" onclick="setRegion('asia')">🌏 Asia</button>
+      <button class="region-tab" data-region="korea" onclick="setRegion('korea')">Korea</button>
+    </div>
+  </div>
+</header>
+
+<div class="content-area">
+  <div class="issue-label">
+    <span class="en-content">Sunday Issue — May 17, 2026</span>
+    <span class="kr-content" style="display:none">2026-05-17 주간</span>
+    
+  </div>
+
+  <div class="region-panel active" id="panel-global">
+    
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#ec4899">
+      <span class="cat-icon">🔥</span>
+      <h3><span class="en-content">Viral on Social Media</span><span class="kr-content" style="display:none">바이럴 소셜 미디어</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Consumer curiosity and well-executed creative campaigns, particularly those revealing behind-the-scenes insights or featuring FMCG brands, continue to drive significant social media engagement.</span><span class="kr-content" style="display:none">소비자 호기심과 잘 실행된 크리에이티브 캠페인, 특히 비하인드 스토리를 공개하거나 FMCG 브랜드를 특징으로 하는 콘텐츠가 소셜 미디어 참여를 계속해서 크게 유도하고 있습니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#ec4899">
+      <span class="article-date">2026-05-14</span>
+      <div class="en-content">
+        <h4>McDonald's Fry Secret Revealed on YouTube Sparks Viral Discussion</h4>
+        <p>McDonald's workers shared insights on YouTube regarding the varying sizes of their fries, a topic of long-standing consumer curiosity. This candid revelation is poised to generate significant social media buzz and discussion, highlighting the potential for viral engagement through behind-the-scenes content.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>맥도날드 감자튀김 크기 비밀 유튜브서 공개, 소비자 관심 집중</h4>
+        <p>맥도날드 직원들이 유튜브에서 감자튀김 크기가 다른 이유에 대한 비밀을 공개하여 오랜 기간 소비자들이 궁금해했던 점을 해소했습니다. 이러한 솔직한 폭로는 소셜 미디어에서 상당한 화제와 논의를 불러일으킬 것으로 예상되며, 비하인드 스토리 콘텐츠를 통한 바이럴 참여 가능성을 보여줍니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.youtube.com/watch?v=rEvaw9JgorA" target="_blank" rel="noopener">YouTube →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#ec4899">
+      <span class="article-date">2026-05-15</span>
+      <div class="en-content">
+        <h4>Dove, CeraVe Campaigns Among Weekly Standout Ads</h4>
+        <p>This week's standout advertising campaigns included those from FMCG brands Dove and CeraVe, recognized for their creative impact and ability to capture audience attention. For FMCG marketers, this underscores the importance of innovative storytelling and strong visual identity in developing content that can resonate widely and potentially achieve viral traction.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>도브, 세라비 캠페인 금주 주목할 만한 광고로 선정</h4>
+        <p>이번 주 주목할 만한 광고에는 FMCG 브랜드인 도브와 세라비의 캠페인이 포함되었으며, 창의적인 영향력과 시청자들의 이목을 끄는 능력으로 인정받았습니다. 이는 FMCG 마케터들에게 광범위하게 공감대를 형성하고 바이럴 효과를 얻을 수 있는 콘텐츠를 개발하는 데 있어 혁신적인 스토리텔링과 강력한 시각적 아이덴티티의 중요성을 강조합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/creativity/ads-of-the-week-10-campaigns-that-caught-our-eye-from-dove-to-hinge/" target="_blank" rel="noopener">Adweek →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#10b981">
+      <span class="cat-icon">📈</span>
+      <h3><span class="en-content">Brand Activation &amp; Sales Surge</span><span class="kr-content" style="display:none">브랜드 액티베이션 &amp; 매출 급증</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">The global FMCG marketing landscape is rapidly evolving, driven by a strategic shift towards immersive experiential brand activation, data-powered retail media, and the increasing integration of AI in creative campaign development.</span><span class="kr-content" style="display:none">글로벌 FMCG 마케팅 환경은 몰입형 경험 중심의 브랜드 활성화, 데이터 기반 리테일 미디어, 그리고 AI를 활용한 크리에이티브 캠페인 개발의 증가로 빠르게 변화하고 있습니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#10b981">
+      <span class="article-date">2026-05-17</span>
+      <div class="en-content">
+        <h4>Experiential Fan Dining &amp; Flavor Entertainment Reshape Brand Marketing</h4>
+        <p>Brand marketing is rapidly evolving towards immersive experiential fan dining and flavor entertainment. This trend emphasizes sensory engagement and unique interactions, offering FMCG brands powerful new avenues for activation and consumer connection beyond traditional advertising.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>팬 다이닝 및 미식 엔터테인먼트, 브랜드 마케팅 재편</h4>
+        <p>브랜드 마케팅이 몰입형 팬 다이닝과 미식 엔터테인먼트 경험으로 빠르게 변화하고 있습니다. 이 트렌드는 감각적 몰입과 독특한 상호작용을 강조하며, FMCG 브랜드에 기존 광고를 넘어선 새로운 활성화 및 소비자 연결 기회를 제공합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMiugFBVV95cUxPTHlhR0kzMU40MlNwVEpKQWhvekxRRmxyckF2ZEZXOVI5dDh2M3VvX3Rxb0kxQjFxQnh5YjJ5WThVS0VGTnNPaVdWQl9QMjR6V041d0owX0x0MHZRMjdzeGFtN0s4bjNId3RzM0czQlE3d3BhWlB2Z093MnRaX1R3VXVpeHZrRlBDdGtUNFByMXVTRE9TRTJhTmFqeEF6aERPNUoyTnljZkRWU216SXRIZ0ZuTV9BSy1EWHc?oc=5" target="_blank" rel="noopener">InsightTrendsWorld →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      <span class="article-date">2026-05-15</span>
+      <div class="en-content">
+        <h4>Dove, CeraVe Campaigns Highlight Week's Standout Advertising</h4>
+        <p>This week's standout advertising campaigns include notable work from FMCG brands like Dove and CeraVe, alongside others such as Apple Mac and TJ Maxx. These examples provide valuable insights into current effective creative strategies for driving brand engagement and visibility.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>도브, 세라비 캠페인, 금주 최고의 광고로 선정</h4>
+        <p>이번 주 주목할 만한 광고 캠페인에는 도브와 세라비 같은 FMCG 브랜드의 인상적인 작업들이 애플 맥, TJ Maxx 등과 함께 포함되었습니다. 이 사례들은 브랜드 참여와 가시성을 높이는 효과적인 최신 크리에이티브 전략에 대한 귀중한 통찰력을 제공합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/creativity/ads-of-the-week-10-campaigns-that-caught-our-eye-from-dove-to-hinge/" target="_blank" rel="noopener">Adweek →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      <span class="article-date">2026-05-14</span>
+      <div class="en-content">
+        <h4>Retail Media Set to Capture More TV Ad Spend</h4>
+        <p>Retail media platforms like Walmart and Amazon are increasingly attracting TV ad spend, leveraging enhanced data and AI capabilities. This shift signifies a growing imperative for FMCG brands to integrate commerce media strategies into their overall marketing mix to maximize sales performance.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>리테일 미디어, TV 광고 지출 점유율 확대 전망</h4>
+        <p>월마트와 아마존 같은 리테일 미디어 플랫폼들이 강화된 데이터 및 AI 역량을 활용하여 TV 광고 지출을 점차 더 많이 유치하고 있습니다. 이러한 변화는 FMCG 브랜드가 매출 성과를 극대화하기 위해 커머스 미디어 전략을 전체 마케팅 믹스에 통합해야 할 필요성을 강조합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/commerce/adweek-commerce-advantage-retail-media-is-about-to-take-even-more-tv-ad-spend/" target="_blank" rel="noopener">Adweek →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      <span class="article-date">2026-05-15</span>
+      <div class="en-content">
+        <h4>Cannes Lions 2026 Introduces New AI Award, Reflecting Industry Shift</h4>
+        <p>Cannes Lions 2026 is introducing several changes, most notably a new AI award, reflecting the advertising industry's increasing focus on artificial intelligence. This signals the growing importance of AI-driven creativity and data utilization in future brand activation campaigns, impacting how FMCG brands innovate and connect with consumers.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>칸 라이언즈 2026, AI 어워드 신설로 업계 변화 반영</h4>
+        <p>칸 라이언즈 2026은 특히 새로운 AI 어워드를 도입하며 광고 산업의 인공지능에 대한 증가하는 관심을 반영합니다. 이는 미래 브랜드 활성화 캠페인에서 AI 기반 창의성과 데이터 활용의 중요성이 커지고 있음을 시사하며, FMCG 브랜드가 혁신하고 소비자와 연결하는 방식에 영향을 미칠 것입니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/creativity/7-new-things-at-cannes-lions-2026/" target="_blank" rel="noopener">Adweek →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#f59e0b">
+      <span class="cat-icon">🏆</span>
+      <h3><span class="en-content">Award-Winning Campaigns</span><span class="kr-content" style="display:none">수상 마케팅 성공 사례</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">FMCG marketers must prioritize AI integration and data-driven retail media strategies to develop standout campaigns capable of winning future awards and achieving effective consumer engagement.</span><span class="kr-content" style="display:none">FMCG 마케터들은 미래의 수상 캠페인을 개발하고 효과적인 소비자 참여를 달성하기 위해 AI 통합 및 데이터 기반 리테일 미디어 전략을 우선시해야 합니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#f59e0b">
+      <span class="article-date">2026-05-15</span>
+      <div class="en-content">
+        <h4>Dove, CeraVe Campaigns Stand Out in Weekly Ad Review</h4>
+        <p>Dove and CeraVe, prominent FMCG brands, featured among the top 10 standout campaigns of the week, indicating successful creative execution in the current market. This highlights the ongoing importance of engaging, impactful advertising for consumer goods.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>도브, 세라비 캠페인, 주간 광고 리뷰에서 두각</h4>
+        <p>선두 FMCG 브랜드인 도브와 세라비가 이번 주 주목할 만한 10대 캠페인에 포함되어, 현재 시장에서 성공적인 크리에이티브 실행을 보여줍니다. 이는 소비자 상품에 있어 매력적이고 영향력 있는 광고의 지속적인 중요성을 강조합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/creativity/ads-of-the-week-10-campaigns-that-caught-our-eye-from-dove-to-hinge/" target="_blank" rel="noopener">Adweek →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#f59e0b">
+      <span class="article-date">2026-05-15</span>
+      <div class="en-content">
+        <h4>Cannes Lions 2026 Introduces New AI Award, Stricter Entry Rules</h4>
+        <p>Cannes Lions, a global benchmark for creative excellence, is introducing a new AI award and stricter entry rules for 2026, signaling a major shift towards technology and accountability in campaign recognition. This indicates AI integration will be a key differentiator for future award-winning campaigns.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>칸 라이언즈 2026, 새로운 AI 어워드 도입 및 엄격해진 출품 규정</h4>
+        <p>창의적 우수성의 글로벌 기준인 칸 라이언즈가 2026년에 새로운 AI 어워드와 더욱 엄격해진 출품 규정을 도입하며, 캠페인 인정에 있어 기술과 책임에 대한 중대한 변화를 예고합니다. 이는 AI 통합이 미래 수상 캠페인의 핵심 차별화 요소가 될 것임을 시사합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/creativity/7-new-things-at-cannes-lions-2026/" target="_blank" rel="noopener">Adweek →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#f59e0b">
+      <span class="article-date">2026-05-14</span>
+      <div class="en-content">
+        <h4>Retail Media Poised to Capture More TV Ad Spend from Brands</h4>
+        <p>Retail media, led by giants like Walmart and Amazon, is increasingly attracting TV ad spend from brands, driven by advanced data and AI capabilities. This trend suggests FMCG marketers should re-evaluate their media mix, prioritizing retail platforms for more effective, data-driven campaigns.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>리테일 미디어, 브랜드 TV 광고 지출 더 많이 흡수할 전망</h4>
+        <p>월마트, 아마존과 같은 거대 기업이 주도하는 리테일 미디어가 첨단 데이터 및 AI 역량을 통해 브랜드의 TV 광고 지출을 더욱 유치하고 있습니다. 이 추세는 FMCG 마케터들이 미디어 믹스를 재평가하고, 보다 효과적이고 데이터 중심적인 캠페인을 위해 리테일 플랫폼을 우선시해야 함을 시사합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/commerce/adweek-commerce-advantage-retail-media-is-about-to-take-even-more-tv-ad-spend/" target="_blank" rel="noopener">Adweek →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#6366f1">
+      <span class="cat-icon">🎓</span>
+      <h3><span class="en-content">Byron Sharp &amp; Laws of Growth</span><span class="kr-content" style="display:none">바이런 샤프 &amp; 성장의 법칙</span><span class="global-badge">Global</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Global FMCG marketing continues to emphasize distinctive creative campaigns and strategic media allocation, particularly with the rise of retail media, to enhance both mental and physical availability in line with Byron Sharp's growth principles.</span><span class="kr-content" style="display:none">글로벌 FMCG 마케팅은 바이런 샤프의 성장 원칙에 따라 정신적 및 물리적 가용성을 높이기 위해, 리테일 미디어의 부상과 더불어 차별화된 크리에이티브 캠페인 및 전략적인 미디어 할당을 지속적으로 강조하고 있습니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#6366f1">
+      <span class="article-date">2026-05-15</span>
+      <div class="en-content">
+        <h4>Top FMCG Campaigns Highlight Distinctive Advertising</h4>
+        <p>This week's standout ads from brands like Dove and CeraVe demonstrate the power of effective creative work in capturing consumer attention. These campaigns highlight the importance of distinctive assets and broad emotional appeal, critical for building mental availability in competitive FMCG categories.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>주요 FMCG 캠페인, 차별화된 광고의 중요성 강조</h4>
+        <p>이번 주, Dove와 CeraVe와 같은 브랜드의 뛰어난 광고 캠페인들은 소비자들의 관심을 사로잡는 효과적인 크리에이티브의 힘을 보여줍니다. 이 캠페인들은 경쟁이 치열한 FMCG 시장에서 정신적 가용성을 구축하는 데 필수적인 독특한 자산과 광범위한 감성적 매력의 중요성을 강조합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/creativity/ads-of-the-week-10-campaigns-that-caught-our-eye-from-dove-to-hinge/" target="_blank" rel="noopener">Adweek →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#6366f1">
+      <span class="article-date">2026-05-14</span>
+      <div class="en-content">
+        <h4>Retail Media Captures Increasing TV Ad Spend</h4>
+        <p>Retail media platforms, led by Walmart and Amazon, are significantly increasing their share of TV ad spend by leveraging data and AI. This shift underlines the growing importance of integrated commerce media strategies for FMCG brands to enhance physical availability and target consumers effectively at the point of purchase.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>리테일 미디어, TV 광고 지출 점유율 확대</h4>
+        <p>월마트와 아마존이 주도하는 리테일 미디어 플랫폼들이 데이터와 AI를 활용하여 TV 광고 지출 점유율을 크게 늘리고 있습니다. 이러한 변화는 FMCG 브랜드가 구매 시점에서 물리적 가용성을 높이고 소비자를 효과적으로 타겟팅하기 위한 통합 상거래 미디어 전략의 중요성을 강조합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/commerce/adweek-commerce-advantage-retail-media-is-about-to-take-even-more-tv-ad-spend/" target="_blank" rel="noopener">Adweek →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#6366f1">
+      <span class="article-date">2026-05-15</span>
+      <div class="en-content">
+        <h4>Cannes Lions 2026 Focuses on AI and Stricter Entry</h4>
+        <p>The Cannes Lions festival introduces new elements like an AI award and stricter entry rules, signaling an industry-wide push towards innovative and accountable creative work. This reflects the evolving landscape where distinctiveness and measurable impact, crucial for brand growth, are increasingly important.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>칸 라이언즈 2026, AI 및 엄격해진 출품 규정 초점</h4>
+        <p>칸 라이언즈 페스티벌은 AI 어워드 신설과 엄격해진 출품 규정 등 새로운 요소를 도입하며, 혁신적이고 책임감 있는 크리에이티브 작업에 대한 업계 전반의 노력을 알립니다. 이는 브랜드 성장에 중요한 차별성과 측정 가능한 영향이 점점 더 중요해지는 변화하는 환경을 반영합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/creativity/7-new-things-at-cannes-lions-2026/" target="_blank" rel="noopener">Adweek →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#dc2626">
+      <span class="cat-icon">🍫</span>
+      <h3><span class="en-content">Mars &amp; Kellanova Brand News</span><span class="kr-content" style="display:none">마즈 &amp; 켈레노바 브랜드 뉴스</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">The global FMCG marketing landscape is experiencing a significant shift towards retail media, fueled by AI and data, challenging traditional TV ad spend and emphasizing the need for innovative, data-driven campaign strategies.</span><span class="kr-content" style="display:none">글로벌 FMCG 마케팅 환경은 AI와 데이터를 기반으로 한 리테일 미디어로 크게 전환되어 기존 TV 광고 지출에 도전하며, 혁신적이고 데이터 중심적인 캠페인 전략의 필요성을 강조하고 있습니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#dc2626">
+      <span class="article-date">2026-05-14</span>
+      <div class="en-content">
+        <h4>Retail Media Set to Capture More TV Ad Spend, Driven by AI</h4>
+        <p>Retail media, led by giants like Walmart and Amazon, is increasingly attracting advertising spend by leveraging advanced data and AI capabilities. This shift indicates a growing trend where commerce media firms are offering more sophisticated pitches, potentially reallocating significant portions of traditional TV ad budgets. FMCG brands like Mars and Kellanova will need to adjust their media strategies to capitalize on these evolving retail-centric advertising platforms.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>AI 기반 리테일 미디어, TV 광고 지출 점유율 확대 전망</h4>
+        <p>월마트와 아마존 같은 거대 기업이 주도하는 리테일 미디어가 고급 데이터 및 AI 역량을 활용하여 광고 지출을 점차 더 많이 유치하고 있습니다. 이러한 변화는 커머스 미디어 기업들이 더욱 정교한 제안을 내놓으며, 전통적인 TV 광고 예산의 상당 부분을 재할당할 가능성을 시사합니다. Mars 및 Kellanova와 같은 FMCG 브랜드는 이러한 진화하는 리테일 중심 광고 플랫폼을 활용하기 위해 미디어 전략을 조정해야 할 것입니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/commerce/adweek-commerce-advantage-retail-media-is-about-to-take-even-more-tv-ad-spend/" target="_blank" rel="noopener">Adweek Commerce Advantage →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#dc2626">
+      <span class="article-date">2026-05-15</span>
+      <div class="en-content">
+        <h4>Cannes Lions 2026 Introduces AI Award, Stricter Entry Rules</h4>
+        <p>The Cannes Lions festival in 2026 will feature new developments, including a dedicated AI award and stricter entry regulations. These changes highlight the industry's focus on innovation in artificial intelligence for creative work and a push for higher quality, more impactful campaigns. FMCG marketers should note these trends to ensure their future campaigns align with evolving industry standards and embrace technological advancements.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>칸 라이언즈 2026, AI 어워드 신설 및 엄격해진 출품 규정 발표</h4>
+        <p>2026년 칸 라이언즈 페스티벌은 AI 부문 신설과 더 엄격해진 출품 규정을 포함한 새로운 변화를 선보일 예정입니다. 이러한 변화는 크리에이티브 작업에서 인공지능 혁신에 대한 업계의 초점과 더 높은 품질의 영향력 있는 캠페인을 위한 노력을 강조합니다. FMCG 마케터들은 이러한 추세를 주시하여 미래 캠페인이 진화하는 업계 표준에 부합하고 기술 발전을 수용하도록 해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/creativity/7-new-things-at-cannes-lions-2026/" target="_blank" rel="noopener">Adweek →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#dc2626">
+      <span class="article-date">2026-05-15</span>
+      <div class="en-content">
+        <h4>Standout Ad Campaigns This Week Feature Dove, Apple Mac</h4>
+        <p>Adweek highlighted several standout campaigns this week, including examples from FMCG brand Dove and tech giant Apple Mac. These campaigns demonstrate effective creative strategies and messaging that resonated with audiences across various sectors. For Mars and Kellanova, analyzing successful campaigns from competitors and diverse industries provides valuable insights into current advertising best practices and innovative approaches to consumer engagement.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>이번 주 주목할 만한 광고 캠페인: Dove, Apple Mac 등</h4>
+        <p>Adweek은 이번 주에 FMCG 브랜드 Dove와 IT 기업 Apple Mac의 캠페인을 포함한 여러 주목할 만한 광고를 선정했습니다. 이 캠페인들은 다양한 부문에서 소비자들에게 반향을 일으킨 효과적인 크리에이티브 전략과 메시지를 보여줍니다. Mars 및 Kellanova는 경쟁사 및 다양한 산업의 성공적인 캠페인을 분석하여 현재의 광고 모범 사례와 소비자 참여를 위한 혁신적인 접근 방식에 대한 귀중한 통찰력을 얻을 수 있습니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/creativity/ads-of-the-week-10-campaigns-that-caught-our-eye-from-dove-to-hinge/" target="_blank" rel="noopener">Adweek →</a>
+    </div></div>
+  </section>
+  </div>
+  <div class="region-panel" id="panel-asia">
+    
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#ec4899">
+      <span class="cat-icon">🔥</span>
+      <h3><span class="en-content">Viral on Social Media</span><span class="kr-content" style="display:none">바이럴 소셜 미디어</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#10b981">
+      <span class="cat-icon">📈</span>
+      <h3><span class="en-content">Brand Activation &amp; Sales Surge</span><span class="kr-content" style="display:none">브랜드 액티베이션 &amp; 매출 급증</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Asia's FMCG landscape is evolving with strategic brand activation, as seen in Korean retailers transforming discount events into unique brands, alongside significant growth opportunities in emerging health and wellness categories like microalgae and probiotics.</span><span class="kr-content" style="display:none">아시아 FMCG 시장은 전략적인 브랜드 활성화를 통해 발전하고 있으며, 한국 유통업체들이 할인 행사를 독자적인 브랜드로 전환하는 모습과 함께 미세조류 및 프로바이오틱스와 같은 신흥 건강 및 웰니스 카테고리에서 상당한 성장 기회가 나타나고 있습니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#10b981">
+      <span class="article-date">2026-05-17</span>
+      <div class="en-content">
+        <h4>Korean Retailers Rebrand Discount Events into Standalone Brands</h4>
+        <p>Korean retailers are strategically transforming traditional discount events into unique standalone brands to enhance customer engagement and foster brand loyalty. This innovative approach aims to create distinct shopping experiences, moving beyond one-off promotions to build sustained consumer relationships and drive sales. It represents a key brand activation strategy to maintain market relevance.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>한국 유통업체, 할인 행사를 독립 브랜드로 재탄생</h4>
+        <p>한국 유통업체들은 고객 참여를 높이고 브랜드 충성도를 강화하기 위해 기존 할인 행사를 독자적인 브랜드로 전략적으로 전환하고 있습니다. 이러한 혁신적인 접근 방식은 일회성 프로모션을 넘어 지속적인 소비자 관계를 구축하고 매출을 증대시키기 위해 차별화된 쇼핑 경험을 만드는 것을 목표로 합니다. 이는 시장 관련성을 유지하는 핵심적인 브랜드 활성화 전략입니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMipgFBVV95cUxOUE1FbkUyV0dLRGNlbGdZNUZhbmV5NEp5Z3FMU3RqVDdWSFk0OEZOT01mZWpoWjZmYUlpRXhSdEdsRTVDd3NodkdzcTVUMzAzTlZoYWVFWWRHVFJoT3lIVFZ0YUh6UWFXZmRWUEhKVUxDbGpnRHB0a3pIRTdUX3dsd1RvWXNUVURHLXg1YkptcU9EVXptdGc0d2lmNGdWdGVhUnFETG93?oc=5" target="_blank" rel="noopener">Seoul Economic Daily →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      <span class="article-date">2026-05-17</span>
+      <div class="en-content">
+        <h4>Asia Microalgae Food &amp; Beverage Market Shows Growth Trends</h4>
+        <p>The Asia Microalgae Food and Beverage market is undergoing significant analysis, with forecasts indicating emerging trends and potential for growth. This growing sector presents opportunities for FMCG brands to innovate and activate new product lines targeting health-conscious consumers in the region, potentially leading to future sales surges. Brands should monitor these insights for product development.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>아시아 미세조류 식음료 시장, 성장 추세 보여</h4>
+        <p>아시아 미세조류 식음료 시장은 심층적인 분석이 진행 중이며, 예측에 따르면 새로운 트렌드와 성장 잠재력을 보이고 있습니다. 이 성장하는 분야는 FMCG 브랜드가 혁신하고 건강을 중시하는 아시아 지역 소비자들을 대상으로 새로운 제품 라인을 활성화하여 향후 매출 급증을 이끌어낼 기회를 제공합니다. 브랜드는 제품 개발을 위해 이러한 인사이트를 주시해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMitAFBVV95cUxQb25iWVpPU0l6ZHhGYktPMW9YOXplV0d6X3RBZ1UzRmpDZDNrNzRaZWhBUlBZNG5iS25MaXFQYVVJblVQdFJONjVmS0dVaDhNSkZjYW5CV2ViWjUySVE0aW5WZDEzYUNETWJFQjlHWEl5SlpFUndPMGhVVkVYTjNkc3ZWb01hN3VPOGgwNGdOOVBIWHYzZFBvRmFuZEJiY2RtZ3RidUV5YWhDdWkyUUdjVzlHcC0?oc=5" target="_blank" rel="noopener">IndexBox →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      <span class="article-date">2026-05-17</span>
+      <div class="en-content">
+        <h4>Asia-Pacific Probiotics Market Exhibits Strong Growth Potential</h4>
+        <p>The Asia-Pacific Probiotics market is subject to ongoing analysis, revealing significant growth trends and substantial market size. This indicates a ripe environment for FMCG companies to launch and activate new probiotic-rich products, capitalizing on increasing consumer health awareness to drive sales surges. Strategic brand activation in this category could yield strong returns.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>아시아 태평양 프로바이오틱스 시장, 높은 성장 잠재력 보여</h4>
+        <p>아시아 태평양 프로바이오틱스 시장은 지속적인 분석을 통해 상당한 성장 추세와 시장 규모를 보여주고 있습니다. 이는 FMCG 기업이 증가하는 소비자 건강 인식을 활용하여 새로운 프로바이오틱스 함유 제품을 출시하고 활성화하여 매출 급증을 이끌어낼 수 있는 좋은 환경임을 시사합니다. 이 카테고리에서의 전략적인 브랜드 활성화는 높은 수익을 가져올 수 있습니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMisAFBVV95cUxPTDlMOC1FbnFCVmVlNUxuUzBJZi1LcjVkYnQ2N2Zib2pFb0hEVWl2Q1RINF9jMWJLZW5KVENhUzRWQWMxRFM4RDd4cXBNWFljaG5pd2Q4Rk9qU1hOYTZTWkREZlFZQzV0VC1jQk5LSlB4T0NiU05jaUhtM3ZrdWQ1SHFxRVd5ejVkMGg2OEF2NEZjNWY5UDE2SWRnS1JCM2IzZzNzY24xenBTYlhVM2xBWA?oc=5" target="_blank" rel="noopener">IndexBox →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#dc2626">
+      <span class="cat-icon">🍫</span>
+      <h3><span class="en-content">Mars &amp; Kellanova Brand News</span><span class="kr-content" style="display:none">마즈 &amp; 켈레노바 브랜드 뉴스</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  </div>
+  <div class="region-panel" id="panel-korea">
+    
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#ec4899">
+      <span class="cat-icon">🔥</span>
+      <h3><span class="en-content">Viral on Social Media</span><span class="kr-content" style="display:none">바이럴 소셜 미디어</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#10b981">
+      <span class="cat-icon">📈</span>
+      <h3><span class="en-content">Brand Activation &amp; Sales Surge</span><span class="kr-content" style="display:none">브랜드 액티베이션 &amp; 매출 급증</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#dc2626">
+      <span class="cat-icon">🍫</span>
+      <h3><span class="en-content">Mars &amp; Kellanova Brand News</span><span class="kr-content" style="display:none">마즈 &amp; 켈레노바 브랜드 뉴스</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>
+    <span class="en-content">FMCG Marketing Intelligence Newsletter — Auto-generated weekly</span>
+    <span class="kr-content" style="display:none">FMCG 마케팅 인텔리전스 뉴스레터 — 매주 자동 생성</span>
+  </p>
+</footer>
+
+<script>
+(function(){
+  function setLang(lang){
+    document.querySelectorAll('.en-content').forEach(function(el){
+      el.style.display = lang==='en' ? '' : 'none';
+    });
+    document.querySelectorAll('.kr-content').forEach(function(el){
+      el.style.display = lang==='kr' ? '' : 'none';
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(el){
+      el.classList.remove('active');
+    });
+    var btn = document.getElementById('btn-'+lang);
+    if(btn) btn.classList.add('active');
+    try{ localStorage.setItem('fmcg_lang', lang); }catch(e){}
+  }
+
+  function setRegion(region){
+    document.querySelectorAll('.region-panel').forEach(function(el){
+      el.classList.remove('active');
+    });
+    var panel = document.getElementById('panel-'+region);
+    if(panel) panel.classList.add('active');
+    document.querySelectorAll('.region-tab').forEach(function(el){
+      el.classList.remove('active');
+    });
+    var tab = document.querySelector('.region-tab[data-region="'+region+'"]');
+    if(tab) tab.classList.add('active');
+    try{ localStorage.setItem('fmcg_region', region); }catch(e){}
+  }
+
+  window.setLang = setLang;
+  window.setRegion = setRegion;
+
+  var lang = 'en';
+  var region = 'global';
+  try{
+    lang = localStorage.getItem('fmcg_lang') || 'en';
+    region = localStorage.getItem('fmcg_region') || 'global';
+  }catch(e){}
+  setLang(lang);
+  setRegion(region);
+})();
+</script>
+</body>
+</html>
