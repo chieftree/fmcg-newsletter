@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FMCG Marketing Intelligence — Thursday Issue — May 21, 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f4f8;color:#1a202c;line-height:1.6}
+a{color:#4f46e5;text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Header */
+.site-header{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 60%,#0f3460 100%);color:#fff;padding:32px 24px 0}
+.header-inner{max-width:1100px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:8px}
+.site-title{font-size:clamp(20px,4vw,28px);font-weight:700;letter-spacing:-0.5px}
+.site-subtitle{font-size:13px;opacity:.7;margin-top:4px}
+
+/* Language toggle */
+.lang-toggle{display:flex;gap:8px}
+.lang-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;cursor:pointer;transition:all .2s}
+.lang-btn.active,.lang-btn:hover{background:rgba(255,255,255,.9);color:#1a1a2e}
+
+/* Region tabs */
+.region-tabs{display:flex;gap:0;margin-top:24px;border-bottom:none}
+.region-tab{background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.7);padding:12px 24px;font-size:14px;font-weight:500;cursor:pointer;border-radius:8px 8px 0 0;transition:all .2s;margin-right:4px}
+.region-tab.active,.region-tab:hover{background:#fff;color:#1a1a2e}
+
+/* Content area */
+.content-area{max-width:1100px;margin:0 auto;padding:32px 24px 64px}
+.region-panel{display:none}
+.region-panel.active{display:block}
+
+/* Issue label */
+.issue-label{background:#fff;border-radius:0 0 12px 12px;padding:12px 24px;display:inline-block;font-size:13px;color:#64748b;margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.first-issue-badge{background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;margin-left:8px;vertical-align:middle}
+
+/* Category section */
+.category-section{background:#fff;border-radius:12px;padding:24px;margin-bottom:24px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.cat-header{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:2px solid #e2e8f0;margin-bottom:16px}
+.cat-icon{font-size:22px}
+.cat-header h3{font-size:16px;font-weight:700;color:#1e293b}
+.global-badge{font-size:10px;font-weight:600;background:#6366f1;color:#fff;padding:2px 7px;border-radius:10px;margin-left:8px;vertical-align:middle}
+
+/* Section insight */
+.section-insight{font-size:13px;color:#475569;background:#f8fafc;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-style:italic;border-left:3px solid #e2e8f0}
+
+/* Article grid */
+.articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.article-card{border-left:3px solid #ccc;padding:14px 16px;background:#fafafa;border-radius:0 8px 8px 0;transition:box-shadow .2s}
+.article-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.1);background:#fff}
+.article-date{font-size:11px;color:#94a3b8;display:block;margin-bottom:6px}
+.article-card h4{font-size:14px;font-weight:600;color:#1e293b;margin-bottom:6px;line-height:1.4}
+.article-card p{font-size:13px;color:#475569;margin-bottom:10px;line-height:1.6}
+.metric{font-size:12px;font-weight:600;color:#0f766e;background:#f0fdf4;display:inline-block;padding:3px 8px;border-radius:6px;margin-bottom:8px}
+.source-link{font-size:12px;color:#4f46e5;font-weight:500;display:block;margin-top:6px}
+
+/* No updates */
+.no-updates{font-size:13px;color:#94a3b8;font-style:italic;padding:8px 0}
+
+/* Footer */
+.site-footer{background:#1a1a2e;color:rgba(255,255,255,.5);text-align:center;padding:32px 24px;font-size:13px}
+.site-footer a{color:rgba(255,255,255,.7)}
+
+@media(max-width:600px){
+  .header-top{flex-direction:column}
+  .articles-grid{grid-template-columns:1fr}
+  .region-tab{padding:10px 14px;font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div>
+        <div class="site-title">FMCG Marketing Intelligence</div>
+        <div class="site-subtitle">
+          <span class="en-content">Global · Asia · Korea — Curated weekly for FMCG marketers</span>
+          <span class="kr-content" style="display:none">글로벌 · 아시아 · 한국 — FMCG 마케터를 위한 주간 큐레이션</span>
+        </div>
+      </div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">🌐 English</button>
+        <button class="lang-btn" id="btn-kr" onclick="setLang('kr')">🇰🇷 한국어</button>
+      </div>
+    </div>
+    <div class="region-tabs">
+      <button class="region-tab active" data-region="global" onclick="setRegion('global')">🌍 Global</button>
+      <button class="region-tab" data-region="asia" onclick="setRegion('asia')">🌏 Asia</button>
+      <button class="region-tab" data-region="korea" onclick="setRegion('korea')">Korea</button>
+    </div>
+  </div>
+</header>
+
+<div class="content-area">
+  <div class="issue-label">
+    <span class="en-content">Thursday Issue — May 21, 2026</span>
+    <span class="kr-content" style="display:none">2026-05-21 주간</span>
+    
+  </div>
+
+  <div class="region-panel active" id="panel-global">
+    
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#ec4899">
+      <span class="cat-icon">🔥</span>
+      <h3><span class="en-content">Viral on Social Media</span><span class="kr-content" style="display:none">바이럴 소셜 미디어</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Google's integration of native checkout functionality on platforms like YouTube offers FMCG marketers a powerful new pathway to convert viral content into immediate direct sales.</span><span class="kr-content" style="display:none">구글이 유튜브와 같은 플랫폼에 네이티브 결제 기능을 통합하면서 FMCG 마케터들은 바이럴 콘텐츠를 즉각적인 직접 판매로 전환할 수 있는 강력한 새로운 경로를 얻게 되었습니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#ec4899">
+      <span class="article-date">2026-05-20</span>
+      <div class="en-content">
+        <h4>Google boosts e-commerce with native checkout on YouTube, Search</h4>
+        <p>Google is significantly enhancing its e-commerce capabilities by rolling out native checkout functionality across its platforms, including YouTube and Search. This allows consumers to complete purchases directly within Google's ecosystem, streamlining the path from content discovery to immediate transaction. For FMCG brands, this simplifies monetization of viral content and shortens the purchase journey significantly.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>구글, 유튜브·검색에 네이티브 결제 도입, 전자상거래 강화</h4>
+        <p>구글은 유튜브와 검색을 포함한 자사 플랫폼 전반에 걸쳐 네이티브 결제 기능을 도입하며 전자상거래 역량을 크게 강화하고 있습니다. 이를 통해 소비자는 구글 생태계를 벗어나지 않고 구매를 완료할 수 있어 콘텐츠 발견부터 즉각적인 거래까지의 경로가 간소화됩니다. FMCG 브랜드는 바이럴 콘텐츠의 수익화를 단순화하고 구매 여정을 크게 단축할 수 있습니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/media/google-challenges-amazon-with-new-native-checkout-rolls-out-ai-ad-explainers/" target="_blank" rel="noopener">Adweek →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#10b981">
+      <span class="cat-icon">📈</span>
+      <h3><span class="en-content">Brand Activation &amp; Sales Surge</span><span class="kr-content" style="display:none">브랜드 액티베이션 &amp; 매출 급증</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Brands are leveraging AI for marketing production efficiency and embracing new e-commerce functionalities from major platforms like Google to enhance brand activation and drive sales.</span><span class="kr-content" style="display:none">브랜드들은 마케팅 생산 효율성을 위해 AI를 활용하고 있으며, 구글과 같은 주요 플랫폼의 새로운 전자상거래 기능을 적극적으로 도입하여 브랜드 활성화를 강화하고 판매를 촉진하고 있습니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#10b981">
+      <span class="article-date">2026-05-20</span>
+      <div class="en-content">
+        <h4>Brands Boost Marketing Production with AI; MorningAI Platform Use Surges</h4>
+        <p>Brands are increasingly adopting AI platforms like MorningAI to streamline marketing production, indicating a significant shift towards efficiency. This trend suggests marketers are leveraging AI for faster content creation and campaign management, directly impacting brand activation strategies. The surge in platform usage highlights a growing industry reliance on AI tools.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>AI 활용 마케팅 생산 급증, MorningAI 플랫폼 사용량 폭발적 증가</h4>
+        <p>브랜드들이 마케팅 생산 효율화를 위해 MorningAI와 같은 AI 플랫폼을 빠르게 도입하고 있습니다. 이는 콘텐츠 제작 및 캠페인 관리를 가속화하여 브랜드 활성화 전략에 직접적인 영향을 미치고 있음을 시사합니다. 플랫폼 사용량 급증은 AI 도구에 대한 업계의 의존도가 높아지고 있음을 강조합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMiV0FVX3lxTE1nSGlTNzBub0xuNzNZSU1ia0xEY3dsd2xoUTNOVkN2SGVudDhrQkxKS2xNM01sVHZxbm5KSmZydVlneEtWSzZMcDBaM0ZMa1FzRXEzR0Q4aw?oc=1" target="_blank" rel="noopener">AI Magazine →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      <span class="article-date">2026-05-20</span>
+      <div class="en-content">
+        <h4>Google Challenges Amazon with Native Checkout, Rolls Out AI Ad Explainers</h4>
+        <p>Google is rolling out new native checkout capabilities, allowing consumers to complete purchases directly on its platforms without leaving Google properties. This, combined with new AI ad ‘explainers,’ offers FMCG brands a more frictionless path to purchase and improved transparency in ad performance. These features provide powerful new tools for brand activation and sales conversion.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>구글, 네이티브 결제 및 AI 광고 설명 기능으로 아마존에 도전</h4>
+        <p>구글이 새로운 네이티브 결제 기능을 도입하여 소비자들이 구글 플랫폼 내에서 직접 구매를 완료할 수 있도록 합니다. 이는 새로운 AI 광고 '설명' 기능과 결합되어 FMCG 브랜드에 마찰 없는 구매 경로와 광고 성과에 대한 투명성을 제공합니다. 이 기능들은 브랜드 활성화 및 판매 전환을 위한 강력한 새 도구를 제공합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/media/google-challenges-amazon-with-new-native-checkout-rolls-out-ai-ad-explainers/" target="_blank" rel="noopener">Adweek →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#f59e0b">
+      <span class="cat-icon">🏆</span>
+      <h3><span class="en-content">Award-Winning Campaigns</span><span class="kr-content" style="display:none">수상 마케팅 성공 사례</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Global FMCG marketing success is being driven by effective, ethical campaigns like eos's award-winning efforts, alongside new platform capabilities from Google that offer enhanced e-commerce and AI-powered ad transparency tools.</span><span class="kr-content" style="display:none">eos와 같은 FMCG 브랜드의 윤리적 마케팅 캠페인이 글로벌 성공을 이끌고 있으며, 구글의 향상된 이커머스 및 AI 기반 광고 투명성 도구와 같은 새로운 플랫폼 기능이 마케팅에 영향을 미치고 있습니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#f59e0b">
+      <span class="article-date">2026-05-19</span>
+      <div class="en-content">
+        <h4>eos Products Wins Global Iridium Effie for Second Consecutive Year</h4>
+        <p>eos Products and agency Mischief @ No Fixed Address secured the prestigious Iridium Effie Award for the second consecutive year at the 2025 Global Best of the Best Effie Awards. This recognizes their exceptional effectiveness in ethical marketing campaigns, setting a high standard for global FMCG brands in achieving measurable impact.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>eos 제품, 글로벌 이리듐 에피상 2년 연속 수상 쾌거</h4>
+        <p>eos 제품과 에이전시 Mischief @ No Fixed Address는 2025 글로벌 베스트 오브 베스트 에피 어워드에서 2년 연속 권위 있는 이리듐 에피상을 수상했습니다. 이는 윤리적 마케팅 캠페인에서의 탁월한 효과를 인정받은 것으로, 글로벌 FMCG 브랜드에 측정 가능한 영향력 달성의 높은 기준을 제시합니다.</p>
+      </div>
+      <div class="metric">📊 Second Consecutive Year</div>
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMi_wFBVV95cUxQZ0hveXRwT2JUV3UtMTUwc1dEclNuYmp1S1dHYUxwX09vNEQ0cUhpdllXQ1U5S2hHSTYzbUdpazZFWHh6VV9RRm9oWXE2dy1YRGRKVThJSENrc0c5b2plYVVGU25TOTRnckZtRURpOU55bXpkbjYxYVR5dHhyN09UMVJEa0ZmalNWQW9MdVQyWTZlWG0tY181Tm1kMG5tb3I5cU11M2trbHpsa2FTQmxuRkN0VmdLb0FBd29iSkFUem9zbzV4UHY2OUROQXoyNU5wQ1RhSE5wU21wYmZQS1FhMnhCUTQ3MzRsMjk3Nmx5OG43OUFablRLLXNqRExsMXc?oc=5" target="_blank" rel="noopener">Ethical Marketing News →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#f59e0b">
+      <span class="article-date">2026-05-20</span>
+      <div class="en-content">
+        <h4>Google Boosts E-commerce with Native Checkout and AI Ad Explainers</h4>
+        <p>Google is expanding its e-commerce capabilities by rolling out native checkout infrastructure across its platforms like YouTube and Search, allowing consumers to complete purchases without leaving Google properties. Additionally, new AI Ad 'Explainers' are being introduced to enhance transparency for advertisers, offering new tools for FMCG brands to optimize their digital presence and conversion funnels.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>구글, 네이티브 결제 및 AI 광고 설명 기능으로 이커머스 강화</h4>
+        <p>구글은 유튜브 및 검색과 같은 플랫폼 전반에 걸쳐 네이티브 결제 인프라를 도입하여, 소비자들이 구글 플랫폼을 떠나지 않고 구매를 완료할 수 있도록 이커머스 역량을 강화하고 있습니다. 또한, 광고주를 위한 투명성을 높이는 새로운 AI 광고 '설명 기능'이 도입되어, FMCG 브랜드가 디지털 존재감과 전환 유입경로를 최적화할 새로운 도구를 제공합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/media/google-challenges-amazon-with-new-native-checkout-rolls-out-ai-ad-explainers/" target="_blank" rel="noopener">Adweek →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#6366f1">
+      <span class="cat-icon">🎓</span>
+      <h3><span class="en-content">Byron Sharp &amp; Laws of Growth</span><span class="kr-content" style="display:none">바이런 샤프 &amp; 성장의 법칙</span><span class="global-badge">Global</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Global FMCG marketing is evolving rapidly, with e-commerce platforms like Google intensifying competition, dedicated CMOs driving brand growth through strategic leadership, and established advertising markets like India emphasizing the enduring value of consistent, creative brand building.</span><span class="kr-content" style="display:none">글로벌 FMCG 마케팅은 빠르게 진화하고 있으며, 구글과 같은 이커머스 플랫폼이 경쟁을 심화시키고, 전담 CMO가 전략적 리더십을 통해 브랜드 성장을 주도하며, 인도와 같은 기존 광고 시장은 일관되고 창의적인 브랜드 구축의 지속적인 가치를 강조하고 있습니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#6366f1">
+      <span class="article-date">2026-05-20</span>
+      <div class="en-content">
+        <h4>Google's New Native Checkout Intensifies Amazon E-commerce Battle</h4>
+        <p>Google is rolling out new native checkout infrastructure and AI ad 'Explainers' to allow consumers to shop directly on its platforms like YouTube and Search. This strategic move directly challenges Amazon's e-commerce dominance, enhancing physical availability and potentially mental availability for FMCG brands through seamless shopping experiences and improved ad transparency across Google's vast ecosystem.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>구글의 새로운 네이티브 결제, 아마존과의 이커머스 경쟁 심화</h4>
+        <p>구글이 유튜브 및 검색 등 자사 플랫폼에서 소비자가 직접 쇼핑할 수 있도록 새로운 네이티브 결제 인프라와 AI 광고 '설명 도구'를 출시했습니다. 이 전략적 움직임은 아마존의 이커머스 지배력에 직접 도전하며, 구글의 방대한 생태계 전반에 걸쳐 원활한 쇼핑 경험과 개선된 광고 투명성을 통해 FMCG 브랜드의 물리적 및 정신적 가용성을 높입니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/media/google-challenges-amazon-with-new-native-checkout-rolls-out-ai-ad-explainers/" target="_blank" rel="noopener">Adweek →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#6366f1">
+      <span class="article-date">2026-05-20</span>
+      <div class="en-content">
+        <h4>Seed Health Appoints First CMO to Drive Next Chapter of Brand Growth</h4>
+        <p>Seed Health, a prominent health and wellness brand, has appointed Anisha Raghavan as its first Chief Marketing Officer to lead its next phase of brand growth. This signals a strategic focus on expanding market presence and consumer engagement, crucial for a direct-to-consumer FMCG brand aiming to build strong mental and physical availability in competitive health categories.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>시드 헬스, 브랜드 성장의 다음 장을 이끌 첫 CMO 임명</h4>
+        <p>유명 건강 웰니스 브랜드 시드 헬스가 아니샤 라가반을 첫 최고 마케팅 책임자(CMO)로 임명하여 브랜드 성장의 다음 단계를 이끌 예정입니다. 이는 경쟁적인 건강 카테고리에서 강력한 정신적 및 물리적 가용성을 구축하려는 D2C FMCG 브랜드에게 중요한 시장 점유율 확장과 소비자 참여에 대한 전략적 집중을 시사합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMi-wFBVV95cUxQUFZIcW43SkhzTGQzN0YzNWE0dGpVTjFRd0hDNy01SmFwR1dkaS1ubzFRT0hxRjFCTW93NUZJRXRQTkhrUFFvYnNmYkNja3BnOWFqWG5fTEhzemNaQ1U1djlSUmw5bGxJQ25YNEtrbHNrNzF5SXRkNFVBNFZYaVVfTkIwcy1UbDF3N2xvR2ZRdXlrZWdHRmxsUmNsdVg3cWZkOW5yUUNiUzliQ2RCSE9yS2RqcmNKYmdoYjJsSWFhVWY1Ylg1Vll1RjRUUkt3RUg5UnFBUnJJZ1BxY3QyeEFFS2ZLWjJiMHdWTUEzYjBRaUxlb2tJRjdzTFBTYw?oc=5" target="_blank" rel="noopener">PR Newswire →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#6366f1">
+      <span class="article-date">2026-05-21</span>
+      <div class="en-content">
+        <h4>India's Advertising Industry Celebrates 80 Years of Growth and Reinvention</h4>
+        <p>Sam Balsara reflects on 80 years of the Indian advertising industry, highlighting its evolution, battles, and continuous reinvention. This milestone underscores the dynamic environment where FMCG brands in India operate, emphasizing the enduring importance of creative differentiation and consistent brand building, principles central to long-term market leadership and brand loyalty.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>인도 광고 산업, 80년간의 성장과 재창조 기념</h4>
+        <p>샘 발사라(Sam Balsara)는 인도 광고 산업의 80년을 회고하며 그 발전, 난관, 그리고 끊임없는 재창조를 강조했습니다. 이 이정표는 인도 FMCG 브랜드가 활동하는 역동적인 환경을 보여주며, 장기적인 시장 리더십과 브랜드 충성도에 핵심적인 창의적 차별화와 일관된 브랜드 구축의 지속적인 중요성을 강조합니다.</p>
+      </div>
+      <div class="metric">📊 80 years</div>
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMi5wFBVV95cUxNc010bFhjdjN4cUFtaGxDV0lWMmNkb1hXUS14d3VmSUpFRmZ3V0RrQ3p6SDhmdWljWml6bktFQm5ZdnRtQldXWHoxZHhlcHZUbUM4a2lhS0JhRHRWRTNfODdHbmFwOFFpV2c0T1RVaVpld0RfWWZZRDhzY1pEcktMcmd2WDBNSmxaQ3g3QUV6akVxM2xnSXZ1cmU5Wk9XTEZUbkozdTZWQjBQbjAzOXplVnVHWkVpSm96VWdmVUM1Y19PNGk5RnpOM2RiV0ZKN3FWbm9LaUNmLXdoVkc4Z1RlT3BnVFU1VVHSAewBQVVfeXFMTzlZbllUU2FPa21GTEs4RkN3bmd6WWtQaG1WdmotSmlfUFdCMDZtbmIwNlp3SnlpWkFXaGtMcWhVaHRqelpkYzcyNENrQzhBalhyZWVSYWg4UlNuU2FzSGh2NFAzZDcybDU2dmZ0Y3JsWkJkcGxSUF9qQkxTM29ZQVltMDFVNlQ4dWphRjMtN0lvb3E0dGVLdDJwc3d5Z2FhamlCVENKbDNwNjg4UVk1VjRmY0pOdElZQ0E3TzFBWFhYWERRaUdqTDRhbkJJaS1QOG9jUXRWREdoelM5MXVkY1RlMzZibkpGM004TkU?oc=5" target="_blank" rel="noopener">Storyboard18 →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#dc2626">
+      <span class="cat-icon">🍫</span>
+      <h3><span class="en-content">Mars &amp; Kellanova Brand News</span><span class="kr-content" style="display:none">마즈 &amp; 켈레노바 브랜드 뉴스</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">FMCG giants like Mars are strategically investing in digital innovation and bold product launches, while the broader digital advertising landscape is evolving rapidly with new e-commerce and AI-driven tools from platforms like Google, demanding adaptable marketing strategies from all brands.</span><span class="kr-content" style="display:none">마스와 같은 FMCG 거대 기업들은 디지털 혁신과 과감한 제품 출시에 전략적으로 투자하고 있으며, 구글과 같은 플랫폼의 새로운 이커머스 및 AI 기반 도구로 인해 광범위한 디지털 광고 환경이 빠르게 변화하고 있어 모든 브랜드에게 적응력 있는 마케팅 전략이 요구됩니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#dc2626">
+      <span class="article-date">2026-05-18</span>
+      <div class="en-content">
+        <h4>Mars Pioneers New Confectionery Era with Bold Launches and Digital Focus</h4>
+        <p>Mars is ushering in a new era for its confectionery business, emphasizing bold product launches and a strong digital engagement strategy. This move signals a proactive approach to evolving consumer preferences and leveraging digital channels for enhanced brand connection and market reach, presenting a competitive benchmark.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>마스, 과자 시장에 과감한 신제품 출시와 디지털 집중으로 새 시대 예고</h4>
+        <p>마스는 과감한 신제품 출시와 강력한 디지털 참여 전략을 통해 제과 사업의 새로운 시대를 열고 있습니다. 이는 변화하는 소비자 선호도에 대한 적극적인 접근 방식과 브랜드 연결 및 시장 도달 범위 확대를 위한 디지털 채널 활용을 나타내며, 경쟁사 벤치마크가 될 수 있습니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMivAFBVV95cUxQWEtEWkY0TjN3QzNRV2JNNGxheGM5X0psRE5FbW1vdVBrdFYyZGFOTVptNDh1dDlYbENQYW03aFQwLVJMM0xfRUFVRGhLYm9ST0VOSmtTbWQ1bjJ4YTVaOUVSMWFHcmxldmdxejJkdjBKY01vVks0WnBKd3dxejk2dC02SmRmVUVXMzVOOEJybGd3d25PYjhHVXBXZ3RmSnlia0xjWl9yc3kwcjBSRTdGdDFyVG5tWm1wRU1uVg?oc=5" target="_blank" rel="noopener">Confectionery News →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#dc2626">
+      <span class="article-date">2026-05-20</span>
+      <div class="en-content">
+        <h4>Asia-Pacific Granola Bar Market Shows Growth and Variety Demand</h4>
+        <p>The Asia-Pacific granola bars market is experiencing significant growth, driven by increasing consumer demand for variety packs and healthier snack options. This market analysis provides critical insights into regional trends, size, and future forecasts, indicating opportunities for brands like Kellanova to expand or innovate in this segment.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>아시아 태평양 그래놀라 바 시장, 성장 및 다양성 수요 증가</h4>
+        <p>아시아 태평양 그래놀라 바 시장은 다양한 구성의 제품과 건강한 스낵 옵션에 대한 소비자 수요 증가로 상당한 성장을 보이고 있습니다. 이 시장 분석은 지역 트렌드, 규모 및 미래 예측에 대한 중요한 통찰력을 제공하며, 켈라노바와 같은 브랜드가 이 부문에서 확장하거나 혁신할 기회를 나타냅니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMixAFBVV95cUxPTkFHZk1vY1k3QzNETl9obHJNbk5UU0VQQUpTX09wMjdGSTczS3puV3FaTUJZOXVKb3FYMFBUOXNNRjN5bmRZVnBTWWRiTjYtT3BqQ2lxSmRqZFg1ci1zb2NhcnpCOUhJZnBHeTVydEZOY3QwOUYtMUxidFdPb2VYb1EyOGVHbXR3Z3lhTy11cXc4UlFCLWRyRmk4ZmpWZS1MV29CZHM4UTFrT1FRZFh3WFJHUlhoZmwya1FLaHg3SWlDMmZ1?oc=5" target="_blank" rel="noopener">IndexBox →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#dc2626">
+      <span class="article-date">2026-05-20</span>
+      <div class="en-content">
+        <h4>Google Enhances E-commerce with Native Checkout and AI Ad 'Explainers'</h4>
+        <p>Google is challenging Amazon by rolling out new native checkout capabilities, allowing consumers to complete purchases directly on Google properties like YouTube and Search. Additionally, the introduction of AI Ad 'Explainers' will provide advertisers with deeper insights into ad performance, offering significant new tools for FMCG brands to optimize their digital advertising and sales funnels.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>구글, 자체 결제 및 AI 광고 '설명 기능'으로 이커머스 강화</h4>
+        <p>구글은 유튜브 및 검색과 같은 구글 플랫폼에서 직접 구매를 완료할 수 있는 자체 결제 기능을 출시하며 아마존에 도전하고 있습니다. 또한 AI 광고 '설명 기능' 도입은 광고주에게 광고 성과에 대한 더 깊은 통찰력을 제공하여, FMCG 브랜드가 디지털 광고 및 판매 유입경로를 최적화할 수 있는 중요한 새 도구를 제공합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/media/google-challenges-amazon-with-new-native-checkout-rolls-out-ai-ad-explainers/" target="_blank" rel="noopener">Adweek →</a>
+    </div></div>
+  </section>
+  </div>
+  <div class="region-panel" id="panel-asia">
+    
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#ec4899">
+      <span class="cat-icon">🔥</span>
+      <h3><span class="en-content">Viral on Social Media</span><span class="kr-content" style="display:none">바이럴 소셜 미디어</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#10b981">
+      <span class="cat-icon">📈</span>
+      <h3><span class="en-content">Brand Activation &amp; Sales Surge</span><span class="kr-content" style="display:none">브랜드 액티베이션 &amp; 매출 급증</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Brand activation in Asia is diverse, ranging from leveraging market trends in key FMCG categories and intellectual property for consumer products, to strategic corporate focus on regional growth and the adoption of AI-powered retail innovations.</span><span class="kr-content" style="display:none">아시아 지역의 브랜드 활성화는 주요 FMCG 카테고리의 시장 트렌드와 지적 재산권 활용, 지역 성장을 위한 전략적 기업 집중, 그리고 AI 기반 리테일 혁신 도입에 이르기까지 다양합니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#10b981">
+      <span class="article-date">2026-05-19</span>
+      <div class="en-content">
+        <h4>Asia Caffeinated Beverage Market Shows Strong Growth and Emerging Trends</h4>
+        <p>A new market analysis reveals significant growth and evolving consumer trends in the Asia caffeinated beverage sector. This report provides crucial insights into market size, future forecasts, and key drivers, essential for brand strategists. Marketers should leverage these trends for product development and activation.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>아시아 카페인 음료 시장, 강력한 성장 및 새로운 트렌드 보임</h4>
+        <p>새로운 시장 분석에 따르면 아시아 카페인 음료 부문에서 상당한 성장과 변화하는 소비자 트렌드가 나타났습니다. 이 보고서는 시장 규모, 미래 예측 및 주요 동인에 대한 중요한 통찰력을 제공하며, 이는 브랜드 전략가에게 필수적입니다. 마케터는 이러한 트렌드를 제품 개발 및 활성화에 활용해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMiqgFBVV95cUxPWnNDLWlmcUZFREc3VUxoVnVoa1lxX3Z4SjZOY3pHYndqVkJpaHM3UGpOMGx3bnlCUjNqQWNyTVhiWU1iM1ViWDRUcTF0cUtGNjZxRWRsZUZSc0dVMmxPbThDZ3l2Zl9nbGJ6czlsNlAybWVPQXd6bEY0QjJ4ejVZQ2Q5VEFjdjZRaFp6eGpCSGZlZlBRYm5EajlrRGhEVkVSZm1xVnRsdTVKUQ?oc=5" target="_blank" rel="noopener">IndexBox →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      <span class="article-date">2026-05-18</span>
+      <div class="en-content">
+        <h4>Zootopia 2 Powers APAC Retail Activations for Disney Consumer Products</h4>
+        <p>Disney's Zootopia 2 is driving major retail activations across the APAC region, boosting sales for consumer products. Local teams are executing innovative in-store experiences and promotions, demonstrating effective leveraging of popular IP for merchandise sales. This strategy is crucial for brand engagement and product visibility.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>주토피아 2, 디즈니 소비자 제품 아시아 태평양 리테일 활성화 주도</h4>
+        <p>디즈니의 주토피아 2가 아시아 태평양 지역 전반에 걸쳐 대규모 리테일 활성화를 추진하며 소비자 제품 판매를 촉진하고 있습니다. 현지 팀은 혁신적인 매장 내 경험과 프로모션을 실행하여 인기 IP를 활용한 상품 판매의 효과를 보여줍니다. 이 전략은 브랜드 참여와 제품 가시성에 중요합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMi4gFBVV95cUxONEhaek5hak92MVQtcUp3U0RTNngxTXlaLVJKd0VVOUxIQThzOG4xR1A3SDhWVDRPT0tMN2w2X2RUcTBLc1pzVmdYNlotU0FGQUpKMm1ocWFON0ZvQnNuRG5WV25xS29CT09HU01TQ2ZFNmstZDN6cklGZ3FFRXNGeU8wb2VYRUV1MmEzU0lNQVB4RUtFMVRXbjlaZy1CYm9JelJSMlhZa3NXdDd2M1ZYeGtySDZuYmZHN1BPUVpGd0J3OVRTMkpBMzZCYWUxR2p4Q1lfbHl5R2NWT05KckFWc3FB?oc=5" target="_blank" rel="noopener">Disney.com →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      <span class="article-date">2026-05-21</span>
+      <div class="en-content">
+        <h4>Suntory Beverage &amp; Food Strategy Focuses on Asia Growth</h4>
+        <p>Suntory Beverage &amp; Food is strategically focusing on growth in Asia, with recent earnings discussions highlighting key market approaches. The company's strategy likely involves targeted marketing initiatives and brand activations to boost beverage sales in the region. This indicates a proactive stance on market expansion.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>산토리 음료 및 식품, 아시아 성장 전략에 집중</h4>
+        <p>산토리 음료 및 식품은 아시아 지역 성장에 전략적으로 집중하고 있으며, 최근 실적 논의에서 주요 시장 접근 방식을 강조했습니다. 회사의 전략은 이 지역에서 음료 판매를 촉진하기 위한 맞춤형 마케팅 이니셔티브 및 브랜드 활성화를 포함할 것으로 보입니다. 이는 시장 확장에 대한 적극적인 입장을 나타냅니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMixwFBVV95cUxQQVhtMW5VSUlsR3cyLTlYMmlmdEgyLW83S3NrSms2WDhBWElDMkc0RjFfRGY0eWVTcG5uNEMzZXE3YThGY2M4Yk5jTU40QjVxNWhVXzBleF9GS0xGa0Via0Q1VkdJRjVfVG9FMk52aW56Q3pwSWw3TFFGelI0N3ZOLTdUcTBISWtUbU40dDJoelJDTVVGZ20tSmZQSmJSUzFxNmRLc1VaSzdDTWNzdEtOSE5rQkJDZ3gxOHhNLTZjQ3JkVWlhX3c0?oc=5" target="_blank" rel="noopener">AD HOC NEWS →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      <span class="article-date">2026-05-19</span>
+      <div class="en-content">
+        <h4>Centric Software to Unveil AI Retail Innovations for APAC Marketers</h4>
+        <p>Centric Software will showcase AI-powered retail innovations at NRF 2026 APAC, offering new tools for brand activation and sales enhancement. These technologies can optimize product planning, merchandising, and personalized customer experiences, crucial for boosting FMCG performance. Marketers should explore AI's potential in driving future engagement.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>센트릭 소프트웨어, 아시아 태평양 마케터를 위한 AI 리테일 혁신 공개</h4>
+        <p>센트릭 소프트웨어는 NRF 2026 APAC에서 AI 기반 리테일 혁신을 선보이며, 브랜드 활성화 및 판매 증진을 위한 새로운 도구를 제공합니다. 이러한 기술은 제품 기획, 머천다이징 및 개인화된 고객 경험을 최적화하여 FMCG 성과 향상에 중요합니다. 마케터는 미래 참여를 유도하는 AI의 잠재력을 탐색해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMiygFBVV95cUxOQks5UGNnZThDUnZPR1QwZ3VPaXpmaTVwNFNDUVRRSEJuQWpSbXNGOGVnc2djMGwtZWdiam1xaE95dUN2UjdBX0ZFWE5sckFNOUxXMjZTWERhMnpPSkVBVTdYc1A1SklVYXVnYk9oaTBHQnFYQ0NRUkZVenpvdURTZ0J4SGs5VmF1M0t0cE1HaUhraFFpUjFDbGdvcjZGM2JUTVY2NjRuX2w2T2g1VVlwbkV5YS1XclNYdEJza1hvRkZ3OGVoOHVsOTln?oc=5" target="_blank" rel="noopener">StreetInsider →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#dc2626">
+      <span class="cat-icon">🍫</span>
+      <h3><span class="en-content">Mars &amp; Kellanova Brand News</span><span class="kr-content" style="display:none">마즈 &amp; 켈레노바 브랜드 뉴스</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  </div>
+  <div class="region-panel" id="panel-korea">
+    
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#ec4899">
+      <span class="cat-icon">🔥</span>
+      <h3><span class="en-content">Viral on Social Media</span><span class="kr-content" style="display:none">바이럴 소셜 미디어</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#10b981">
+      <span class="cat-icon">📈</span>
+      <h3><span class="en-content">Brand Activation &amp; Sales Surge</span><span class="kr-content" style="display:none">브랜드 액티베이션 &amp; 매출 급증</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#dc2626">
+      <span class="cat-icon">🍫</span>
+      <h3><span class="en-content">Mars &amp; Kellanova Brand News</span><span class="kr-content" style="display:none">마즈 &amp; 켈레노바 브랜드 뉴스</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>
+    <span class="en-content">FMCG Marketing Intelligence Newsletter — Auto-generated weekly</span>
+    <span class="kr-content" style="display:none">FMCG 마케팅 인텔리전스 뉴스레터 — 매주 자동 생성</span>
+  </p>
+</footer>
+
+<script>
+(function(){
+  function setLang(lang){
+    document.querySelectorAll('.en-content').forEach(function(el){
+      el.style.display = lang==='en' ? '' : 'none';
+    });
+    document.querySelectorAll('.kr-content').forEach(function(el){
+      el.style.display = lang==='kr' ? '' : 'none';
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(el){
+      el.classList.remove('active');
+    });
+    var btn = document.getElementById('btn-'+lang);
+    if(btn) btn.classList.add('active');
+    try{ localStorage.setItem('fmcg_lang', lang); }catch(e){}
+  }
+
+  function setRegion(region){
+    document.querySelectorAll('.region-panel').forEach(function(el){
+      el.classList.remove('active');
+    });
+    var panel = document.getElementById('panel-'+region);
+    if(panel) panel.classList.add('active');
+    document.querySelectorAll('.region-tab').forEach(function(el){
+      el.classList.remove('active');
+    });
+    var tab = document.querySelector('.region-tab[data-region="'+region+'"]');
+    if(tab) tab.classList.add('active');
+    try{ localStorage.setItem('fmcg_region', region); }catch(e){}
+  }
+
+  window.setLang = setLang;
+  window.setRegion = setRegion;
+
+  var lang = 'en';
+  var region = 'global';
+  try{
+    lang = localStorage.getItem('fmcg_lang') || 'en';
+    region = localStorage.getItem('fmcg_region') || 'global';
+  }catch(e){}
+  setLang(lang);
+  setRegion(region);
+})();
+</script>
+</body>
+</html>
