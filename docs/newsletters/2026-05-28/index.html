@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FMCG Marketing Intelligence — Thursday Issue — May 28, 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f4f8;color:#1a202c;line-height:1.6}
+a{color:#4f46e5;text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Header */
+.site-header{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 60%,#0f3460 100%);color:#fff;padding:32px 24px 0}
+.header-inner{max-width:1100px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:8px}
+.site-title{font-size:clamp(20px,4vw,28px);font-weight:700;letter-spacing:-0.5px}
+.site-subtitle{font-size:13px;opacity:.7;margin-top:4px}
+
+/* Language toggle */
+.lang-toggle{display:flex;gap:8px}
+.lang-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;cursor:pointer;transition:all .2s}
+.lang-btn.active,.lang-btn:hover{background:rgba(255,255,255,.9);color:#1a1a2e}
+
+/* Region tabs */
+.region-tabs{display:flex;gap:0;margin-top:24px;border-bottom:none}
+.region-tab{background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.7);padding:12px 24px;font-size:14px;font-weight:500;cursor:pointer;border-radius:8px 8px 0 0;transition:all .2s;margin-right:4px}
+.region-tab.active,.region-tab:hover{background:#fff;color:#1a1a2e}
+
+/* Content area */
+.content-area{max-width:1100px;margin:0 auto;padding:32px 24px 64px}
+.region-panel{display:none}
+.region-panel.active{display:block}
+
+/* Issue label */
+.issue-label{background:#fff;border-radius:0 0 12px 12px;padding:12px 24px;display:inline-block;font-size:13px;color:#64748b;margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.first-issue-badge{background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;margin-left:8px;vertical-align:middle}
+
+/* Category section */
+.category-section{background:#fff;border-radius:12px;padding:24px;margin-bottom:24px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.cat-header{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:2px solid #e2e8f0;margin-bottom:16px}
+.cat-icon{font-size:22px}
+.cat-header h3{font-size:16px;font-weight:700;color:#1e293b}
+.global-badge{font-size:10px;font-weight:600;background:#6366f1;color:#fff;padding:2px 7px;border-radius:10px;margin-left:8px;vertical-align:middle}
+
+/* Section insight */
+.section-insight{font-size:13px;color:#475569;background:#f8fafc;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-style:italic;border-left:3px solid #e2e8f0}
+
+/* Article grid */
+.articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.article-card{border-left:3px solid #ccc;padding:14px 16px;background:#fafafa;border-radius:0 8px 8px 0;transition:box-shadow .2s}
+.article-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.1);background:#fff}
+.article-date{font-size:11px;color:#94a3b8;display:block;margin-bottom:6px}
+.article-card h4{font-size:14px;font-weight:600;color:#1e293b;margin-bottom:6px;line-height:1.4}
+.article-card p{font-size:13px;color:#475569;margin-bottom:10px;line-height:1.6}
+.metric{font-size:12px;font-weight:600;color:#0f766e;background:#f0fdf4;display:inline-block;padding:3px 8px;border-radius:6px;margin-bottom:8px}
+.source-link{font-size:12px;color:#4f46e5;font-weight:500;display:block;margin-top:6px}
+
+/* No updates */
+.no-updates{font-size:13px;color:#94a3b8;font-style:italic;padding:8px 0}
+
+/* Footer */
+.site-footer{background:#1a1a2e;color:rgba(255,255,255,.5);text-align:center;padding:32px 24px;font-size:13px}
+.site-footer a{color:rgba(255,255,255,.7)}
+
+@media(max-width:600px){
+  .header-top{flex-direction:column}
+  .articles-grid{grid-template-columns:1fr}
+  .region-tab{padding:10px 14px;font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div>
+        <div class="site-title">FMCG Marketing Intelligence</div>
+        <div class="site-subtitle">
+          <span class="en-content">Global · Asia · Korea — Curated weekly for FMCG marketers</span>
+          <span class="kr-content" style="display:none">글로벌 · 아시아 · 한국 — FMCG 마케터를 위한 주간 큐레이션</span>
+        </div>
+      </div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">🌐 English</button>
+        <button class="lang-btn" id="btn-kr" onclick="setLang('kr')">🇰🇷 한국어</button>
+      </div>
+    </div>
+    <div class="region-tabs">
+      <button class="region-tab active" data-region="global" onclick="setRegion('global')">🌍 Global</button>
+      <button class="region-tab" data-region="asia" onclick="setRegion('asia')">🌏 Asia</button>
+      <button class="region-tab" data-region="korea" onclick="setRegion('korea')">Korea</button>
+    </div>
+  </div>
+</header>
+
+<div class="content-area">
+  <div class="issue-label">
+    <span class="en-content">Thursday Issue — May 28, 2026</span>
+    <span class="kr-content" style="display:none">2026-05-28 주간</span>
+    
+  </div>
+
+  <div class="region-panel active" id="panel-global">
+    
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#ec4899">
+      <span class="cat-icon">🔥</span>
+      <h3><span class="en-content">Viral on Social Media</span><span class="kr-content" style="display:none">바이럴 소셜 미디어</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">The social media landscape for viral content is evolving, requiring FMCG brands to re-evaluate traditional content creation models and refine audience targeting, especially for often-misunderstood demographics like Gen X.</span><span class="kr-content" style="display:none">바이럴 콘텐츠를 위한 소셜 미디어 환경이 변화하고 있으며, FMCG 브랜드는 전통적인 콘텐츠 제작 모델을 재평가하고 X세대처럼 종종 오해받는 인구 통계를 포함한 잠재 고객 타겟팅을 개선해야 합니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#ec4899">
+      <span class="article-date">2026-05-27</span>
+      <div class="en-content">
+        <h4>Digital Media Shift: BuzzFeed, Vox Sales Signal End of Viral Content Era</h4>
+        <p>The recent sales of BuzzFeed and Vox Media signify a major shift in the digital media landscape, potentially marking the end of an era dominated by these viral content powerhouses. For FMCG marketers, this suggests a need to re-evaluate traditional digital content strategies and explore new avenues for achieving virality beyond established platforms.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>디지털 미디어 변화: 버즈피드, 복스 매각, 바이럴 콘텐츠 시대의 종말을 알리다</h4>
+        <p>버즈피드와 복스 미디어의 최근 매각은 디지털 미디어 환경의 큰 변화를 의미하며, 이들 바이럴 콘텐츠 강자들이 지배했던 시대의 종말을 알릴 수 있습니다. FMCG 마케터들은 기존의 디지털 콘텐츠 전략을 재평가하고, 기존 플랫폼을 넘어 바이럴 성공을 위한 새로운 방법을 모색해야 할 필요가 있습니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/media/vox-media-buzzfeed-end-era/" target="_blank" rel="noopener">Adweek →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#ec4899">
+      <span class="article-date">2026-05-27</span>
+      <div class="en-content">
+        <h4>Avoid Gen X-Boomer Blurring: Target Distinct Audiences for Viral Success</h4>
+        <p>Marketers are underperforming by treating Gen X and Baby Boomers as a single &quot;older consumers&quot; demographic, alienating a key purchasing group. FMCG brands must recognize Gen X's distinct preferences and social media habits to create tailored, resonant content that can effectively go viral within this valuable segment.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>X세대-베이비부머 혼동 금지: 바이럴 성공을 위한 명확한 타겟팅</h4>
+        <p>마케터들이 X세대와 베이비부머를 '고령 소비자'라는 단일 집단으로 취급하여 핵심 구매층을 소외시키고 있습니다. FMCG 브랜드는 X세대의 독특한 선호도와 소셜 미디어 습관을 인지하고, 이 가치 있는 세대 내에서 효과적으로 바이럴될 수 있는 맞춤형 콘텐츠를 제작해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/brand-marketing/marketers-keep-conflating-gen-x-with-boomers-and-its-costing-them/" target="_blank" rel="noopener">Adweek →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#10b981">
+      <span class="cat-icon">📈</span>
+      <h3><span class="en-content">Brand Activation &amp; Sales Surge</span><span class="kr-content" style="display:none">브랜드 액티베이션 &amp; 매출 급증</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Recent reports highlight the impact of both product-specific successes (e.g., Bloom's beverages) and strategic brand activations, including major event advertising and sustainability initiatives, alongside crucial insights into effective demographic targeting for FMCG growth.</span><span class="kr-content" style="display:none">최근 보고서들은 블룸의 음료와 같은 특정 제품의 성공, 주요 이벤트 광고 및 지속가능성 이니셔티브를 포함한 전략적 브랜드 활성화, 그리고 FMCG 성장을 위한 효과적인 인구 통계학적 타겟팅에 대한 중요한 통찰력을 강조합니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#10b981">
+      <span class="article-date">2026-05-27</span>
+      <div class="en-content">
+        <h4>Bloom's Growth Soars from Energy Drinks and Sodas</h4>
+        <p>Bloom is experiencing a significant growth surge driven by strong performance in its energy drink and soda categories. This highlights the effectiveness of targeted product development and brand positioning within high-demand beverage segments.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>블룸, 에너지 드링크 및 탄산음료로 성장 급증</h4>
+        <p>블룸은 에너지 드링크 및 탄산음료 부문의 강력한 성과에 힘입어 상당한 성장을 경험하고 있습니다. 이는 수요가 높은 음료 부문 내에서 목표 제품 개발 및 브랜드 포지셔닝의 효과를 보여줍니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMiqAFBVV95cUxPbXlRNmxSaWFzRUdEZVR5cTJDMTJFdUFocndHNXpjR3VFZ2t5YjgycUlOd1FQSWVzVEpfUVhYOUtiN01WTElTRnpRMjltcUFOUVFiNnI4MHpYU1pScUdZb0VIanQxTEpJLWI1RkJYVTlCQ2ZiMDJxa2dwZTU5NXl4SlhUdGc3NkVPTzBPbVFzZ2ZEc2VaY3lYRTJhbVBHbEVFYm1Td1lHdFg?oc=5" target="_blank" rel="noopener">The Business Journals →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      <span class="article-date">2026-05-26</span>
+      <div class="en-content">
+        <h4>Brands Gear Up for FIFA World Cup 2026 Ad Campaigns</h4>
+        <p>The Brand Innovators FIFA World Cup Ad Tracker 2026 indicates that CPG brands are actively planning and executing advertising campaigns around the upcoming global event. This underscores the significant role of major sporting events in large-scale brand activation and driving consumer engagement.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>2026년 FIFA 월드컵 광고 캠페인에 박차를 가하는 브랜드들</h4>
+        <p>브랜드 이노베이터스의 2026년 FIFA 월드컵 광고 추적기는 CPG 브랜드들이 다가오는 글로벌 이벤트를 중심으로 광고 캠페인을 적극적으로 계획하고 실행하고 있음을 보여줍니다. 이는 대규모 스포츠 이벤트가 브랜드 활성화 및 소비자 참여를 유도하는 데 중요한 역할을 한다는 것을 강조합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMigwFBVV95cUxQdnpFLTQzMWVTVDBLZEt4UDBreFdpaVVWTGV3S21POHJaYjdlcld4VXV4Nmtqa1prZzBKQVFITFlnQ3hLakVzR29CQjdHbHpxLV9HaE9GbFZqNGFibGhHR2ZxLTNYMUJuUGh3NjktNkkzSC1UdFNXc3g3eWliMmNzdDk4TQ?oc=5" target="_blank" rel="noopener">Brand Innovators →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      <span class="article-date">2026-05-26</span>
+      <div class="en-content">
+        <h4>CPG Brands Embrace Regenerative Agriculture for Sustainability Push</h4>
+        <p>Five CPG brands are highlighted for their commitment to regenerative agriculture, signaling a growing trend where sustainability initiatives become key drivers for brand positioning and consumer appeal. This approach can enhance brand reputation and attract environmentally conscious consumers.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>CPG 브랜드, 지속가능성을 위해 재생 농업 채택</h4>
+        <p>다섯 개의 CPG 브랜드가 재생 농업에 대한 노력으로 주목받고 있으며, 이는 지속가능성 이니셔티브가 브랜드 포지셔닝 및 소비자 매력의 핵심 동인이 되는 추세임을 나타냅니다. 이러한 접근 방식은 브랜드 평판을 높이고 환경 의식적인 소비자를 유인할 수 있습니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMioAFBVV95cUxOYTgtdy1DTElPZEhlOG1TUzdKbmRPcmxVY3ZlWHNfbmJPMnNYT3VqUDZuaGRwRmJVZVFRMEpOUHBfQzVSZ2dCUnRCQllWcGRFNTJwOUlHVjN1cVRYQ3o4VlRsMjNBWlAtaUtsUmNMUlBkQnpXSVNXeXkwc3lXTE5xZ2wyeDVfT0dwTjhzYm14SlYxaFkwMWpoNTRJd1J0TWhR?oc=5" target="_blank" rel="noopener">FoodNavigator-USA.com →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      <span class="article-date">2026-05-27</span>
+      <div class="en-content">
+        <h4>Marketers Alienate Gen X by Grouping with Boomers</h4>
+        <p>A critical insight reveals that marketers are losing out by conflating Gen X with Baby Boomers, treating them as a single &quot;older consumers&quot; audience. Tailored marketing strategies are essential to effectively engage Gen X, whose distinct preferences and purchasing power are being overlooked.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>마케터들, 베이비붐 세대와 Gen X 혼동으로 고객 이탈 초래</h4>
+        <p>마케터들이 Gen X를 베이비붐 세대와 혼동하여 &quot;나이든 소비자&quot;라는 단일 그룹으로 취급함으로써 손실을 입고 있다는 중요한 통찰이 나왔습니다. Gen X의 독특한 선호도와 구매력을 간과하지 않고 효과적으로 참여시키기 위해서는 맞춤형 마케팅 전략이 필수적입니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/brand-marketing/marketers-keep-conflating-gen-x-with-boomers-and-its-costing-them/" target="_blank" rel="noopener">Adweek →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#f59e0b">
+      <span class="cat-icon">🏆</span>
+      <h3><span class="en-content">Award-Winning Campaigns</span><span class="kr-content" style="display:none">수상 마케팅 성공 사례</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">The global marketing landscape is preparing for future effectiveness awards while highlighting critical demographic missteps that hinder campaign success, urging FMCG brands to refine their targeting strategies.</span><span class="kr-content" style="display:none">글로벌 마케팅 환경은 미래 효과성 어워드를 준비하는 동시에 캠페인 성공을 저해하는 중요한 인구통계학적 오류를 강조하며, FMCG 브랜드에 타겟팅 전략 개선을 촉구하고 있습니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#f59e0b">
+      <span class="article-date">2026-05-27</span>
+      <div class="en-content">
+        <h4>Effie Awards Europe Unveils Grand Jury for 2026 Edition</h4>
+        <p>Effie Awards Europe has announced its Grand Jury for the upcoming 2026 edition, comprising top marketing and agency leaders. This signals the start of the evaluation process for campaigns aiming for recognition in effectiveness, a key benchmark for FMCG brands. The jury selection emphasizes the industry's focus on impactful and measurable results.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>에피 어워즈 유럽, 2026년 그랜드 심사위원단 발표</h4>
+        <p>에피 어워즈 유럽이 2026년 시상식을 위한 그랜드 심사위원단을 발표했으며, 이는 최고의 마케팅 및 에이전시 리더들로 구성됩니다. 이는 효과적인 캠페인 인정을 위한 평가 과정의 시작을 알리며, FMCG 브랜드에게 중요한 벤치마크가 될 것입니다. 심사위원단 선정은 업계가 영향력 있고 측정 가능한 결과에 중점을 둔다는 것을 강조합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMib0FVX3lxTE1xeTh5Ujlaa2RyR0V2THY1cS1wc3BBZUxBUE9STmY0Y2xleENrLWxFWEhuYXlVbzZaTVl0VlpBRTVRamZLaVFqV19zUXYtbjVBeU1rOTQzdFZkeFRlWG1rMmlOYlp4bXNCQmNEQXhWcw?oc=5" target="_blank" rel="noopener">Little Black Book | LBBOnline →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#f59e0b">
+      <span class="article-date">2026-05-27</span>
+      <div class="en-content">
+        <h4>Marketers Alienate Gen X by Grouping with Boomers</h4>
+        <p>Marketers are consistently conflating Gen X consumers with Baby Boomers, leading to alienated audiences and ineffective campaigns. This oversight costs brands significant opportunities by failing to recognize the distinct values, media consumption habits, and purchasing power of Gen X. FMCG brands must tailor strategies specifically for this key demographic to achieve greater campaign effectiveness and ROI.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>마케터들, 베이비붐 세대와 묶어 Gen X 소외시켜</h4>
+        <p>마케터들이 Gen X 소비자를 베이비붐 세대와 지속적으로 혼동하여, 소비자 소외 및 비효율적인 캠페인을 초래하고 있습니다. 이러한 간과는 Gen X의 뚜렷한 가치, 미디어 소비 습관 및 구매력을 인식하지 못해 브랜드에 상당한 기회 손실을 가져옵니다. FMCG 브랜드는 캠페인 효과 및 ROI 증대를 위해 이 핵심 인구통계학적 그룹에 특화된 전략을 수립해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/brand-marketing/marketers-keep-conflating-gen-x-with-boomers-and-its-costing-them/" target="_blank" rel="noopener">Adweek →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#6366f1">
+      <span class="cat-icon">🎓</span>
+      <h3><span class="en-content">Byron Sharp &amp; Laws of Growth</span><span class="kr-content" style="display:none">바이런 샤프 &amp; 성장의 법칙</span><span class="global-badge">Global</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">The global FMCG landscape shows active brand expansion into new categories and a critical need for nuanced audience understanding to maximize reach and mental availability.</span><span class="kr-content" style="display:none">글로벌 FMCG 시장은 새로운 카테고리로의 적극적인 브랜드 확장을 보이며, 도달률과 정신적 가용성을 극대화하기 위한 미묘한 오디언스 이해가 필수적입니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#6366f1">
+      <span class="article-date">2026-05-26</span>
+      <div class="en-content">
+        <h4>Marico Enters Shampoo Market with New Parachute Advansed Protein Range</h4>
+        <p>FMCG giant Marico has launched its new Parachute Advansed Protein shampoo range, signaling a strategic entry into the competitive shampoo market. This move aligns with Byron Sharp's &quot;Laws of Growth&quot; by aiming to increase brand penetration and market presence in a new category. Leveraging an established brand name like Parachute helps build mental availability for the new offering.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>마리코, 신제품 파라슈트 어드밴스드 프로틴으로 샴푸 시장 진출</h4>
+        <p>FMCG 대기업 마리코가 신제품 파라슈트 어드밴스드 프로틴 샴푸 라인을 출시하며 경쟁이 치열한 샴푸 시장에 전략적으로 진출했습니다. 이 움직임은 새로운 카테고리에서 브랜드 침투율과 시장 점유율을 높이려는 바이런 샤프의 '성장 법칙'과 일치합니다. 파라슈트와 같은 기존 브랜드 이름을 활용하여 새로운 제품에 대한 정신적 가용성을 구축하는 데 도움이 됩니다.</p>
+      </div>
+      <div class="metric">📊 New range launch</div>
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMitgFBVV95cUxPZmVWVTF1SFlrS0hkb1pwYkxFT0JLcHB2R0l1dTlERGZKa0xHbC1ESXBQU3hmekZkeE9aLVFlYzJ6SEtLZ3FVaHZoQlVOcjVsU1E2SmpESlZaSHptQ09QcVdWMTBrUF9zY0VrSWl5cDBfX2xGYmRSUkpnRjZObmhma0VQTnphMlVuTXJvWE5ETTY5aHZBQmE3NVFlVHA1UlVsTloxVlZWMWQ2Y1Z5aEd2b3A3dGdMUdIBvgFBVV95cUxPVzBpNUFlMS00NVdKNGVQNl9jMmhZUHM2Qm5DZVlrSXBzdWljcjNkN3F5N3Q0RGYtY3hNR0hHTXFNOXZoTU5wWjJfQWE5WmdiVlhrVWVWN3VzVi1CS2RJeXljTjFQbVZSVHN3cTNZRmdua1BKRFRlUHBtYzlEQ3FHaDU4a3V3NVZqb2pjdGdxYUNPcXE5Z0NmcGRBRHNrcmQyQ3JvZVJ0bkJrQnVfOVZOZmwyZnoxM2x2cU1vTW1B?oc=5" target="_blank" rel="noopener">NDTV Profit →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#6366f1">
+      <span class="article-date">2026-05-27</span>
+      <div class="en-content">
+        <h4>Marketers Alienate Gen X by Grouping with Boomers, Losing Opportunities</h4>
+        <p>Marketers are reportedly losing significant opportunities by conflating Gen X consumers with Baby Boomers, treating them as a single &quot;older consumers&quot; demographic. This oversight can hinder effective mental availability, as distinct messaging is crucial for broad appeal without alienating specific large segments. FMCG brands must tailor communications to Gen X's unique preferences to improve penetration.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>마케터들, X세대를 베이비붐 세대와 혼동하여 기회 놓쳐</h4>
+        <p>마케터들이 X세대 소비자를 베이비붐 세대와 혼동하여 단일 '고령 소비자'층으로 취급함으로써 상당한 기회를 놓치고 있다고 합니다. 이러한 간과는 정신적 가용성을 저해할 수 있는데, 특정 대규모 세대를 소외시키지 않으면서 폭넓은 매력을 얻기 위해서는 차별화된 메시지가 중요하기 때문입니다. FMCG 브랜드는 침투율을 높이기 위해 X세대의 고유한 선호도에 맞춰 커뮤니케이션을 조정해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/brand-marketing/marketers-keep-conflating-gen-x-with-boomers-and-its-costing-them/" target="_blank" rel="noopener">Adweek →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#6366f1">
+      <span class="article-date">2026-05-27</span>
+      <div class="en-content">
+        <h4>Morning News Show &quot;Today&quot; Reports Double-Digit Growth in Key Demo</h4>
+        <p>The morning news program &quot;Today&quot; experienced double-digit growth in the Adults 25-54 demographic for the week of May 11. This data indicates shifting media consumption patterns and offers insights for FMCG brands to optimize their media spend for physical availability, ensuring advertisements reach key consumer segments through high-performing channels.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>아침 뉴스 프로그램 &quot;투데이&quot;, 주요 시청층에서 두 자릿수 성장 기록</h4>
+        <p>아침 뉴스 프로그램 &quot;투데이&quot;가 5월 11일 주에 성인 25-54세 시청층에서 두 자릿수 성장을 기록했습니다. 이 데이터는 미디어 소비 패턴의 변화를 나타내며, FMCG 브랜드가 물리적 가용성을 위해 미디어 지출을 최적화하고 고성과 채널을 통해 핵심 소비자 세그먼트에 광고가 도달하도록 하는 데 통찰력을 제공합니다.</p>
+      </div>
+      <div class="metric">📊 double-digit growth</div>
+      <a class="source-link" href="https://www.adweek.com/tvnewser/week-of-may-11-2026-morning-news-ratings/" target="_blank" rel="noopener">Adweek →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#dc2626">
+      <span class="cat-icon">🍫</span>
+      <h3><span class="en-content">Mars &amp; Kellanova Brand News</span><span class="kr-content" style="display:none">마즈 &amp; 켈레노바 브랜드 뉴스</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">The global marketing landscape is undergoing significant shifts, with the declining influence of traditional digital media platforms and a critical need for FMCG brands to refine their audience segmentation strategies, particularly concerning Gen X consumers.</span><span class="kr-content" style="display:none">글로벌 마케팅 환경은 상당한 변화를 겪고 있으며, 전통적인 디지털 미디어 플랫폼의 영향력 감소와 더불어 FMCG 브랜드들이 X세대 소비자에 대한 타겟팅 전략을 정교화할 필요성이 대두되고 있습니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#dc2626">
+      <span class="article-date">2026-05-27</span>
+      <div class="en-content">
+        <h4>Digital Media Shift: BuzzFeed, Vox Sales Signal End of an Era</h4>
+        <p>The recent sales of digital media giants BuzzFeed and Vox Media signify a major shift in the digital media landscape. This trend suggests that traditional digital advertising models and platforms may be losing effectiveness, prompting FMCG brands to reassess their digital media spending and explore alternative content strategies.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>디지털 미디어 변화: 버즈피드, 복스 매각으로 시대의 종말 예고</h4>
+        <p>최근 디지털 미디어 거물 버즈피드와 복스 미디어의 매각은 디지털 미디어 환경의 중대한 변화를 시사합니다. 이러한 추세는 기존 디지털 광고 모델과 플랫폼의 효과가 감소하고 있음을 나타내며, FMCG 브랜드들이 디지털 미디어 지출을 재평가하고 대안적인 콘텐츠 전략을 모색하도록 유도합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/media/vox-media-buzzfeed-end-era/" target="_blank" rel="noopener">Adweek →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#dc2626">
+      <span class="article-date">2026-05-27</span>
+      <div class="en-content">
+        <h4>Marketers Mistake Gen X for Boomers, Alienating Key Consumers</h4>
+        <p>A critical oversight in marketing strategies is conflating Gen X with Baby Boomers, leading to alienated consumers and missed opportunities. FMCG brands must recognize Gen X as a distinct and powerful demographic with unique purchasing habits and media consumption patterns, requiring tailored messaging and product positioning.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>마케터들, X세대를 베이비붐 세대와 혼동하여 핵심 소비자 이탈</h4>
+        <p>마케팅 전략에서 X세대를 베이비붐 세대와 혼동하는 치명적인 실수는 소비자 이탈과 기회 상실로 이어집니다. FMCG 브랜드는 X세대가 고유한 구매 습관과 미디어 소비 패턴을 가진 별개의 강력한 인구 통계 집단임을 인식하고, 맞춤형 메시지와 제품 포지셔닝이 필요합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.adweek.com/brand-marketing/marketers-keep-conflating-gen-x-with-boomers-and-its-costing-them/" target="_blank" rel="noopener">Adweek →</a>
+    </div></div>
+  </section>
+  </div>
+  <div class="region-panel" id="panel-asia">
+    
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#ec4899">
+      <span class="cat-icon">🔥</span>
+      <h3><span class="en-content">Viral on Social Media</span><span class="kr-content" style="display:none">바이럴 소셜 미디어</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Social media continues to be a powerful driver of food and dessert trends across Asia, rapidly turning niche international products like Korean butter tteok into viral sensations.</span><span class="kr-content" style="display:none">소셜 미디어는 아시아 전역에서 식품 및 디저트 트렌드를 주도하는 강력한 동인으로 작용하며, 한국 버터 떡과 같은 틈새 국제 제품을 빠르게 바이럴 센세이션으로 만들고 있습니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#ec4899">
+      <span class="article-date">2026-05-26</span>
+      <div class="en-content">
+        <h4>Korean Butter Tteok Goes Viral as Bangkok's New Dessert Obsession</h4>
+        <p>Korean butter tteok is rapidly gaining traction and becoming a viral dessert sensation in Bangkok. This trend highlights the power of social media in driving food crazes, particularly for unique international treats, and presents a strong opportunity for FMCG brands to innovate with Korean-inspired desserts in the Thai market.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>한국 버터 떡, 방콕의 새로운 디저트 열풍으로 입소문 나다</h4>
+        <p>한국 버터 떡이 방콕에서 빠르게 인기를 얻으며 바이럴 디저트 센세이션을 일으키고 있습니다. 이 트렌드는 소셜 미디어가 독특한 해외 특식을 중심으로 식품 열풍을 주도하는 힘을 보여주며, FMCG 브랜드에게 태국 시장에서 한국에서 영감을 받은 디저트로 혁신할 강력한 기회를 제공합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMiyAFBVV95cUxPbkE2UmRmUXdsdlJUNWFkbGJoclU5bGNacEhQYnEwMzZPNjUtQlNtazJySVV6NzVXZlloZWdsNDJ4c2lnMHRLc21SSmZlRnBCZjY2RGdMNmNTeVJ3QjVic1pXa0kzLUVwZkUtUk51bUtENFJKVkFlQmI0N1R0TW9KMU9TMlB3Q19mWHdHZ3NnbC03SmlLUVhVekJ6UGRqb2Z2ZkhhSmIwcGhUb0NNZVp4OUYzWEg0cWdyTko1THNLLXlZZUxpVklCMA?oc=5" target="_blank" rel="noopener">InsightTrendsWorld →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#10b981">
+      <span class="cat-icon">📈</span>
+      <h3><span class="en-content">Brand Activation &amp; Sales Surge</span><span class="kr-content" style="display:none">브랜드 액티베이션 &amp; 매출 급증</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#dc2626">
+      <span class="cat-icon">🍫</span>
+      <h3><span class="en-content">Mars &amp; Kellanova Brand News</span><span class="kr-content" style="display:none">마즈 &amp; 켈레노바 브랜드 뉴스</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  </div>
+  <div class="region-panel" id="panel-korea">
+    
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#ec4899">
+      <span class="cat-icon">🔥</span>
+      <h3><span class="en-content">Viral on Social Media</span><span class="kr-content" style="display:none">바이럴 소셜 미디어</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#10b981">
+      <span class="cat-icon">📈</span>
+      <h3><span class="en-content">Brand Activation &amp; Sales Surge</span><span class="kr-content" style="display:none">브랜드 액티베이션 &amp; 매출 급증</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">K-FMCG brands are successfully expanding globally through strategic brand activation, leveraging cultural content and strong market penetration to drive significant sales surges and integrate into local daily consumption.</span><span class="kr-content" style="display:none">K-FMCG 브랜드는 전략적인 브랜드 활성화를 통해 전 세계적으로 성공적인 확장을 이루고 있으며, 문화 콘텐츠와 강력한 시장 침투를 활용하여 상당한 매출 급증을 견인하고 현지 일상 소비에 통합되고 있습니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#10b981">
+      <span class="article-date">2026-05-25</span>
+      <div class="en-content">
+        <h4>K-Beauty &amp; K-Food Exports Soar, Penetrating Czech Daily Life</h4>
+        <p>K-beauty and K-food products have successfully penetrated the Czech Republic, becoming part of daily consumption patterns. Cosmetics exports surged tenfold in five years, while K-food exports jumped 80% in two years, indicating robust brand activation and consumer acceptance in a key European market.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>K뷰티·푸드 체코 일상 소비 진입, 수출 급증</h4>
+        <p>K뷰티와 K푸드 제품이 체코에 성공적으로 침투하여 일상 소비 패턴의 일부가 되었습니다. 화장품 수출은 5년 만에 10배 급증했고, K푸드 수출은 2년 만에 80% 증가하며 주요 유럽 시장에서 강력한 브랜드 활성화와 소비자 수용도를 보여줍니다.</p>
+      </div>
+      <div class="metric">📊 10x cosmetics exports, 80% K-food exports</div>
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMibEFVX3lxTE9wYkdGY3ppZldVNk1ERzVoWlBmbk5vdW8teFlzNlpNaUFRR3F5OS1oQkt3MWZXaGlTeEVpcEdIOC1QeUJuRVQza3FUTHNCTTZJSGlhbm52OVU4M0dhdlFDX3Q5bG1peUJ0SFNDbQ?oc=5" target="_blank" rel="noopener">워크투데이 →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      <span class="article-date">2026-05-27</span>
+      <div class="en-content">
+        <h4>K-Food Transforms into Cultural Content in Southeast Asia &amp; North America</h4>
+        <p>K-food, spanning chicken, bakery, and tuna, is evolving into cultural content in Southeast Asia and North America, leveraging the Hallyu wave. This strategic brand activation deepens consumer engagement and drives sales by integrating food into local lifestyles and entertainment beyond simple consumption.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>K-푸드, 동남아·북미서 ‘문화 콘텐츠’로 진화</h4>
+        <p>치킨, 베이커리, 참치 등을 포함한 K-푸드가 동남아와 북미에서 한류를 활용하여 문화 콘텐츠로 진화하고 있습니다. 이러한 전략적 브랜드 활성화는 단순 소비를 넘어 식품을 현지 라이프스타일 및 엔터테인먼트에 통합함으로써 소비자 참여를 심화하고 매출을 견인합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMibkFVX3lxTE90Q1lRRmhYM0ZaYzBmaWdYSF9qMHBxeGluTFFFU3czUklzaEE2aWMweWJEMHl5WGxVLWVMQ3czbmpqYnhYSkxtejRYRGpwdFZKeWZja0htNl8zNjlycHd1YXBBV0RFV2hGZnRKVV9n?oc=5" target="_blank" rel="noopener">코리아포스트 한글판 →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#f59e0b">
+      <span class="cat-icon">🏆</span>
+      <h3><span class="en-content">Award-Winning Campaigns</span><span class="kr-content" style="display:none">수상 마케팅 성공 사례</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">FMCG brands in Korea continue to leverage merchandise and loyalty programs as powerful engagement tools, but must navigate associated risks like resale markets and quality control to maintain brand reputation.</span><span class="kr-content" style="display:none">한국의 FMCG 브랜드들은 굿즈와 로열티 프로그램을 강력한 고객 참여 도구로 활용하고 있으나, 브랜드 평판 유지를 위해 리셀 시장 및 품질 관리와 같은 관련 위험을 관리해야 합니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#f59e0b">
+      <span class="article-date">2026-05-26</span>
+      <div class="en-content">
+        <h4>Starbucks Merchandise Campaigns: A Double-Edged Sword for Brand Growth</h4>
+        <p>Starbucks Korea's merchandise campaigns, particularly the Summer e-Frequency promotions, act as a powerful marketing engine, driving significant customer engagement and repeat purchases. While these collectible items generate immense buzz and contribute to sales, the strategy faces challenges from the illegal resale market, quality control issues, and potential brand image damage from consumer complaints. This highlights the complex balance between promotional success and operational risks in loyalty-driven FMCG marketing.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>스타벅스 굿즈 캠페인: 브랜드 성장의 양날의 검</h4>
+        <p>스타벅스 코리아의 굿즈 캠페인, 특히 여름 e-프리퀀시 프로모션은 강력한 마케팅 동력으로서 고객 참여와 반복 구매를 크게 이끌고 있습니다. 이러한 수집 가능한 아이템들이 엄청난 화제와 매출에 기여하는 반면, 불법 리셀 시장, 품질 관리 문제, 소비자 불만으로 인한 잠재적 브랜드 이미지 손상과 같은 문제에 직면합니다. 이는 로열티 기반 FMCG 마케팅에서 프로모션 성공과 운영상 위험 사이의 복잡한 균형을 보여줍니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMisgNBVV95cUxOUVhKa3phRnRjSGw4Q0lDalk0TDlqSHRZeE85TlM4N1phZm4wYWdEQldYSzd2akVSZk54ZXRodXNmcFFSNlBhS28tbzB3OGpBYjg5RkkycGxWdG10UURzUXo3SW9LSzFrTGloWlM4WDRES2ZkSTRDcmFRc0Fla2VZV1FNQlNpM1lqeFdsd21wYWhTczAydFM4NVk4LThSVTgtelRFWkZKNXlONnVwNTFSZUVEUHBxdHl6Y1RJNTFhXy1ZdmlzWlBIZ3pUcWF3TWVGdEhmdVZNRnBwcUxPaFg1M19fbWhPc05SNmlSZ21wYTNrSFc5dzl2UmV5R1JHY2tmWDhQN0RYLTk2MVYxTG1XdTc1VURsWjJ3aDR4OHhlcnd3OUNhZm8xQnh1TTVhQVRRZUlDbzVCT1lWM3NUQ21WWWt1UUhXcWZDNF9kUDBVMTJwRHZmNi1xOW5nNG5XNm54Tjh5bEs2N1lxYmR5QWJyMzdIemx5a2FsSXNLUzlYOERIemJ5cUh1cVVBT3NTblRFcnNaeDhiS0g3MW5ocm5DakN6SGo5VVVMN1ktNDBxVHdyUzBfY2J1Zw?oc=5" target="_blank" rel="noopener">Korea JoongAng Daily →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#dc2626">
+      <span class="cat-icon">🍫</span>
+      <h3><span class="en-content">Mars &amp; Kellanova Brand News</span><span class="kr-content" style="display:none">마즈 &amp; 켈레노바 브랜드 뉴스</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Mars Korea is strategically leveraging CSR activities in pet welfare to enhance brand reputation and connect with pet owners in the Korean market.</span><span class="kr-content" style="display:none">한국마즈는 반려 동물 복지 관련 CSR 활동을 전략적으로 활용하여 한국 시장에서 브랜드 평판을 높이고 반려인들과의 유대감을 강화하고 있습니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#dc2626">
+      <span class="article-date">2026-05-27</span>
+      <div class="en-content">
+        <h4>Mars Korea Partners for Pet Cat Blood Donation Drive</h4>
+        <p>Mars Korea (한국마즈) signed an MOU with the Korea Cat Blood Center to encourage pet cat blood donation. This initiative highlights Mars's commitment to pet welfare, bolstering its brand image and engagement with pet owners in the competitive pet food market through corporate social responsibility.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>한국마즈, 반려묘 헌혈 장려 위한 업무협약 체결</h4>
+        <p>한국마즈가 한국고양이혈액센터와 반려묘 헌혈 장려를 위한 업무협약을 체결했다. 이는 마즈의 반려 동물 복지 노력을 강조하며, 경쟁이 치열한 펫 푸드 시장에서 기업의 사회적 책임을 통해 브랜드 이미지와 반려인과의 참여를 강화하는 전략이다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMidkFVX3lxTE1ha2REUUNCQjVoaGJvNy1SbGVmTGtnVWdVMW5NMnZlRk5MSm5FcXJzeXV0eGgyMkFnbmhTTDdoNUZtQmZfYzNfanZGNldQMUlTTVVMTGd2cFRoUjQ2dm1LaHJXY1dIbm1Wb3BYX2tOWl8tbVNMaXc?oc=5" target="_blank" rel="noopener">헬스조선 →</a>
+    </div></div>
+  </section>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>
+    <span class="en-content">FMCG Marketing Intelligence Newsletter — Auto-generated weekly</span>
+    <span class="kr-content" style="display:none">FMCG 마케팅 인텔리전스 뉴스레터 — 매주 자동 생성</span>
+  </p>
+</footer>
+
+<script>
+(function(){
+  function setLang(lang){
+    document.querySelectorAll('.en-content').forEach(function(el){
+      el.style.display = lang==='en' ? '' : 'none';
+    });
+    document.querySelectorAll('.kr-content').forEach(function(el){
+      el.style.display = lang==='kr' ? '' : 'none';
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(el){
+      el.classList.remove('active');
+    });
+    var btn = document.getElementById('btn-'+lang);
+    if(btn) btn.classList.add('active');
+    try{ localStorage.setItem('fmcg_lang', lang); }catch(e){}
+  }
+
+  function setRegion(region){
+    document.querySelectorAll('.region-panel').forEach(function(el){
+      el.classList.remove('active');
+    });
+    var panel = document.getElementById('panel-'+region);
+    if(panel) panel.classList.add('active');
+    document.querySelectorAll('.region-tab').forEach(function(el){
+      el.classList.remove('active');
+    });
+    var tab = document.querySelector('.region-tab[data-region="'+region+'"]');
+    if(tab) tab.classList.add('active');
+    try{ localStorage.setItem('fmcg_region', region); }catch(e){}
+  }
+
+  window.setLang = setLang;
+  window.setRegion = setRegion;
+
+  var lang = 'en';
+  var region = 'global';
+  try{
+    lang = localStorage.getItem('fmcg_lang') || 'en';
+    region = localStorage.getItem('fmcg_region') || 'global';
+  }catch(e){}
+  setLang(lang);
+  setRegion(region);
+})();
+</script>
+</body>
+</html>
