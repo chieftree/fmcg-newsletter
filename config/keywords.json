@@ -15,7 +15,8 @@
       {"url": "https://www.businessinsider.com/rss",              "name": "Business Insider"},
       {"url": "https://feeds.hbr.org/harvardbusiness",            "name": "Harvard Business Review"},
       {"url": "https://econsultancy.com/blog/rss",                "name": "Econsultancy"},
-      {"url": "https://www.warc.com/newsandopinion/rss",          "name": "WARC"}
+      {"url": "https://www.warc.com/newsandopinion/rss",          "name": "WARC"},
+      {"url": "https://marketingscience.info/feed/",              "name": "Marketing Science (Ehrenberg-Bass)"}
     ],
     "asia": [
       {"url": "https://www.marketing-interactive.com/feed/",                                          "name": "Marketing Interactive"},
@@ -54,10 +55,13 @@
       "asia":   ["Asia brand pop-up event consumer activation"],
       "korea":  ["팝업 스토어 식품 브랜드 소비자 체험"]
     },
+    "byron_sharp": {
+      "global": ["Byron Sharp How Brands Grow marketing lecture", "Ehrenberg-Bass Institute marketing science"]
+    },
     "mars_snacking": {
-      "global": ["Snickers M&Ms Pringles Skittles marketing campaign", "Kellanova brand Kellogg commercial"],
-      "asia":   ["Mars chocolate Pringles Asia brand campaign"],
-      "korea":  ["스니커즈 프링글스 켈로그 마즈 한국 광고"]
+      "global": ["Snickers M&Ms Pringles Skittles marketing campaign", "Kellanova brand Kellogg commercial", "Dove chocolate Galaxy marketing campaign"],
+      "asia":   ["Mars chocolate Pringles Asia brand campaign", "Dove chocolate Asia brand marketing"],
+      "korea":  ["스니커즈 프링글스 켈로그 마즈 한국 광고", "다브 초콜릿 한국 마케팅"]
     }
   },
 
@@ -154,13 +158,16 @@
       "global_only": true,
       "queries": {
         "global": [
-          "Byron Sharp marketing research",
-          "Laws of Growth brand marketing",
+          "Byron Sharp marketing research How Brands Grow",
+          "Laws of Growth brand marketing science",
           "distinctive brand assets marketing strategy",
           "mental availability physical availability FMCG",
-          "Ehrenberg-Bass Institute research",
+          "Ehrenberg-Bass Institute research marketing science",
           "brand salience penetration marketing effectiveness",
-          "double jeopardy law brand loyalty"
+          "double jeopardy law brand loyalty research",
+          "category entry points brand awareness study",
+          "reach vs frequency advertising effectiveness FMCG",
+          "brand assets recognition packaging color character"
         ]
       }
     },
@@ -179,30 +186,51 @@
           "Twix brand marketing news",
           "Skittles brand marketing campaign",
           "Starburst brand news marketing",
-          "Eclipse gum Doublemint Airwaves brand news",
+          "Dove chocolate Galaxy chocolate brand marketing campaign",
+          "Maltesers brand marketing news",
+          "Bounty chocolate brand marketing",
+          "Eclipse gum Doublemint Airwaves Extra gum Orbit brand news",
           "Pringles brand marketing Kellanova",
-          "Kind bar BeKind brand news marketing",
-          "Kellogg cereal brand Special K Corn Flakes news",
+          "Kind bar BeKind RXBar brand news marketing",
+          "Kellogg cereal brand Special K Corn Flakes Pop-Tarts news",
+          "Cheez-It brand news expansion",
+          "Whiskas cat food brand marketing news",
+          "Pedigree dog food brand news campaign",
+          "Temptations cat treats brand marketing",
           "Cesar dog food Sheba cat food brand news",
           "Mars Snacking brand news",
-          "Kellanova brand marketing news"
+          "Kellanova brand marketing news",
+          "Mars Kellanova brand controversy recall consumer issue",
+          "Mars brand PR crisis consumer complaint",
+          "Mars Kellanova sustainability ESG news",
+          "Mars brand acquisition partnership news"
         ],
         "asia": [
           "Snickers M&Ms Pringles Asia marketing campaign",
           "Mars chocolate Kellanova Asia brand news",
+          "Dove chocolate Asia brand campaign consumer",
+          "Maltesers Asia marketing brand news",
           "Kellogg cereal brand Asia Pacific",
           "Skittles Twix Asia brand campaign",
-          "Cesar Sheba pet food Asia marketing"
+          "Whiskas cat food Asia brand marketing",
+          "Pedigree dog food Asia brand news",
+          "Cesar Sheba pet food Asia marketing",
+          "Mars brand consumer issue Asia recall PR",
+          "Kellanova brand expansion Asia Pacific new launch"
         ],
         "korea": [
           "스니커즈 엠앤엠즈 트윅스 한국 마케팅",
           "프링글스 한국 브랜드 뉴스",
           "스키틀즈 스타버스트 한국",
+          "다브 초콜릿 한국 마케팅 캠페인",
+          "몰티저스 한국 브랜드",
           "이클립스 에어웨이브스 더블민트 한국",
-          "켈로그 시리얼 한국 브랜드",
+          "켈로그 시리얼 한국 브랜드 팝타르츠",
           "비카인드 카인드바 한국",
-          "시저 쉬바 펫푸드 한국",
-          "마즈 켈레노바 한국 뉴스"
+          "위스카스 펫푸드 한국",
+          "페디그리 시저 쉬바 한국 마케팅",
+          "마즈 켈레노바 한국 뉴스 소비자",
+          "마즈 브랜드 한국 리콜 이슈 소비자 반응"
         ]
       }
     }

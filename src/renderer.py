@@ -44,8 +44,17 @@ def _article_card(item: dict, color: str) -> str:
 
     date_html = f'<span class="article-date">{_esc(item.get("date", ""))}</span>' if item.get("date") else ""
 
+    subsection_html = ""
+    if item.get("subsection"):
+        subsection_html = (
+            f'<span class="subsection-badge en-content">{_esc(item["subsection"])}</span>'
+            f'<span class="subsection-badge kr-content" style="display:none">'
+            f'{_esc(item.get("subsection_kr", item["subsection"]))}</span>'
+        )
+
     return f"""
     <div class="article-card" style="border-left-color:{color}">
+      {subsection_html}
       {date_html}
       <div class="en-content">
         <h4>{_esc(item.get("headline_en", ""))}</h4>
@@ -238,6 +247,9 @@ a:hover{{text-decoration:underline}}
 .article-card p{{font-size:13px;color:#475569;margin-bottom:10px;line-height:1.6}}
 .metric{{font-size:12px;font-weight:600;color:#0f766e;background:#f0fdf4;display:inline-block;padding:3px 8px;border-radius:6px;margin-bottom:8px}}
 .source-link{{font-size:12px;color:#4f46e5;font-weight:500;display:block;margin-top:6px}}
+
+/* Subsection badge (Byron Sharp principle labels) */
+.subsection-badge{{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;background:#6366f1;color:#fff;display:inline-block;padding:2px 9px;border-radius:10px;margin-bottom:8px}}
 
 /* No updates */
 .no-updates{{font-size:13px;color:#94a3b8;font-style:italic;padding:8px 0}}
