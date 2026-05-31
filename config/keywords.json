@@ -18,11 +18,15 @@
       {"url": "https://www.warc.com/newsandopinion/rss",          "name": "WARC"}
     ],
     "asia": [
-      {"url": "https://www.marketing-interactive.com/feed/",      "name": "Marketing Interactive"},
-      {"url": "https://www.campaignasia.com/rss",                 "name": "Campaign Asia"},
-      {"url": "https://www.marketingmag.com.au/feed/",            "name": "Marketing Mag AU"},
-      {"url": "https://mumbrella.com.au/feed",                    "name": "Mumbrella"},
-      {"url": "https://www.marketing-beat.co.uk/feed/",           "name": "Marketing Beat"}
+      {"url": "https://www.marketing-interactive.com/feed/",                                          "name": "Marketing Interactive"},
+      {"url": "https://www.campaignasia.com/rss",                                                     "name": "Campaign Asia"},
+      {"url": "https://www.marketingmag.com.au/feed/",                                                "name": "Marketing Mag AU"},
+      {"url": "https://mumbrella.com.au/feed",                                                        "name": "Mumbrella"},
+      {"url": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=10416",  "name": "CNA Business"},
+      {"url": "https://www.businesstimes.com.sg/rss/all-news",                                        "name": "Business Times SG"},
+      {"url": "https://www.scmp.com/rss/91/feed",                                                     "name": "South China Morning Post"},
+      {"url": "https://asia.nikkei.com/rss/feed/nar",                                                 "name": "Nikkei Asia"},
+      {"url": "https://www.theedgemarkets.com/rss.xml",                                               "name": "The Edge Malaysia"}
     ],
     "korea": [
       {"url": "https://koreajoongangdaily.joins.com/rss/business", "name": "JoongAng Daily"},
