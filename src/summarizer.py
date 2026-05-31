@@ -145,6 +145,11 @@ def summarize_all(
                         wait = 15 * (2 ** attempt)
                         print(f"[WARN] Gemini {cat_key}/{region} attempt {attempt+1} — retrying in {wait}s: {msg[:80]}")
                         time.sleep(wait)
+                    elif "Expecting" in msg or "JSONDecodeError" in msg or "json" in msg.lower():
+                        # Malformed JSON from model — retry once
+                        wait = 10
+                        print(f"[WARN] Gemini JSON parse error {cat_key}/{region} attempt {attempt+1} — retrying in {wait}s")
+                        time.sleep(wait)
                     else:
                         print(f"[WARN] Gemini error for {cat_key}/{region}: {msg[:120]}")
                         break

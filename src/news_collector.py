@@ -342,7 +342,7 @@ def _fetch_gnews(queries: list, api_key: str, lookback_days: int,
                 })
         except Exception as exc:
             print(f"[WARN] GNews — query='{query}': {exc}")
-        time.sleep(0.3)
+        time.sleep(1.5)  # GNews rate limit
 
     return articles
 
@@ -356,7 +356,7 @@ def _fetch_currents(queries: list, api_key: str, lookback_days: int,
 
     articles   = []
     lang_map   = {"global": "en", "asia": "en", "korea": "ko"}
-    start_date = (datetime.now() - timedelta(days=lookback_days)).strftime("%Y-%m-%d %H:%M:%S")
+    start_date = (datetime.now() - timedelta(days=lookback_days)).strftime("%Y-%m-%d %H:%M:%S +0000")
 
     for query in queries[:3]:
         try:
@@ -518,7 +518,7 @@ def _fetch_nyt(queries: list, api_key: str, lookback_days: int,
                 })
         except Exception as exc:
             print(f"[WARN] NYT API — query='{query}': {exc}")
-        time.sleep(0.5)  # NYT rate limit: 10 req/min
+        time.sleep(7)  # NYT rate limit: 10 req/min → 6s minimum between calls
 
     return articles
 
