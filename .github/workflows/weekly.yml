@@ -38,6 +38,7 @@ jobs:
           NEWSAPI_KEY:         ${{ secrets.NEWSAPI_KEY }}
           GUARDIAN_API_KEY:    ${{ secrets.GUARDIAN_API_KEY }}
           GNEWS_API_KEY:       ${{ secrets.GNEWS_API_KEY }}
+          CURRENTS_API_KEY:    ${{ secrets.CURRENTS_API_KEY }}
           GITHUB_REPOSITORY:   ${{ github.repository }}
         run: python main.py
 

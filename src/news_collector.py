@@ -347,6 +347,64 @@ def _fetch_gnews(queries: list, api_key: str, lookback_days: int,
     return articles
 
 
+# ── Currents API ──────────────────────────────────────────────────────────────
+
+def _fetch_currents(queries: list, api_key: str, lookback_days: int,
+                    seen_hashes: set, seen_titles: set, region: str = "global") -> list:
+    if not api_key:
+        return []
+
+    articles   = []
+    lang_map   = {"global": "en", "asia": "en", "korea": "ko"}
+    start_date = (datetime.now() - timedelta(days=lookback_days)).strftime("%Y-%m-%d %H:%M:%S")
+
+    for query in queries[:3]:
+        try:
+            resp = requests.get(
+                "https://api.currentsapi.services/v1/search",
+                params={
+                    "apiKey":     api_key,
+                    "keywords":   query,
+                    "language":   lang_map.get(region, "en"),
+                    "start_date": start_date,
+                    "page_size":  10,
+                },
+                timeout=10,
+            )
+            data = resp.json()
+            if data.get("status") != "ok":
+                print(f"[WARN] Currents API: {data.get('message', '')}")
+                break
+
+            for item in data.get("news", []):
+                url   = item.get("url", "")
+                title = (item.get("title") or "").strip()
+                if not url or not title:
+                    continue
+                description = item.get("description") or ""
+                pub_date    = (item.get("published") or "")[:10]
+                source_name = item.get("author") or "Currents"
+
+                title_key = re.sub(r"\W+", "", title.lower())[:60]
+                h = _url_hash(url)
+                if h in seen_hashes or title_key in seen_titles:
+                    continue
+
+                seen_hashes.add(h)
+                seen_titles.add(title_key)
+                articles.append({
+                    "title": title, "url": url,
+                    "description": description[:300], "hash": h,
+                    "date": pub_date, "source_type": "currents",
+                    "source_name": source_name,
+                })
+        except Exception as exc:
+            print(f"[WARN] Currents API — query='{query}': {exc}")
+        time.sleep(0.3)
+
+    return articles
+
+
 # ── Reddit ─────────────────────────────────────────────────────────────────────
 
 def _fetch_reddit(subreddits: list, lookback_days: int,
@@ -519,6 +577,7 @@ def collect_all(keywords_config: dict, lookback_days: int, sent_urls: list) -> d
     newsapi_key     = os.environ.get("NEWSAPI_KEY", "")
     guardian_key    = os.environ.get("GUARDIAN_API_KEY", "")
     gnews_key       = os.environ.get("GNEWS_API_KEY", "")
+    currents_key    = os.environ.get("CURRENTS_API_KEY", "")
 
     rss_sources_by_region  = keywords_config.get("rss_sources", {})
     youtube_queries_by_cat = keywords_config.get("youtube_queries", {})
@@ -587,12 +646,17 @@ def collect_all(keywords_config: dict, lookback_days: int, sent_urls: list) -> d
                 region_queries, gnews_key, lookback_days, seen_h, seen_t, region
             )
 
-            # 6. Reddit (global only)
+            # 6. Currents API
+            currents = _fetch_currents(
+                region_queries, currents_key, lookback_days, seen_h, seen_t, region
+            )
+
+            # 7. Reddit (global only)
             reddit = []
             if region == "global" and reddit_subs:
                 reddit = _fetch_reddit(reddit_subs, lookback_days, seen_h, seen_t)
 
-            # 7. YouTube
+            # 8. YouTube
             yt_thresh = YOUTUBE_THRESHOLDS.get(cat_key, {"min_views": 50_000, "min_subs": 50_000})
             yt = _search_youtube(
                 yt_queries.get(region, []),
@@ -602,7 +666,7 @@ def collect_all(keywords_config: dict, lookback_days: int, sent_urls: list) -> d
             )
 
             # Validate URLs (Google News & NewsAPI are most unreliable)
-            merged_raw = gnews_articles + premium + newsapi + guardian + gnews_api + reddit + yt
+            merged_raw = gnews_articles + premium + newsapi + guardian + gnews_api + currents + reddit + yt
             merged = _filter_valid_urls(merged_raw)[:25]
 
             # Register used URLs so other categories don't repeat them
