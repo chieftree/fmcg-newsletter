@@ -537,7 +537,7 @@ def _fetch_kakao_news(queries: list, api_key: str, lookback_days: int,
     for query in queries[:5]:
         try:
             resp = requests.get(
-                "https://dapi.kakao.com/v2/search/news",
+                "https://dapi.kakao.com/v2/search/web",
                 headers=headers,
                 params={"query": query, "sort": "recency", "size": 20},
                 timeout=10,
@@ -549,7 +549,7 @@ def _fetch_kakao_news(queries: list, api_key: str, lookback_days: int,
             for item in resp.json().get("documents", []):
                 title = _clean_html(item.get("title", "")).strip()
                 url   = item.get("url", "")
-                desc  = _clean_html(item.get("contents", ""))
+                desc  = _clean_html(item.get("contents", "") or item.get("description", ""))
                 # datetime format: "2026-05-19T10:00:00.000+09:00"
                 try:
                     pub_dt   = datetime.fromisoformat(
