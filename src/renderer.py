@@ -118,14 +118,68 @@ def _region_panel(summarized: dict, region: str) -> str:
     return sections
 
 
+def _shopping_insight_block(data: dict | None) -> str:
+    if not data or not data.get("items"):
+        return ""
+
+    max_val  = data.get("max_val") or 100
+    items    = data["items"]
+    period   = data.get("period", "")
+    prev_period = data.get("prev_period", "prev period")
+
+    rows = ""
+    for item in items:
+        bar_pct   = (item["current_avg"] / max_val) * 100
+        direction = item["direction"]
+        arrow     = "▲" if direction == "up" else ("▼" if direction == "down" else "→")
+        color     = "#10b981" if direction == "up" else ("#ef4444" if direction == "down" else "#6366f1")
+        sign      = "+" if item["change_pct"] > 0 else ""
+        change_txt = f"{arrow} {sign}{item['change_pct']}%"
+        rows += f"""
+      <div class="trend-row">
+        <div class="trend-label">{_esc(item['name'])}</div>
+        <div class="trend-bar-wrap">
+          <div class="trend-bar" style="width:{bar_pct:.0f}%;background:{color};opacity:.85"></div>
+        </div>
+        <div class="trend-score">{item['current_avg']}</div>
+        <div class="trend-change" style="color:{color}">{_esc(change_txt)}</div>
+      </div>"""
+
+    return f"""
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#e11d48;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="cat-icon">📊</span>
+        <h3>
+          <span class="en-content">Korea Search Trends — Naver DataLab</span>
+          <span class="kr-content" style="display:none">한국 검색 트렌드 — 네이버 데이터랩</span>
+        </h3>
+      </div>
+      <span style="font-size:11px;color:#94a3b8;white-space:nowrap">{_esc(period)}</span>
+    </div>
+    <div class="trend-grid">{rows}
+    </div>
+    <div class="trend-footnote">
+      <span class="en-content">Naver relative search volume index (0–100). ▲▼ vs. {_esc(prev_period)}.</span>
+      <span class="kr-content" style="display:none">네이버 상대 검색량 지수 (0–100). ▲▼ {_esc(prev_period)} 대비.</span>
+    </div>
+  </section>"""
+
+
 # ─── web renderer ─────────────────────────────────────────────────────────────
 
-def render_web(summarized: dict, issue_date: str, issue_label: str, is_first_issue: bool) -> str:
+def render_web(
+    summarized: dict,
+    issue_date: str,
+    issue_label: str,
+    is_first_issue: bool,
+    shopping_insight: dict | None = None,
+) -> str:
     issue_label_kr = f"{'창간호: 2025~2026 연간 리뷰' if is_first_issue else issue_date + ' 주간'}"
 
     global_panel = _region_panel(summarized, "global")
     asia_panel   = _region_panel(summarized, "asia")
-    korea_panel  = _region_panel(summarized, "korea")
+    korea_panel  = _region_panel(summarized, "korea") + _shopping_insight_block(shopping_insight)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -192,10 +246,21 @@ a:hover{{text-decoration:underline}}
 .site-footer{{background:#1a1a2e;color:rgba(255,255,255,.5);text-align:center;padding:32px 24px;font-size:13px}}
 .site-footer a{{color:rgba(255,255,255,.7)}}
 
+/* Trend block */
+.trend-grid{{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}}
+.trend-row{{display:grid;grid-template-columns:130px 1fr 48px 76px;align-items:center;gap:10px}}
+.trend-label{{font-size:13px;color:#1e293b;font-weight:500}}
+.trend-bar-wrap{{background:#f1f5f9;border-radius:4px;height:8px;overflow:hidden}}
+.trend-bar{{height:100%;border-radius:4px}}
+.trend-score{{font-size:12px;color:#64748b;text-align:right;font-weight:500}}
+.trend-change{{font-size:12px;font-weight:700;text-align:right}}
+.trend-footnote{{font-size:11px;color:#94a3b8;margin-top:10px;padding-top:8px;border-top:1px solid #f1f5f9}}
+
 @media(max-width:600px){{
   .header-top{{flex-direction:column}}
   .articles-grid{{grid-template-columns:1fr}}
   .region-tab{{padding:10px 14px;font-size:13px}}
+  .trend-row{{grid-template-columns:90px 1fr 36px 60px;gap:6px}}
 }}
 </style>
 </head>
@@ -299,6 +364,29 @@ a:hover{{text-decoration:underline}}
 
 # ─── email renderer ────────────────────────────────────────────────────────────
 
+def _email_trend_section(data: dict | None) -> str:
+    if not data or not data.get("items"):
+        return ""
+    rows = ""
+    for item in data["items"]:
+        arrow = "▲" if item["direction"] == "up" else ("▼" if item["direction"] == "down" else "→")
+        color = "#10b981" if item["direction"] == "up" else ("#ef4444" if item["direction"] == "down" else "#6366f1")
+        sign  = "+" if item["change_pct"] > 0 else ""
+        rows += (
+            f'<tr><td style="padding:4px 0 4px 8px;font-size:13px;color:#475569;">'
+            f'<span style="font-weight:600;color:#1e293b;">{_esc(item["name"])}</span>'
+            f' &nbsp;<span style="color:{color};font-weight:700">{arrow} {sign}{item["change_pct"]}%</span>'
+            f'</td></tr>'
+        )
+    period = _esc(data.get("period", ""))
+    return f"""
+      <p style="font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin:20px 0 8px;">
+        Korea Search Trends — Naver DataLab <span style="font-weight:400;text-transform:none">({period})</span>
+      </p>
+      <table width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #e2e8f0;">
+        {rows}
+      </table>"""
+
 def _email_category_preview(cat: dict) -> str:
     """One-line teaser per category for the email body."""
     lines = []
@@ -319,7 +407,13 @@ def _email_category_preview(cat: dict) -> str:
     return "\n".join(lines)
 
 
-def render_email(summarized: dict, issue_date: str, issue_label: str, web_url: str) -> str:
+def render_email(
+    summarized: dict,
+    issue_date: str,
+    issue_label: str,
+    web_url: str,
+    shopping_insight: dict | None = None,
+) -> str:
     category_rows = ""
     for cat_key in CATEGORY_ORDER:
         cat = summarized.get(cat_key)
@@ -394,6 +488,7 @@ def render_email(summarized: dict, issue_date: str, issue_label: str, web_url: s
       <table width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #e2e8f0;">
         {category_rows}
       </table>
+      {_email_trend_section(shopping_insight)}
     </td>
   </tr>
 

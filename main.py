@@ -8,6 +8,7 @@ from pathlib import Path
 from src.email_sender import send_newsletter
 from src.news_collector import collect_all
 from src.renderer import render_email, render_web
+from src.shopping_insight import fetch_search_trends
 from src.summarizer import summarize_all
 
 CONFIG_DIR = Path("config")
@@ -65,6 +66,18 @@ def main() -> None:
         api_key=os.environ["GEMINI_API_KEY"],
     )
 
+    # ── 2b. Korea shopping / search trends ────────────────────────────────────
+    print("[INFO] Fetching Naver search trends…")
+    shopping_insight = fetch_search_trends(
+        client_id=os.environ.get("NAVER_CLIENT_ID", ""),
+        client_secret=os.environ.get("NAVER_CLIENT_SECRET", ""),
+        lookback_days=lookback_days,
+    )
+    if shopping_insight:
+        print(f"[INFO] Naver trends: {len(shopping_insight['items'])} groups, period={shopping_insight['period']}")
+    else:
+        print("[WARN] Naver trends unavailable — skipping block")
+
     # ── 3. Determine GitHub Pages URL ─────────────────────────────────────────
     repo = os.environ.get("GITHUB_REPOSITORY", "user/fmcg-newsletter")
     gh_user = repo.split("/")[0]
@@ -73,8 +86,8 @@ def main() -> None:
 
     # ── 4. Render HTML ─────────────────────────────────────────────────────────
     print("[INFO] Rendering HTML…")
-    web_html   = render_web(summarized, issue_date, issue_label, is_first_issue)
-    email_html = render_email(summarized, issue_date, issue_label, web_url)
+    web_html   = render_web(summarized, issue_date, issue_label, is_first_issue, shopping_insight=shopping_insight)
+    email_html = render_email(summarized, issue_date, issue_label, web_url, shopping_insight=shopping_insight)
 
     # ── 5. Write to docs/ ──────────────────────────────────────────────────────
     out_dir = DOCS_DIR / "newsletters" / issue_date
