@@ -39,6 +39,8 @@ jobs:
           GUARDIAN_API_KEY:    ${{ secrets.GUARDIAN_API_KEY }}
           GNEWS_API_KEY:       ${{ secrets.GNEWS_API_KEY }}
           CURRENTS_API_KEY:    ${{ secrets.CURRENTS_API_KEY }}
+          NAVER_CLIENT_ID:     ${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
           GITHUB_REPOSITORY:   ${{ github.repository }}
         run: python main.py
 

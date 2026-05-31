@@ -405,6 +405,67 @@ def _fetch_currents(queries: list, api_key: str, lookback_days: int,
     return articles
 
 
+# ── Naver News Search API ─────────────────────────────────────────────────────
+
+def _fetch_naver_news(queries: list, client_id: str, client_secret: str,
+                      lookback_days: int, seen_hashes: set, seen_titles: set) -> list:
+    if not client_id or not client_secret:
+        return []
+
+    articles = []
+    cutoff   = datetime.utcnow() - timedelta(days=lookback_days)
+    headers  = {
+        "X-Naver-Client-Id":     client_id,
+        "X-Naver-Client-Secret": client_secret,
+    }
+
+    for query in queries[:5]:
+        try:
+            resp = requests.get(
+                "https://openapi.naver.com/v1/search/news.json",
+                headers=headers,
+                params={"query": query, "display": 20, "sort": "date"},
+                timeout=10,
+            )
+            if resp.status_code != 200:
+                print(f"[WARN] Naver News API {resp.status_code}: {resp.text[:80]}")
+                break
+
+            for item in resp.json().get("items", []):
+                title = _clean_html(item.get("title", "")).strip()
+                url   = item.get("originallink") or item.get("link", "")
+                desc  = _clean_html(item.get("description", ""))
+                # pubDate format: "Mon, 19 May 2026 10:00:00 +0900"
+                try:
+                    pub_dt   = datetime.strptime(
+                        item.get("pubDate", ""), "%a, %d %b %Y %H:%M:%S %z"
+                    ).replace(tzinfo=None)
+                    if pub_dt < cutoff:
+                        continue
+                    date_str = pub_dt.strftime("%Y-%m-%d")
+                except Exception:
+                    date_str = "Unknown"
+
+                title_key = re.sub(r"\W+", "", title.lower())[:60]
+                h = _url_hash(url)
+                if h in seen_hashes or title_key in seen_titles:
+                    continue
+
+                seen_hashes.add(h)
+                seen_titles.add(title_key)
+                articles.append({
+                    "title": title, "url": url,
+                    "description": desc[:300], "hash": h,
+                    "date": date_str, "source_type": "naver",
+                    "source_name": "Naver News",
+                })
+        except Exception as exc:
+            print(f"[WARN] Naver News — query='{query}': {exc}")
+        time.sleep(0.3)
+
+    return articles
+
+
 # ── Reddit ─────────────────────────────────────────────────────────────────────
 
 def _fetch_reddit(subreddits: list, lookback_days: int,
@@ -578,6 +639,8 @@ def collect_all(keywords_config: dict, lookback_days: int, sent_urls: list) -> d
     guardian_key    = os.environ.get("GUARDIAN_API_KEY", "")
     gnews_key       = os.environ.get("GNEWS_API_KEY", "")
     currents_key    = os.environ.get("CURRENTS_API_KEY", "")
+    naver_client_id = os.environ.get("NAVER_CLIENT_ID", "")
+    naver_client_secret = os.environ.get("NAVER_CLIENT_SECRET", "")
 
     rss_sources_by_region  = keywords_config.get("rss_sources", {})
     youtube_queries_by_cat = keywords_config.get("youtube_queries", {})
@@ -651,12 +714,20 @@ def collect_all(keywords_config: dict, lookback_days: int, sent_urls: list) -> d
                 region_queries, currents_key, lookback_days, seen_h, seen_t, region
             )
 
-            # 7. Reddit (global only)
+            # 7. Naver News (Korea only)
+            naver = []
+            if region == "korea":
+                naver = _fetch_naver_news(
+                    region_queries, naver_client_id, naver_client_secret,
+                    lookback_days, seen_h, seen_t,
+                )
+
+            # 8. Reddit (global only)
             reddit = []
             if region == "global" and reddit_subs:
                 reddit = _fetch_reddit(reddit_subs, lookback_days, seen_h, seen_t)
 
-            # 8. YouTube
+            # 9. YouTube
             yt_thresh = YOUTUBE_THRESHOLDS.get(cat_key, {"min_views": 50_000, "min_subs": 50_000})
             yt = _search_youtube(
                 yt_queries.get(region, []),
@@ -666,7 +737,7 @@ def collect_all(keywords_config: dict, lookback_days: int, sent_urls: list) -> d
             )
 
             # Validate URLs (Google News & NewsAPI are most unreliable)
-            merged_raw = gnews_articles + premium + newsapi + guardian + gnews_api + currents + reddit + yt
+            merged_raw = gnews_articles + premium + newsapi + guardian + gnews_api + currents + naver + reddit + yt
             merged = _filter_valid_urls(merged_raw)[:25]
 
             # Register used URLs so other categories don't repeat them
