@@ -42,6 +42,7 @@ jobs:
           NAVER_CLIENT_ID:     ${{ secrets.NAVER_CLIENT_ID }}
           NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
           KAKAO_REST_API_KEY:  ${{ secrets.KAKAO_REST_API_KEY }}
+          NYT_API_KEY:         ${{ secrets.NYT_API_KEY }}
           GITHUB_REPOSITORY:   ${{ github.repository }}
         run: python main.py
 

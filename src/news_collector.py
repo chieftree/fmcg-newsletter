@@ -466,6 +466,63 @@ def _fetch_naver_news(queries: list, client_id: str, client_secret: str,
     return articles
 
 
+# ── New York Times Article Search API ─────────────────────────────────────────
+
+def _fetch_nyt(queries: list, api_key: str, lookback_days: int,
+               seen_hashes: set, seen_titles: set) -> list:
+    if not api_key:
+        return []
+
+    articles   = []
+    begin_date = (datetime.now() - timedelta(days=lookback_days)).strftime("%Y%m%d")
+
+    for query in queries[:3]:
+        try:
+            resp = requests.get(
+                "https://api.nytimes.com/svc/search/v2/articlesearch.json",
+                params={
+                    "q":          query,
+                    "begin_date": begin_date,
+                    "sort":       "relevance",
+                    "page":       0,
+                    "api-key":    api_key,
+                },
+                timeout=10,
+            )
+            data = resp.json()
+            if data.get("status") != "OK":
+                print(f"[WARN] NYT API: {data.get('fault', {}).get('faultstring', '')}")
+                break
+
+            for item in data.get("response", {}).get("docs", []):
+                url   = item.get("web_url", "")
+                title = (item.get("headline", {}).get("main") or "").strip()
+                if not url or not title:
+                    continue
+                desc     = item.get("abstract") or item.get("snippet") or ""
+                pub_date = (item.get("pub_date") or "")[:10]
+                source   = item.get("source", "The New York Times")
+
+                title_key = re.sub(r"\W+", "", title.lower())[:60]
+                h = _url_hash(url)
+                if h in seen_hashes or title_key in seen_titles:
+                    continue
+
+                seen_hashes.add(h)
+                seen_titles.add(title_key)
+                articles.append({
+                    "title": title, "url": url,
+                    "description": desc[:300], "hash": h,
+                    "date": pub_date, "source_type": "nyt",
+                    "source_name": source,
+                })
+        except Exception as exc:
+            print(f"[WARN] NYT API — query='{query}': {exc}")
+        time.sleep(0.5)  # NYT rate limit: 10 req/min
+
+    return articles
+
+
 # ── Kakao (Daum) News Search API ──────────────────────────────────────────────
 
 def _fetch_kakao_news(queries: list, api_key: str, lookback_days: int,
@@ -700,6 +757,7 @@ def collect_all(keywords_config: dict, lookback_days: int, sent_urls: list) -> d
     naver_client_id     = os.environ.get("NAVER_CLIENT_ID", "")
     naver_client_secret = os.environ.get("NAVER_CLIENT_SECRET", "")
     kakao_api_key       = os.environ.get("KAKAO_REST_API_KEY", "")
+    nyt_api_key         = os.environ.get("NYT_API_KEY", "")
 
     rss_sources_by_region  = keywords_config.get("rss_sources", {})
     youtube_queries_by_cat = keywords_config.get("youtube_queries", {})
@@ -756,7 +814,12 @@ def collect_all(keywords_config: dict, lookback_days: int, sent_urls: list) -> d
                 region_queries, newsapi_key, lookback_days, seen_h, seen_t
             )
 
-            # 4. Guardian (EN only — skip Korea)
+            # 4. NYT Article Search (EN only — skip Korea)
+            nyt = []
+            if region != "korea":
+                nyt = _fetch_nyt(region_queries, nyt_api_key, lookback_days, seen_h, seen_t)
+
+            # 5. Guardian (EN only — skip Korea)
             guardian = []
             if region != "korea":
                 guardian = _fetch_guardian(
@@ -803,7 +866,7 @@ def collect_all(keywords_config: dict, lookback_days: int, sent_urls: list) -> d
             )
 
             # Validate URLs (Google News & NewsAPI are most unreliable)
-            merged_raw = gnews_articles + premium + newsapi + guardian + gnews_api + currents + naver + kakao + reddit + yt
+            merged_raw = gnews_articles + premium + newsapi + nyt + guardian + gnews_api + currents + naver + kakao + reddit + yt
             merged = _filter_valid_urls(merged_raw)[:25]
 
             # Register used URLs so other categories don't repeat them
