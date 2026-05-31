@@ -2,8 +2,7 @@ name: FMCG Newsletter
 
 on:
   schedule:
-    - cron: "0 21 * * 0"   # Monday   06:00 KST (Sunday   21:00 UTC)
-    - cron: "0 21 * * 3"   # Thursday 06:00 KST (Wednesday 21:00 UTC)
+    - cron: "0 21 * * 0"   # Monday 06:00 KST (Sunday 21:00 UTC)
   workflow_dispatch:
 
 permissions:
@@ -36,6 +35,9 @@ jobs:
           GMAIL_USER:          ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD:  ${{ secrets.GMAIL_APP_PASSWORD }}
           YOUTUBE_API_KEY:     ${{ secrets.YOUTUBE_API_KEY }}
+          NEWSAPI_KEY:         ${{ secrets.NEWSAPI_KEY }}
+          GUARDIAN_API_KEY:    ${{ secrets.GUARDIAN_API_KEY }}
+          GNEWS_API_KEY:       ${{ secrets.GNEWS_API_KEY }}
           GITHUB_REPOSITORY:   ${{ github.repository }}
         run: python main.py
 

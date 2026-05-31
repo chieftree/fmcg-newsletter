@@ -2,6 +2,7 @@ import hashlib
 import os
 import re
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 from urllib.parse import quote_plus
 
@@ -45,6 +46,45 @@ def _clean_html(text: str) -> str:
     return re.sub(r"<[^>]+>", "", text or "").strip()
 
 
+# ── URL Validation ─────────────────────────────────────────────────────────────
+
+def _check_url(url: str) -> tuple:
+    try:
+        resp = requests.head(
+            url, allow_redirects=True, timeout=5,
+            headers={"User-Agent": "Mozilla/5.0 (compatible; NewsBot/1.0)"},
+        )
+        return url, resp.status_code < 400
+    except Exception:
+        return url, False
+
+
+def _filter_valid_urls(articles: list) -> list:
+    """Parallel HEAD-check; drops dead/4xx/5xx links. Skips reliable sources."""
+    SKIP_TYPES = {"youtube", "reddit", "guardian", "gnews"}
+    to_check = [a for a in articles if a.get("source_type") not in SKIP_TYPES]
+    trusted  = [a for a in articles if a.get("source_type") in SKIP_TYPES]
+
+    if not to_check:
+        return articles
+
+    url_status: dict = {}
+    with ThreadPoolExecutor(max_workers=20) as pool:
+        futures = {pool.submit(_check_url, a["url"]): a["url"] for a in to_check}
+        for future in as_completed(futures):
+            try:
+                url, ok = future.result()
+                url_status[url] = ok
+            except Exception:
+                url_status[futures[future]] = False
+
+    valid = [a for a in to_check if url_status.get(a["url"], False)]
+    dropped = len(to_check) - len(valid)
+    if dropped:
+        print(f"[INFO] URL check: removed {dropped} dead links")
+    return valid + trusted
+
+
 # ── Google News RSS ────────────────────────────────────────────────────────────
 
 def _build_rss_url(query: str, region: str, lookback_days: int) -> str:
@@ -67,7 +107,7 @@ def _fetch_google_news(queries: list, region: str, lookback_days: int,
             feed = feedparser.parse(url)
             for entry in feed.entries:
                 title = entry.get("title", "").strip()
-                link = entry.get("link", "")
+                link  = entry.get("link", "")
                 description = _clean_html(entry.get("summary", ""))
 
                 parsed = entry.get("published_parsed")
@@ -87,16 +127,12 @@ def _fetch_google_news(queries: list, region: str, lookback_days: int,
                 seen_hashes.add(h)
                 seen_titles.add(title_key)
                 articles.append({
-                    "title": title,
-                    "url": link,
-                    "description": description[:300],
-                    "hash": h,
-                    "date": date_str,
-                    "source_type": "news",
+                    "title": title, "url": link,
+                    "description": description[:300], "hash": h,
+                    "date": date_str, "source_type": "google_news",
                 })
         except Exception as exc:
-            print(f"[WARN] Google News RSS failed — query='{query}' region={region}: {exc}")
-
+            print(f"[WARN] Google News RSS — query='{query}' region={region}: {exc}")
         time.sleep(0.4)
 
     return articles
@@ -110,14 +146,16 @@ def _fetch_premium_rss(rss_sources: list, lookback_days: int,
     cutoff = datetime.utcnow() - timedelta(days=lookback_days)
 
     for source in rss_sources:
-        url = source.get("url", "")
+        url         = source.get("url", "")
         source_name = source.get("name", "")
         try:
             feed = feedparser.parse(url)
             for entry in feed.entries:
                 title = entry.get("title", "").strip()
-                link = entry.get("link", "")
-                description = _clean_html(entry.get("summary", "") or entry.get("description", ""))
+                link  = entry.get("link", "")
+                description = _clean_html(
+                    entry.get("summary", "") or entry.get("description", "")
+                )
 
                 parsed = entry.get("published_parsed")
                 if parsed:
@@ -139,18 +177,228 @@ def _fetch_premium_rss(rss_sources: list, lookback_days: int,
                 seen_hashes.add(h)
                 seen_titles.add(title_key)
                 articles.append({
-                    "title": title,
-                    "url": link,
-                    "description": description[:300],
-                    "hash": h,
-                    "date": date_str,
-                    "source_type": "magazine",
+                    "title": title, "url": link,
+                    "description": description[:300], "hash": h,
+                    "date": date_str, "source_type": "magazine",
                     "source_name": source_name,
                 })
         except Exception as exc:
-            print(f"[WARN] Premium RSS failed — source='{source_name}': {exc}")
-
+            print(f"[WARN] Premium RSS — source='{source_name}': {exc}")
         time.sleep(0.3)
+
+    return articles
+
+
+# ── NewsAPI ────────────────────────────────────────────────────────────────────
+
+def _fetch_newsapi(queries: list, api_key: str, lookback_days: int,
+                   seen_hashes: set, seen_titles: set) -> list:
+    if not api_key:
+        return []
+
+    articles  = []
+    from_date = (datetime.now() - timedelta(days=lookback_days)).strftime("%Y-%m-%d")
+
+    for query in queries[:4]:
+        try:
+            resp = requests.get(
+                "https://newsapi.org/v2/everything",
+                params={
+                    "q": query, "from": from_date, "language": "en",
+                    "sortBy": "relevancy", "pageSize": 10, "apiKey": api_key,
+                },
+                timeout=10,
+            )
+            data = resp.json()
+            if data.get("status") != "ok":
+                print(f"[WARN] NewsAPI: {data.get('message', '')}")
+                break
+
+            for item in data.get("articles", []):
+                url   = item.get("url", "")
+                title = (item.get("title") or "").strip()
+                if not url or url == "[Removed]" or title in ("", "[Removed]"):
+                    continue
+                description = item.get("description") or item.get("content") or ""
+                pub_date    = (item.get("publishedAt") or "")[:10]
+                source_name = item.get("source", {}).get("name", "NewsAPI")
+
+                title_key = re.sub(r"\W+", "", title.lower())[:60]
+                h = _url_hash(url)
+                if h in seen_hashes or title_key in seen_titles:
+                    continue
+
+                seen_hashes.add(h)
+                seen_titles.add(title_key)
+                articles.append({
+                    "title": title, "url": url,
+                    "description": description[:300], "hash": h,
+                    "date": pub_date, "source_type": "newsapi",
+                    "source_name": source_name,
+                })
+        except Exception as exc:
+            print(f"[WARN] NewsAPI — query='{query}': {exc}")
+        time.sleep(0.3)
+
+    return articles
+
+
+# ── The Guardian API ───────────────────────────────────────────────────────────
+
+def _fetch_guardian(queries: list, api_key: str, lookback_days: int,
+                    seen_hashes: set, seen_titles: set) -> list:
+    if not api_key:
+        return []
+
+    articles  = []
+    from_date = (datetime.now() - timedelta(days=lookback_days)).strftime("%Y-%m-%d")
+
+    for query in queries[:4]:
+        try:
+            resp = requests.get(
+                "https://content.guardianapis.com/search",
+                params={
+                    "q": query, "from-date": from_date,
+                    "show-fields": "trailText", "page-size": 10,
+                    "order-by": "relevance", "api-key": api_key,
+                },
+                timeout=10,
+            )
+            for item in resp.json().get("response", {}).get("results", []):
+                url      = item.get("webUrl", "")
+                title    = item.get("webTitle", "").strip()
+                desc     = _clean_html(item.get("fields", {}).get("trailText", ""))
+                pub_date = (item.get("webPublicationDate") or "")[:10]
+
+                title_key = re.sub(r"\W+", "", title.lower())[:60]
+                h = _url_hash(url)
+                if h in seen_hashes or title_key in seen_titles:
+                    continue
+
+                seen_hashes.add(h)
+                seen_titles.add(title_key)
+                articles.append({
+                    "title": title, "url": url,
+                    "description": desc[:300], "hash": h,
+                    "date": pub_date, "source_type": "guardian",
+                    "source_name": "The Guardian",
+                })
+        except Exception as exc:
+            print(f"[WARN] Guardian API — query='{query}': {exc}")
+        time.sleep(0.3)
+
+    return articles
+
+
+# ── GNews API ──────────────────────────────────────────────────────────────────
+
+def _fetch_gnews(queries: list, api_key: str, lookback_days: int,
+                 seen_hashes: set, seen_titles: set, region: str = "global") -> list:
+    if not api_key:
+        return []
+
+    articles    = []
+    lang_map    = {"global": "en", "asia": "en", "korea": "ko"}
+    country_map = {"global": "us", "asia": "sg", "korea": "kr"}
+
+    for query in queries[:3]:
+        try:
+            resp = requests.get(
+                "https://gnews.io/api/v4/search",
+                params={
+                    "q": query,
+                    "lang": lang_map.get(region, "en"),
+                    "country": country_map.get(region, "us"),
+                    "max": 10, "apikey": api_key,
+                },
+                timeout=10,
+            )
+            data = resp.json()
+            if "errors" in data:
+                print(f"[WARN] GNews: {data['errors']}")
+                break
+
+            for item in data.get("articles", []):
+                url   = item.get("url", "")
+                title = (item.get("title") or "").strip()
+                if not url or not title:
+                    continue
+                description = item.get("description") or item.get("content") or ""
+                pub_date    = (item.get("publishedAt") or "")[:10]
+                source_name = item.get("source", {}).get("name", "GNews")
+
+                title_key = re.sub(r"\W+", "", title.lower())[:60]
+                h = _url_hash(url)
+                if h in seen_hashes or title_key in seen_titles:
+                    continue
+
+                seen_hashes.add(h)
+                seen_titles.add(title_key)
+                articles.append({
+                    "title": title, "url": url,
+                    "description": description[:300], "hash": h,
+                    "date": pub_date, "source_type": "gnews",
+                    "source_name": source_name,
+                })
+        except Exception as exc:
+            print(f"[WARN] GNews — query='{query}': {exc}")
+        time.sleep(0.3)
+
+    return articles
+
+
+# ── Reddit ─────────────────────────────────────────────────────────────────────
+
+def _fetch_reddit(subreddits: list, lookback_days: int,
+                  seen_hashes: set, seen_titles: set) -> list:
+    articles    = []
+    cutoff      = datetime.utcnow() - timedelta(days=lookback_days)
+    headers     = {"User-Agent": "FMCG-Newsletter-Bot/1.0"}
+    time_filter = "month" if lookback_days >= 30 else "week"
+
+    for subreddit in subreddits:
+        try:
+            resp = requests.get(
+                f"https://www.reddit.com/r/{subreddit}/top.json",
+                params={"limit": 25, "t": time_filter},
+                headers=headers, timeout=10,
+            )
+            if resp.status_code != 200:
+                continue
+
+            for post in resp.json().get("data", {}).get("children", []):
+                p         = post.get("data", {})
+                title     = p.get("title", "").strip()
+                url       = p.get("url", "")
+                permalink = f"https://www.reddit.com{p.get('permalink', '')}"
+                created   = datetime.utcfromtimestamp(p.get("created_utc", 0))
+                score     = p.get("score", 0)
+
+                if created < cutoff or score < 100:
+                    continue
+                if not _is_relevant(title, p.get("selftext", "")):
+                    continue
+
+                final_url = (
+                    url if url.startswith("https://") and "reddit.com" not in url
+                    else permalink
+                )
+                title_key = re.sub(r"\W+", "", title.lower())[:60]
+                h = _url_hash(final_url)
+                if h in seen_hashes or title_key in seen_titles:
+                    continue
+
+                seen_hashes.add(h)
+                seen_titles.add(title_key)
+                articles.append({
+                    "title": title, "url": final_url,
+                    "description": p.get("selftext", "")[:300] or f"r/{subreddit} — {score} upvotes",
+                    "hash": h, "date": created.strftime("%Y-%m-%d"),
+                    "source_type": "reddit", "source_name": f"r/{subreddit}",
+                })
+        except Exception as exc:
+            print(f"[WARN] Reddit — r/{subreddit}: {exc}")
+        time.sleep(0.5)
 
     return articles
 
@@ -167,30 +415,25 @@ def _search_youtube(queries: list, api_key: str, lookback_days: int,
         datetime.now(timezone.utc) - timedelta(days=lookback_days)
     ).strftime("%Y-%m-%dT%H:%M:%SZ")
 
-    # Step 1: Collect candidate videos from search
     candidates = []
     for query in queries:
         try:
             resp = requests.get(
                 "https://www.googleapis.com/youtube/v3/search",
                 params={
-                    "part": "snippet",
-                    "q": query,
-                    "type": "video",
-                    "maxResults": 10,
-                    "order": "relevance",
+                    "part": "snippet", "q": query, "type": "video",
+                    "maxResults": 10, "order": "relevance",
                     "relevanceLanguage": "en",
-                    "publishedAfter": published_after,
-                    "key": api_key,
+                    "publishedAfter": published_after, "key": api_key,
                 },
                 timeout=10,
             )
             data = resp.json()
             if "error" in data:
-                print(f"[WARN] YouTube API error: {data['error'].get('message', '')}")
+                print(f"[WARN] YouTube API: {data['error'].get('message', '')}")
                 break
             for item in data.get("items", []):
-                snippet = item.get("snippet", {})
+                snippet  = item.get("snippet", {})
                 video_id = item.get("id", {}).get("videoId", "")
                 if not video_id:
                     continue
@@ -203,17 +446,15 @@ def _search_youtube(queries: list, api_key: str, lookback_days: int,
                     "channel_title": snippet.get("channelTitle", "YouTube"),
                 })
         except Exception as exc:
-            print(f"[WARN] YouTube search failed — query='{query}': {exc}")
+            print(f"[WARN] YouTube search — query='{query}': {exc}")
         time.sleep(0.5)
 
     if not candidates:
         return []
 
-    # Step 2: Batch fetch video view counts
     video_stats: dict = {}
-    video_ids = list({c["video_id"] for c in candidates})
-    for i in range(0, len(video_ids), 50):
-        batch = video_ids[i:i + 50]
+    for i in range(0, len({c["video_id"] for c in candidates}), 50):
+        batch = list({c["video_id"] for c in candidates})[i:i + 50]
         try:
             resp = requests.get(
                 "https://www.googleapis.com/youtube/v3/videos",
@@ -225,13 +466,11 @@ def _search_youtube(queries: list, api_key: str, lookback_days: int,
                     item.get("statistics", {}).get("viewCount", 0)
                 )
         except Exception as exc:
-            print(f"[WARN] YouTube video stats fetch failed: {exc}")
+            print(f"[WARN] YouTube video stats: {exc}")
 
-    # Step 3: Batch fetch channel subscriber counts
     channel_stats: dict = {}
-    channel_ids = list({c["channel_id"] for c in candidates if c["channel_id"]})
-    for i in range(0, len(channel_ids), 50):
-        batch = channel_ids[i:i + 50]
+    for i in range(0, len({c["channel_id"] for c in candidates if c["channel_id"]}), 50):
+        batch = list({c["channel_id"] for c in candidates if c["channel_id"]})[i:i + 50]
         try:
             resp = requests.get(
                 "https://www.googleapis.com/youtube/v3/channels",
@@ -243,17 +482,16 @@ def _search_youtube(queries: list, api_key: str, lookback_days: int,
                     item.get("statistics", {}).get("subscriberCount", 0)
                 )
         except Exception as exc:
-            print(f"[WARN] YouTube channel stats fetch failed: {exc}")
+            print(f"[WARN] YouTube channel stats: {exc}")
 
-    # Step 4: Filter by thresholds and deduplicate
     articles = []
     for c in candidates:
-        views = video_stats.get(c["video_id"], 0)
-        subs = channel_stats.get(c["channel_id"], 0)
-        if views < min_views or subs < min_subs:
+        if video_stats.get(c["video_id"], 0) < min_views:
+            continue
+        if channel_stats.get(c["channel_id"], 0) < min_subs:
             continue
 
-        link = f"https://www.youtube.com/watch?v={c['video_id']}"
+        link      = f"https://www.youtube.com/watch?v={c['video_id']}"
         title_key = re.sub(r"\W+", "", c["title"].lower())[:60]
         h = _url_hash(link)
         if h in seen_hashes or title_key in seen_titles:
@@ -262,12 +500,9 @@ def _search_youtube(queries: list, api_key: str, lookback_days: int,
         seen_hashes.add(h)
         seen_titles.add(title_key)
         articles.append({
-            "title": c["title"],
-            "url": link,
-            "description": c["description"],
-            "hash": h,
-            "date": c["date"],
-            "source_type": "youtube",
+            "title": c["title"], "url": link,
+            "description": c["description"], "hash": h,
+            "date": c["date"], "source_type": "youtube",
             "source_name": c["channel_title"],
         })
 
@@ -278,49 +513,55 @@ def _search_youtube(queries: list, api_key: str, lookback_days: int,
 
 def collect_all(keywords_config: dict, lookback_days: int, sent_urls: list) -> dict:
     sent_hashes: set = set(sent_urls)
-    results: dict = {}
+    results: dict    = {}
 
     youtube_api_key = os.environ.get("YOUTUBE_API_KEY", "")
-    rss_sources_by_region = keywords_config.get("rss_sources", {})
-    youtube_queries_by_cat = keywords_config.get("youtube_queries", {})
+    newsapi_key     = os.environ.get("NEWSAPI_KEY", "")
+    guardian_key    = os.environ.get("GUARDIAN_API_KEY", "")
+    gnews_key       = os.environ.get("GNEWS_API_KEY", "")
 
-    # Pre-fetch premium RSS articles (shared across categories)
+    rss_sources_by_region  = keywords_config.get("rss_sources", {})
+    youtube_queries_by_cat = keywords_config.get("youtube_queries", {})
+    reddit_subs_by_cat     = keywords_config.get("reddit_subreddits", {})
+
+    # Pre-fetch premium RSS (shared pool, filtered per category later)
     premium_pool: dict = {}
     for region in ("global", "asia", "korea"):
         rss_list = rss_sources_by_region.get(region, [])
         if rss_list:
-            premium_pool[region] = _fetch_premium_rss(
-                rss_list, lookback_days, set(), set()
-            )
+            premium_pool[region] = _fetch_premium_rss(rss_list, lookback_days, set(), set())
             print(f"[INFO] Premium RSS [{region}]: {len(premium_pool[region])} articles")
         else:
             premium_pool[region] = []
 
+    # Per-region global dedup — each article appears in at most one category per region
+    global_used: dict = {
+        "global": set(sent_hashes),
+        "asia":   set(sent_hashes),
+        "korea":  set(sent_hashes),
+    }
+
     for cat_key, cat in keywords_config["categories"].items():
         results[cat_key] = {}
         queries_by_region = cat.get("queries", {})
-        yt_queries = youtube_queries_by_cat.get(cat_key, {})
+        yt_queries        = youtube_queries_by_cat.get(cat_key, {})
+        reddit_subs       = reddit_subs_by_cat.get(cat_key, [])
 
         for region in ("global", "asia", "korea"):
             if cat.get("global_only") and region != "global":
                 results[cat_key][region] = []
                 continue
 
-            # Shared seen sets per region×category to deduplicate across sources
-            seen_h: set = set(sent_hashes)
-            seen_t: set = set()
+            seen_h: set    = set(global_used[region])
+            seen_t: set    = set()
+            region_queries = queries_by_region.get(region, [])
 
             # 1. Google News RSS
-            gnews = _fetch_google_news(
-                queries_by_region.get(region, []),
-                region, lookback_days, seen_h, seen_t,
+            gnews_articles = _fetch_google_news(
+                region_queries, region, lookback_days, seen_h, seen_t
             )
 
-            # 2. Relevant articles from premium RSS pool (keyword-filtered)
-            cat_keywords = [w.lower() for w in (
-                cat.get("name", "").split() +
-                queries_by_region.get(region, [])[:2]
-            )]
+            # 2. Premium RSS pool
             premium = [
                 a for a in premium_pool.get(region, [])
                 if _url_hash(a["url"]) not in seen_h
@@ -329,7 +570,29 @@ def collect_all(keywords_config: dict, lookback_days: int, sent_urls: list) -> d
             for a in premium:
                 seen_h.add(_url_hash(a["url"]))
 
-            # 3. YouTube
+            # 3. NewsAPI
+            newsapi = _fetch_newsapi(
+                region_queries, newsapi_key, lookback_days, seen_h, seen_t
+            )
+
+            # 4. Guardian (EN only — skip Korea)
+            guardian = []
+            if region != "korea":
+                guardian = _fetch_guardian(
+                    region_queries, guardian_key, lookback_days, seen_h, seen_t
+                )
+
+            # 5. GNews
+            gnews_api = _fetch_gnews(
+                region_queries, gnews_key, lookback_days, seen_h, seen_t, region
+            )
+
+            # 6. Reddit (global only)
+            reddit = []
+            if region == "global" and reddit_subs:
+                reddit = _fetch_reddit(reddit_subs, lookback_days, seen_h, seen_t)
+
+            # 7. YouTube
             yt_thresh = YOUTUBE_THRESHOLDS.get(cat_key, {"min_views": 50_000, "min_subs": 50_000})
             yt = _search_youtube(
                 yt_queries.get(region, []),
@@ -338,7 +601,14 @@ def collect_all(keywords_config: dict, lookback_days: int, sent_urls: list) -> d
                 min_subs=yt_thresh["min_subs"],
             )
 
-            merged = (gnews + premium + yt)[:25]
+            # Validate URLs (Google News & NewsAPI are most unreliable)
+            merged_raw = gnews_articles + premium + newsapi + guardian + gnews_api + reddit + yt
+            merged = _filter_valid_urls(merged_raw)[:25]
+
+            # Register used URLs so other categories don't repeat them
+            for a in merged:
+                global_used[region].add(_url_hash(a["url"]))
+
             results[cat_key][region] = merged
 
         print(f"[INFO] Collected {cat_key}: "

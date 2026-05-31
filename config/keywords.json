@@ -1,17 +1,42 @@
 {
   "rss_sources": {
     "global": [
-      {"url": "https://www.marketingweek.com/feed/",           "name": "Marketing Week"},
-      {"url": "https://www.thedrum.com/rss.xml",               "name": "The Drum"},
-      {"url": "https://www.adweek.com/feed/",                  "name": "Adweek"},
-      {"url": "https://adage.com/rss.xml",                     "name": "Ad Age"},
-      {"url": "https://www.campaignlive.co.uk/rss",            "name": "Campaign UK"}
+      {"url": "https://www.marketingweek.com/feed/",              "name": "Marketing Week"},
+      {"url": "https://www.thedrum.com/rss.xml",                  "name": "The Drum"},
+      {"url": "https://www.adweek.com/feed/",                     "name": "Adweek"},
+      {"url": "https://adage.com/rss.xml",                        "name": "Ad Age"},
+      {"url": "https://www.campaignlive.co.uk/rss",               "name": "Campaign UK"},
+      {"url": "https://digiday.com/feed/",                        "name": "Digiday"},
+      {"url": "https://www.marketingdive.com/feeds/news/",        "name": "Marketing Dive"},
+      {"url": "https://www.fooddive.com/feeds/news/",             "name": "Food Dive"},
+      {"url": "https://www.grocerydive.com/feeds/news/",          "name": "Grocery Dive"},
+      {"url": "https://www.retaildive.com/feeds/news/",           "name": "Retail Dive"},
+      {"url": "https://www.fastcompany.com/latest/rss",           "name": "Fast Company"},
+      {"url": "https://www.businessinsider.com/rss",              "name": "Business Insider"},
+      {"url": "https://feeds.hbr.org/harvardbusiness",            "name": "Harvard Business Review"},
+      {"url": "https://econsultancy.com/blog/rss",                "name": "Econsultancy"},
+      {"url": "https://www.warc.com/newsandopinion/rss",          "name": "WARC"}
     ],
     "asia": [
-      {"url": "https://www.marketing-interactive.com/feed/",   "name": "Marketing Interactive"},
-      {"url": "https://www.campaignasia.com/rss",              "name": "Campaign Asia"}
+      {"url": "https://www.marketing-interactive.com/feed/",      "name": "Marketing Interactive"},
+      {"url": "https://www.campaignasia.com/rss",                 "name": "Campaign Asia"},
+      {"url": "https://www.marketingmag.com.au/feed/",            "name": "Marketing Mag AU"},
+      {"url": "https://mumbrella.com.au/feed",                    "name": "Mumbrella"},
+      {"url": "https://www.marketing-beat.co.uk/feed/",           "name": "Marketing Beat"}
     ],
-    "korea": []
+    "korea": [
+      {"url": "https://koreajoongangdaily.joins.com/rss/business", "name": "JoongAng Daily"},
+      {"url": "https://www.koreaherald.com/rss/business.xml",     "name": "Korea Herald"},
+      {"url": "https://en.yna.co.kr/RSS/economy.xml",             "name": "Yonhap News Economy"}
+    ]
+  },
+
+  "reddit_subreddits": {
+    "viral_social":     ["marketing", "socialmediamarketing", "advertising"],
+    "brand_activation": ["marketing", "advertising", "entrepreneur"],
+    "award_campaigns":  ["marketing", "advertising"],
+    "byron_sharp":      ["marketing", "advertising"],
+    "mars_snacking":    ["snacks", "candy", "food"]
   },
 
   "youtube_queries": {
