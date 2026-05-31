@@ -466,6 +466,64 @@ def _fetch_naver_news(queries: list, client_id: str, client_secret: str,
     return articles
 
 
+# ── Kakao (Daum) News Search API ──────────────────────────────────────────────
+
+def _fetch_kakao_news(queries: list, api_key: str, lookback_days: int,
+                      seen_hashes: set, seen_titles: set) -> list:
+    if not api_key:
+        return []
+
+    articles = []
+    cutoff   = datetime.utcnow() - timedelta(days=lookback_days)
+    headers  = {"Authorization": f"KakaoAK {api_key}"}
+
+    for query in queries[:5]:
+        try:
+            resp = requests.get(
+                "https://dapi.kakao.com/v2/search/news",
+                headers=headers,
+                params={"query": query, "sort": "recency", "size": 20},
+                timeout=10,
+            )
+            if resp.status_code != 200:
+                print(f"[WARN] Kakao News API {resp.status_code}: {resp.text[:80]}")
+                break
+
+            for item in resp.json().get("documents", []):
+                title = _clean_html(item.get("title", "")).strip()
+                url   = item.get("url", "")
+                desc  = _clean_html(item.get("contents", ""))
+                # datetime format: "2026-05-19T10:00:00.000+09:00"
+                try:
+                    pub_dt   = datetime.fromisoformat(
+                        item.get("datetime", "").replace("Z", "+00:00")
+                    ).replace(tzinfo=None)
+                    if pub_dt < cutoff:
+                        continue
+                    date_str = pub_dt.strftime("%Y-%m-%d")
+                except Exception:
+                    date_str = "Unknown"
+
+                title_key = re.sub(r"\W+", "", title.lower())[:60]
+                h = _url_hash(url)
+                if h in seen_hashes or title_key in seen_titles:
+                    continue
+
+                seen_hashes.add(h)
+                seen_titles.add(title_key)
+                articles.append({
+                    "title": title, "url": url,
+                    "description": desc[:300], "hash": h,
+                    "date": date_str, "source_type": "kakao",
+                    "source_name": item.get("source", "Kakao News"),
+                })
+        except Exception as exc:
+            print(f"[WARN] Kakao News — query='{query}': {exc}")
+        time.sleep(0.3)
+
+    return articles
+
+
 # ── Reddit ─────────────────────────────────────────────────────────────────────
 
 def _fetch_reddit(subreddits: list, lookback_days: int,
@@ -639,8 +697,9 @@ def collect_all(keywords_config: dict, lookback_days: int, sent_urls: list) -> d
     guardian_key    = os.environ.get("GUARDIAN_API_KEY", "")
     gnews_key       = os.environ.get("GNEWS_API_KEY", "")
     currents_key    = os.environ.get("CURRENTS_API_KEY", "")
-    naver_client_id = os.environ.get("NAVER_CLIENT_ID", "")
+    naver_client_id     = os.environ.get("NAVER_CLIENT_ID", "")
     naver_client_secret = os.environ.get("NAVER_CLIENT_SECRET", "")
+    kakao_api_key       = os.environ.get("KAKAO_REST_API_KEY", "")
 
     rss_sources_by_region  = keywords_config.get("rss_sources", {})
     youtube_queries_by_cat = keywords_config.get("youtube_queries", {})
@@ -722,6 +781,13 @@ def collect_all(keywords_config: dict, lookback_days: int, sent_urls: list) -> d
                     lookback_days, seen_h, seen_t,
                 )
 
+            # 7b. Kakao (Daum) News (Korea only)
+            kakao = []
+            if region == "korea":
+                kakao = _fetch_kakao_news(
+                    region_queries, kakao_api_key, lookback_days, seen_h, seen_t,
+                )
+
             # 8. Reddit (global only)
             reddit = []
             if region == "global" and reddit_subs:
@@ -737,7 +803,7 @@ def collect_all(keywords_config: dict, lookback_days: int, sent_urls: list) -> d
             )
 
             # Validate URLs (Google News & NewsAPI are most unreliable)
-            merged_raw = gnews_articles + premium + newsapi + guardian + gnews_api + currents + naver + reddit + yt
+            merged_raw = gnews_articles + premium + newsapi + guardian + gnews_api + currents + naver + kakao + reddit + yt
             merged = _filter_valid_urls(merged_raw)[:25]
 
             # Register used URLs so other categories don't repeat them
