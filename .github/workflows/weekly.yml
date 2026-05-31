@@ -2,7 +2,8 @@ name: FMCG Newsletter
 
 on:
   schedule:
-    - cron: "0 21 * * 0"   # Monday 06:00 KST (Sunday 21:00 UTC)
+    - cron: "0 21 * * 0"   # Monday   06:00 KST (Sunday   21:00 UTC)
+    - cron: "0 21 * * 3"   # Thursday 06:00 KST (Wednesday 21:00 UTC)
   workflow_dispatch:
 
 permissions:

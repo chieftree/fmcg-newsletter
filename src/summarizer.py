@@ -13,14 +13,17 @@ REGION_LABELS = {
 
 
 def _build_prompt(cat_name: str, region: str, articles: list, is_first_issue: bool) -> str:
-    period = "the past 12 months" if is_first_issue else "the past 7 days"
+    period = "the past 12 months" if is_first_issue else "the past 4 days"
     region_label = REGION_LABELS[region]
     articles_text = "\n".join(
         f"- [{a['date']}] {a['title']} | {a['description'][:200]} | URL: {a['url']}"
-        for a in articles[:15]
+        for a in articles[:20]
     )
-    return f"""You are an FMCG marketing intelligence analyst.
-Analyze these news articles about "{cat_name}" in the {region_label} region for {period}.
+    return f"""You are a senior marketing intelligence analyst briefing the CMO and marketing leadership team of Mars Asia Snacking — the company behind Snickers, M&M's, Twix, Skittles, Pringles, and Kellogg brands across Asia Pacific.
+
+Your audience are senior FMCG marketers who need sharp, strategic intelligence — not news summaries. They want to know: "What does this mean for our brands, our categories, and our competitors?"
+
+Analyze these articles about "{cat_name}" in the {region_label} region for {period}.
 
 ARTICLES:
 {articles_text}
@@ -30,24 +33,26 @@ Return ONLY a valid JSON object with this exact structure (no markdown, no extra
   "has_content": true,
   "items": [
     {{
-      "headline_en": "Bold headline in English (max 12 words)",
-      "headline_kr": "한국어 헤드라인 (최대 12단어)",
-      "summary_en": "2-3 sentence summary in English with key insights and metrics if available",
-      "summary_kr": "한국어로 2-3문장 요약, 핵심 인사이트와 수치 포함",
-      "key_metric": "One standout stat or number (e.g. +45% sales, 5M views) — empty string if none",
-      "source_name": "Publication or website name",
+      "headline_en": "Sharp, insight-led headline in English (max 12 words) — lead with the strategic implication",
+      "headline_kr": "한국어 헤드라인 (최대 12단어) — 전략적 의미 중심",
+      "summary_en": "2-3 sentences in English. Sentence 1: what happened and key data. Sentence 2: why it matters strategically for FMCG/snacking brands. Sentence 3: implication or watch-out for marketing leaders.",
+      "summary_kr": "한국어 2-3문장. 1문장: 핵심 사실과 수치. 2문장: FMCG/스낵 브랜드 관점의 전략적 의미. 3문장: 마케팅 리더를 위한 시사점.",
+      "key_metric": "The single most compelling number or stat (e.g. +34% category growth, 12M views in 48h, #1 share of voice) — empty string if none",
+      "source_name": "Publication name",
       "url": "Article URL",
       "date": "YYYY-MM-DD"
     }}
   ],
-  "section_insight_en": "One sentence overall regional insight in English",
-  "section_insight_kr": "이 지역 전체 인사이트 한 문장 (한국어)"
+  "section_insight_en": "One sharp sentence: the single most important strategic takeaway for Mars Asia Snacking leadership from this section.",
+  "section_insight_kr": "한 문장: 이 섹션에서 마즈 아시아 스낵킹 리더십에 가장 중요한 전략적 시사점."
 }}
 
-Rules:
-- Include 2 to 4 of the most relevant and insightful items only.
-- If no genuinely relevant FMCG marketing content exists, return {{"has_content": false, "items": [], "section_insight_en": "No significant updates this period.", "section_insight_kr": "이번 기간 주요 업데이트 없음."}}
-- Focus on actionable marketing insights, not generic company news."""
+Strict rules:
+- Select ONLY 2 to 3 items — the highest signal, most strategically relevant stories. Quality over volume.
+- Each item must come from a DIFFERENT story/source. Never summarize the same event twice from different angles.
+- Prioritize: concrete data and metrics, clear competitive or category implications, novel trends with evidence.
+- Exclude: generic corporate announcements without strategic relevance, opinion pieces without data, duplicate stories.
+- If fewer than 2 genuinely high-quality items exist, return {{"has_content": false, "items": [], "section_insight_en": "No significant updates this period.", "section_insight_kr": "이번 기간 주요 업데이트 없음."}}"""
 
 
 PREFERRED_MODELS = [

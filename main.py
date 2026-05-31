@@ -41,7 +41,7 @@ def main() -> None:
     history     = _load(CONFIG_DIR / "sent_history.json")
 
     is_first_issue = history["last_sent"] is None
-    lookback_days  = 365 if is_first_issue else 7
+    lookback_days  = 365 if is_first_issue else 4
     issue_date     = datetime.utcnow().strftime("%Y-%m-%d")
 
     if is_first_issue:
