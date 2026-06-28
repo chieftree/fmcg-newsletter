@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FMCG Marketing Intelligence — Sunday Issue — June 28, 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f4f8;color:#1a202c;line-height:1.6}
+a{color:#4f46e5;text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Header */
+.site-header{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 60%,#0f3460 100%);color:#fff;padding:32px 24px 0}
+.header-inner{max-width:1100px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:8px}
+.site-title{font-size:clamp(20px,4vw,28px);font-weight:700;letter-spacing:-0.5px}
+.site-subtitle{font-size:13px;opacity:.7;margin-top:4px}
+
+/* Language toggle */
+.lang-toggle{display:flex;gap:8px}
+.lang-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;cursor:pointer;transition:all .2s}
+.lang-btn.active,.lang-btn:hover{background:rgba(255,255,255,.9);color:#1a1a2e}
+
+/* Region tabs */
+.region-tabs{display:flex;gap:0;margin-top:24px;border-bottom:none}
+.region-tab{background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.7);padding:12px 24px;font-size:14px;font-weight:500;cursor:pointer;border-radius:8px 8px 0 0;transition:all .2s;margin-right:4px}
+.region-tab.active,.region-tab:hover{background:#fff;color:#1a1a2e}
+
+/* Content area */
+.content-area{max-width:1100px;margin:0 auto;padding:32px 24px 64px}
+.region-panel{display:none}
+.region-panel.active{display:block}
+
+/* Issue label */
+.issue-label{background:#fff;border-radius:0 0 12px 12px;padding:12px 24px;display:inline-block;font-size:13px;color:#64748b;margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.first-issue-badge{background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;margin-left:8px;vertical-align:middle}
+
+/* Category section */
+.category-section{background:#fff;border-radius:12px;padding:24px;margin-bottom:24px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.cat-header{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:2px solid #e2e8f0;margin-bottom:16px}
+.cat-icon{font-size:22px}
+.cat-header h3{font-size:16px;font-weight:700;color:#1e293b}
+.global-badge{font-size:10px;font-weight:600;background:#6366f1;color:#fff;padding:2px 7px;border-radius:10px;margin-left:8px;vertical-align:middle}
+
+/* Section insight */
+.section-insight{font-size:13px;color:#475569;background:#f8fafc;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-style:italic;border-left:3px solid #e2e8f0}
+
+/* Article grid */
+.articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.article-card{border-left:3px solid #ccc;padding:14px 16px;background:#fafafa;border-radius:0 8px 8px 0;transition:box-shadow .2s}
+.article-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.1);background:#fff}
+.article-date{font-size:11px;color:#94a3b8;display:block;margin-bottom:6px}
+.article-card h4{font-size:14px;font-weight:600;color:#1e293b;margin-bottom:6px;line-height:1.4}
+.article-card p{font-size:13px;color:#475569;margin-bottom:10px;line-height:1.6}
+.metric{font-size:12px;font-weight:600;color:#0f766e;background:#f0fdf4;display:inline-block;padding:3px 8px;border-radius:6px;margin-bottom:8px}
+.source-link{font-size:12px;color:#4f46e5;font-weight:500;display:block;margin-top:6px}
+
+/* Subsection badge (Byron Sharp principle labels) */
+.subsection-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;background:#6366f1;color:#fff;display:inline-block;padding:2px 9px;border-radius:10px;margin-bottom:8px}
+
+/* No updates */
+.no-updates{font-size:13px;color:#94a3b8;font-style:italic;padding:8px 0}
+
+/* Footer */
+.site-footer{background:#1a1a2e;color:rgba(255,255,255,.5);text-align:center;padding:32px 24px;font-size:13px}
+.site-footer a{color:rgba(255,255,255,.7)}
+
+/* Trend block */
+.trend-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.trend-row{display:grid;grid-template-columns:130px 1fr 48px 76px;align-items:center;gap:10px}
+.trend-label{font-size:13px;color:#1e293b;font-weight:500}
+.trend-bar-wrap{background:#f1f5f9;border-radius:4px;height:8px;overflow:hidden}
+.trend-bar{height:100%;border-radius:4px}
+.trend-score{font-size:12px;color:#64748b;text-align:right;font-weight:500}
+.trend-change{font-size:12px;font-weight:700;text-align:right}
+.trend-footnote{font-size:11px;color:#94a3b8;margin-top:10px;padding-top:8px;border-top:1px solid #f1f5f9}
+
+@media(max-width:600px){
+  .header-top{flex-direction:column}
+  .articles-grid{grid-template-columns:1fr}
+  .region-tab{padding:10px 14px;font-size:13px}
+  .trend-row{grid-template-columns:90px 1fr 36px 60px;gap:6px}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div>
+        <div class="site-title">FMCG Marketing Intelligence</div>
+        <div class="site-subtitle">
+          <span class="en-content">Global · Asia · Korea — Curated weekly for FMCG marketers</span>
+          <span class="kr-content" style="display:none">글로벌 · 아시아 · 한국 — FMCG 마케터를 위한 주간 큐레이션</span>
+        </div>
+      </div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">🌐 English</button>
+        <button class="lang-btn" id="btn-kr" onclick="setLang('kr')">🇰🇷 한국어</button>
+      </div>
+    </div>
+    <div class="region-tabs">
+      <button class="region-tab active" data-region="global" onclick="setRegion('global')">🌍 Global</button>
+      <button class="region-tab" data-region="asia" onclick="setRegion('asia')">🌏 Asia</button>
+      <button class="region-tab" data-region="korea" onclick="setRegion('korea')">Korea</button>
+    </div>
+  </div>
+</header>
+
+<div class="content-area">
+  <div class="issue-label">
+    <span class="en-content">Sunday Issue — June 28, 2026</span>
+    <span class="kr-content" style="display:none">2026-06-28 주간</span>
+    
+  </div>
+
+  <div class="region-panel active" id="panel-global">
+    
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#ec4899">
+      <span class="cat-icon">🔥</span>
+      <h3><span class="en-content">Viral on Social Media</span><span class="kr-content" style="display:none">바이럴 소셜 미디어</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Marketers face increasing pressure to prove creative ROI and build consumer trust through transparency, while cultural relevance and authentic community engagement remain critical for snacking brand growth.</span><span class="kr-content" style="display:none">마케터들은 크리에이티브 ROI 입증 및 투명성을 통한 소비자 신뢰 구축이라는 압력에 직면하고 있으며, 동시에 문화적 관련성과 진정성 있는 커뮤니티 참여는 스낵 브랜드 성장에 여전히 중요합니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#ec4899">
+      
+      <span class="article-date">2026-06-26</span>
+      <div class="en-content">
+        <h4>CMOs struggle with creative ROI; AI offers measurement solution.</h4>
+        <p>A recent briefing reveals 49% of senior marketers cannot quantify the value of their ad creative with hard data, despite rising interest in AI-enabled effectiveness measurement. This signifies a critical gap in proving marketing ROI, especially for brand-building creative that underpins snacking giants like Mars. Marketing leaders must prioritize investment in AI and advanced analytics to scientifically validate creative impact and optimize future campaign spend.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>CMO, 크리에이티브 ROI 고심; AI가 측정 해법 제시.</h4>
+        <p>최근 브리핑에 따르면, AI 기반 효과 측정에 대한 관심이 증가함에도 불구하고 49%의 고위 마케터들이 광고 크리에이티브의 가치를 명확한 데이터로 입증하지 못하고 있습니다. 이는 마즈(Mars)와 같은 스낵 대기업의 브랜드 구축 크리에이티브를 뒷받침하는 마케팅 ROI 입증에 있어 중요한 격차를 의미합니다. 마케팅 리더들은 AI 및 고급 분석에 대한 투자를 우선하여 크리에이티브의 영향력을 과학적으로 검증하고 향후 캠페인 지출을 최적화해야 합니다.</p>
+      </div>
+      <div class="metric">📊 49% of senior marketers</div>
+      <a class="source-link" href="https://digiday.com/marketing/future-of-marketing-briefing-cmos-are-still-haunted-by-hard-questions-about-value-of-ad-creative/?utm_campaign=digidaydis&amp;utm_medium=rss&amp;utm_source=general-rss" target="_blank" rel="noopener">Digiday →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#ec4899">
+      
+      <span class="article-date">2026-06-25</span>
+      <div class="en-content">
+        <h4>PepsiCo, Coca-Cola lead with QR codes for ingredient transparency.</h4>
+        <p>PepsiCo and 코카콜라(Coca-Cola) are implementing QR codes for ingredient transparency, joining an industry-wide effort as consumers demand more information about food and drink contents. This move sets a new precedent for FMCG brands to build trust and meet evolving consumer expectations for accountability and clear information. Mars Asia Snacking must evaluate proactive strategies for digital transparency to maintain consumer confidence and competitive advantage in the region.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>펩시코(PepsiCo), 코카콜라(Coca-Cola), 성분 투명성 위해 QR 코드 선도.</h4>
+        <p>펩시코(PepsiCo)와 코카콜라(Coca-Cola)가 소비자의 식품 및 음료 성분 정보 요구 증대에 발맞춰 QR 코드를 통한 성분 투명성을 도입하며 업계 전체의 노력에 동참하고 있습니다. 이 움직임은 FMCG 브랜드가 신뢰를 구축하고 책임감 있는 정보 제공에 대한 변화하는 소비자 기대를 충족시키는 새로운 선례를 만듭니다. 마즈 아시아 스낵킹(Mars Asia Snacking)은 소비자 신뢰와 경쟁 우위를 유지하기 위해 디지털 투명성을 위한 선제적인 전략을 평가해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.fooddive.com/news/coca-cola-pepsico-keurig-ingredient-transparency-qr-codes/823802/" target="_blank" rel="noopener">Food Dive →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#ec4899">
+      
+      <span class="article-date">2026-06-25</span>
+      <div class="en-content">
+        <h4>Sprite masterfully unites culture and fans in new hip-hop campaign.</h4>
+        <p>Sprite's &quot;The Living Tracklist&quot; campaign effectively unifies tastemakers and fans to debate hip-hop's greatest hits, leveraging packaging, social content, and a digital experience to establish a genre canon. This demonstrates a powerful strategy for CPG brands to authentically engage specific cultural communities and drive deep consumer connection beyond traditional advertising. Mars should explore similar culture-led initiatives for brands like 스키틀즈(Skittles) or 엠앤엠즈(M&amp;M's) to create relevant, community-driven experiences in Asia.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>스프라이트(Sprite), 힙합 캠페인으로 문화와 팬 탁월하게 연결.</h4>
+        <p>스프라이트(Sprite)의 &quot;The Living Tracklist&quot; 캠페인은 패키징, 소셜 콘텐츠 및 디지털 경험을 활용하여 힙합 장르의 정전을 확립하며, 영향력 있는 인물들과 팬들을 효과적으로 결합하여 힙합 명곡에 대한 논의를 이끌어냅니다. 이는 FMCG 브랜드가 특정 문화 커뮤니티와 진정성 있게 소통하고 전통적인 광고를 넘어 깊은 소비자 관계를 구축하는 강력한 전략을 보여줍니다. 마즈(Mars)는 아시아에서 스키틀즈(Skittles) 또는 엠앤엠즈(M&amp;M's)와 같은 브랜드에 대해 유사한 문화 중심 이니셔티브를 모색하여 관련성 있고 커뮤니티 주도적인 경험을 창출해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.marketingdive.com/news/sprite-unites-tastemakers-and-fans-to-debate-hip-hops-greatest-hits/823546/" target="_blank" rel="noopener">Marketing Dive →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#10b981">
+      <span class="cat-icon">📈</span>
+      <h3><span class="en-content">Brand Activation &amp; Sales Surge</span><span class="kr-content" style="display:none">브랜드 액티베이션 &amp; 매출 급증</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">While premiumization and flavor enjoyment continue to drive FMCG growth in Asia, the rapidly accelerating GLP-1 weight-loss trend demands urgent strategic adaptation of our snacking portfolio and marketing narratives.</span><span class="kr-content" style="display:none">아시아에서 프리미엄화와 맛에 대한 즐거움이 FMCG 성장을 주도하는 동안, 급속히 확산되는 GLP-1 체중 감량 트렌드는 스낵 포트폴리오와 마케팅 메시지의 긴급한 전략적 조정을 요구합니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#10b981">
+      
+      <span class="article-date">2026-06-26</span>
+      <div class="en-content">
+        <h4>Asia FMCG: Premiumization fuels ITC's $2Bn packaged foods growth</h4>
+        <p>ITC's packaged food business surpassed $2 billion in FY26, with overall FMCG consumer spending in India reaching Rs 37,000 crore, driven by premium product launches. This highlights a strong consumer appetite for value-added, premium offerings in key Asian markets, signaling an opportunity for higher-margin products. Mars Asia Snacking should accelerate its premium portfolio development and localized innovation to capture this growth segment and stay competitive.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>아시아 FMCG: ITC, 프리미엄화 전략으로 $20억 규모 포장식품 성장</h4>
+        <p>ITC의 포장식품 사업은 2026 회계연도에 20억 달러를 돌파했으며, 인도 내 FMCG 소비 지출은 37,000 크로어를 기록했고 이는 프리미엄 제품 출시가 주도했습니다. 이는 아시아 주요 시장에서 부가가치가 높은 프리미엄 제품에 대한 강력한 소비자 수요를 보여주며, 고마진 제품에 대한 기회를 시사합니다. 마즈 아시아 스낵킹은 이러한 성장 부문을 포착하고 경쟁력을 유지하기 위해 프리미엄 포트폴리오 개발과 현지화된 혁신을 가속화해야 합니다.</p>
+      </div>
+      <div class="metric">📊 $2 billion in revenue</div>
+      <a class="source-link" href="https://economictimes.indiatimes.com/industry/cons-products/fmcg/itcs-packaged-foods-business-crosses-2-billion-in-revenue/articleshow/132018948.cms" target="_blank" rel="noopener">The Economic Times →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      
+      <span class="article-date">2026-06-25</span>
+      <div class="en-content">
+        <h4>McCormick's strong flavor sales affirm resilient consumer spending</h4>
+        <p>McCormick, a global leader in flavor, reported strong second-quarter performance and reaffirmed its 2026 outlook. This indicates that despite broader economic pressures, consumers are still investing in enhancing their food experiences, supporting categories that offer flavor innovation and culinary enjoyment. Mars should leverage this trend by amplifying the unique flavor profiles of its Snickers, M&amp;M's, Twix, Skittles, Pringles, and Dove chocolate brands and exploring new usage occasions.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>맥코믹 향신료 매출 호조, 소비자 지출 탄력성 확인</h4>
+        <p>세계적인 향신료 기업 맥코믹은 2분기 강력한 실적을 발표하며 2026년 전망을 재확인했습니다. 이는 전반적인 경제 압력에도 불구하고 소비자들이 여전히 음식 경험 향상에 투자하고 있으며, 풍미 혁신과 미식의 즐거움을 제공하는 카테고리를 지지하고 있음을 시사합니다. 마즈는 스니커즈, 엠앤엠즈, 트윅스, 스키틀즈, 프링글스, 다브 초콜릿 브랜드의 독특한 풍미 프로파일을 강조하고 새로운 소비 상황을 탐색함으로써 이러한 트렌드를 활용해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.prnewswire.com/news-releases/mccormick-reports-strong-second-quarter-performance-and-reaffirms-2026-outlook-302810606.html" target="_blank" rel="noopener">PR Newswire →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      
+      <span class="article-date">2026-06-25</span>
+      <div class="en-content">
+        <h4>GLP-1 weight-loss era fundamentally reshaping consumer behavior</h4>
+        <p>Retail experts discuss how the GLP-1 weight-loss era is creating 'fit volatility,' impacting not just clothing but broader consumer purchasing habits across categories. This trend is a significant long-term disruptor for the snacking industry, driving a heightened focus on health, wellness, and mindful consumption. Mars Asia Snacking must proactively adapt product portfolios, portion sizes, and marketing messages for brands like Snickers, M&amp;M's, and Pringles to align with evolving consumer priorities in this new health-conscious landscape.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>GLP-1 체중 감량 시대, 소비자 행동의 근본적 재편</h4>
+        <p>소매 전문가들은 GLP-1 체중 감량 시대가 의류뿐만 아니라 광범위한 카테고리의 소비자 구매 습관에 영향을 미치는 '핏 변동성'을 야기하고 있다고 논의합니다. 이 트렌드는 스낵 산업에 중요한 장기적 변화를 가져오며, 건강, 웰니스, 의식적인 소비에 대한 높은 집중을 유도합니다. 마즈 아시아 스낵킹은 스니커즈, 엠앤엠즈, 프링글스 등 브랜드의 제품 포트폴리오, 포션 크기 및 마케팅 메시지를 이러한 새로운 건강 중심 환경에서 변화하는 소비자 우선순위에 맞춰 선제적으로 조정해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.retaildive.com/news/podcast-the-backroom-glp1-weight-loss-era-not-just-selling-clothes/823700/" target="_blank" rel="noopener">Retail Dive →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#f59e0b">
+      <span class="cat-icon">🏆</span>
+      <h3><span class="en-content">Award-Winning Campaigns</span><span class="kr-content" style="display:none">수상 마케팅 성공 사례</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Award-winning campaigns at Cannes increasingly demonstrate a blend of human-centric creativity and data-driven effectiveness, with AI enhancing, not replacing, the strategic power of authentic storytelling.</span><span class="kr-content" style="display:none">칸 라이언즈 수상작들은 인간 중심의 창의성과 데이터 기반 효율성의 조화를 보여주며, AI가 진정성 있는 스토리텔링의 전략적 힘을 대체하기보다 강화하는 추세입니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#f59e0b">
+      
+      <span class="article-date">2026-06-25</span>
+      <div class="en-content">
+        <h4>Grand Prix Winners Highlight Data-Driven Creativity and Proven Effectiveness.</h4>
+        <p>Cannes Lions Day Three awarded Grand Prix in Data &amp; Analytics to a beer brand for leveraging data for creative impact, and Creative Effectiveness to another for demonstrable results. This signifies that winning campaigns not only captivate but are also built on robust data strategies and deliver measurable business outcomes, aligning creativity with commercial success. Mars brands should prioritize data-driven insights to fuel creative development and rigorously measure campaign ROI to stand out.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>그랑프리 수상작, 데이터 기반 창의성과 입증된 효율성 강조.</h4>
+        <p>칸 라이언즈 셋째 날, 데이터 기반 분석을 통해 창의적 영향을 입증한 맥주 브랜드와 입증된 성과를 보인 다른 브랜드가 각각 데이터 &amp; 애널리틱스 및 크리에이티브 효율성 부문 그랑프리를 수상했습니다. 이는 수상작들이 단순한 매력 이상으로 강력한 데이터 전략 위에 구축되며 측정 가능한 비즈니스 성과를 제공함을 의미하며, 창의성과 상업적 성공을 연결합니다. 마즈 브랜드는 데이터 기반 인사이트를 우선하여 창의성을 개발하고 캠페인 ROI를 엄격하게 측정하여 두각을 나타내야 합니다.</p>
+      </div>
+      <div class="metric">📊 Data &amp; Analytics Grand Prix, Creative Effectiveness Grand Prix</div>
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMioAFBVV95cUxQWlZPX2tXU0RTbm1mVGFxRWhRV0RZNTBYNHBXcjZyNG9VbzBlOF95ZWJHN1o0Qm9rbHdqTFE0Y0UwcVBoc3JWYnN6Mm93OWFQVkh4b1E3Z0szMU80ZUgzLWs2aU1RbFNpVENLb2pDNzh5Q0pXY3ZvNGRKaUxnQmJCMGs4aGI5cTdPeFJCRHdoX3IzRXJPZTJBa0c4ak9zSlBq?oc=5" target="_blank" rel="noopener">MediaNews4U →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#f59e0b">
+      
+      <span class="article-date">2026-06-28</span>
+      <div class="en-content">
+        <h4>Creators Drive Cannes Success, AI Augmenting Human Ingenuity.</h4>
+        <p>Cannes Lions 2026 underscored a strong emphasis on the role of individual &quot;creators&quot; and creative storytelling in award-winning campaigns, even as AI increasingly supports content generation. This highlights a strategic pivot back to authentic human connection and narrative power, where AI serves as an amplification tool rather than a replacement for core creativity. Mars leadership should empower creative teams, invest in unique storytelling, and explore AI applications that enhance, not dilute, brand voice and emotional resonance.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>크리에이터 중심 칸 성공, AI는 인간 독창성 강화.</h4>
+        <p>칸 라이언즈 2026에서는 AI가 콘텐츠 생성에 점차 지원됨에도 불구하고, 수상작 캠페인에서 개별 '크리에이터'와 창의적 스토리텔링의 역할이 강력히 강조되었습니다. 이는 AI가 핵심 창의성을 대체하기보다 증폭 도구로 사용되며, 진정한 인간적 연결과 서사적 힘으로의 전략적 전환을 보여줍니다. 마즈 리더십은 창의적 팀을 강화하고, 독특한 스토리텔링에 투자하며, 브랜드 목소리와 정서적 공감을 희석시키지 않고 향상시키는 AI 적용 방안을 모색해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMikgJBVV95cUxPWk92Vmgxei1UTUR4SnFZaWlMcDRNX29TMWVCZWFzUGhKd3o3ZHlzWkJRdTZrdGN1M0VicjlFOUVlSUEtUnZJcS0wMC10SG5fTk9lSXQ0dFFzaUdIQWFxb2ttaHNyRlI2RDBINnEyV3c4bEF0U3pvWnlCUldIVnNMVUpQa3V3MEEwOTU0VGdpOHBQWVprNGZVTVUzSkNYSnZvNHJ5YURibnZFVXJ1UkpYMWhsWWV4TnltSmdXYVl0N1NYYlJ0c0EzRUtUdTBFcnBBNGdWMkFJc0lrMmNnWW1HeWhXSmdEaWlQd0l0ZEs4WF9wbThDemlOekhvbnBPcFRKNTlPQUU4QURTYXNrX3h0Qk930gGXAkFVX3lxTE9NSnpPRW5wTU8yYVo1S0U4bVZJWjRNS0pVbVloYVNLYS1GUzNPcWhPeDV1MTFBOVV4X2xvWjZCTzFOSWZhR09xWmMxX1otUkVnTGRDYTJ1cWxhT29CMGVwRFA5WnhqRVIzZEVnQjJCNWs1c0ExeE9DZWxYeGh0RlNmTGc5Y2pwNFdfZWJqLWpZQUYyY3NfejFKSnBINEI4UzJDSkFnalRIaW5WWlp1cTJ3SUlDLVZKWnE2NGYxdnlBQnNhY2djc1ZyUUJIbTloTnQxZE5SZktyb2RxRnZRaFJYUW5PX0lGb0tSMV8zN09ZZEVrQk9MWnpPS0N0QlNmN3JvOURMUm5lY3dCVDdyZkZGZUFvYzBTcw?oc=5" target="_blank" rel="noopener">The Australian →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#6366f1">
+      <span class="cat-icon">🎓</span>
+      <h3><span class="en-content">Byron Sharp &amp; Laws of Growth</span><span class="kr-content" style="display:none">바이런 샤프 &amp; 성장의 법칙</span><span class="global-badge">Global</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">In an increasingly noisy marketplace, strategically reinforcing mental availability and distinctive brand assets is key to growth, transcending mere sponsorship or generic advertising spend.</span><span class="kr-content" style="display:none">점점 더 시끄러워지는 시장에서, 정신적 유용성과 차별적 브랜드 자산을 전략적으로 강화하는 것이 단순한 후원이나 일반적인 광고 지출을 넘어 성장의 핵심입니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#6366f1">
+      <span class="subsection-badge en-content">Mental Availability</span><span class="subsection-badge kr-content" style="display:none">멘탈 어베일러빌리티</span>
+      <span class="article-date">2026-06-26</span>
+      <div class="en-content">
+        <h4>Podcast reveals forgotten brands suffer from weak mental associations.</h4>
+        <p>Ulli Appelbaum's podcast delves into how brand associations are formed, strengthened, and measured to drive business growth, underscoring that forgotten brands lack these crucial mental connections. This exemplifies Mental Availability by emphasizing the need for robust brand-category links and salience in consumers' minds. For Mars Asia Snacking, this means continuously investing in creative and media that reinforces relevant Category Entry Points for brands like 스니커즈 (Snickers) or 엠앤엠즈 (M&amp;M's) to ensure they are easily recalled in diverse consumption occasions.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>팟캐스트, 잊혀진 브랜드는 약한 정신적 연관성으로 고통받음을 드러내다.</h4>
+        <p>울리 아펠바움의 팟캐스트는 브랜드 연관성이 어떻게 형성, 강화, 측정되어 사업 성장을 주도하는지 깊이 다루며, 잊혀진 브랜드들은 이러한 중요한 정신적 연결고리가 부족하다는 점을 강조합니다. 이는 소비자의 마음에 강력한 브랜드-카테고리 연결 및 현저성이 필요함을 강조함으로써 멘탈 어베일러빌리티를 예시합니다. 마즈 아시아 스낵킹의 경우, 스니커즈 (Snickers) 또는 엠앤엠즈 (M&amp;M's)와 같은 브랜드가 다양한 소비 상황에서 쉽게 상기되도록 관련 카테고리 진입점(CEP)을 강화하는 크리에이티브 및 미디어에 지속적으로 투자해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://justcreative.com/brand-associations/" target="_blank" rel="noopener">Just Creative →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#6366f1">
+      <span class="subsection-badge en-content">Distinctive Brand Assets</span><span class="subsection-badge kr-content" style="display:none">차별적 브랜드 자산</span>
+      <span class="article-date">2026-06-26</span>
+      <div class="en-content">
+        <h4>Non-sponsors win World Cup with authentic branding, not just spend.</h4>
+        <p>Brands like 나이키 (Nike) and 리바이스 (Levi's) are succeeding in World Cup advertising without official sponsorship, indicating that consumers respond to &quot;authentic branding.&quot; This highlights the power of Distinctive Brand Assets and a consistent brand identity in cutting through noise and ensuring recognition, even in highly competitive advertising environments. Mars Asia Snacking should ensure all campaign assets consistently utilize and reinforce strong distinctive brand assets (e.g., 스니커즈 (Snickers) 로고, 엠앤엠즈 (M&amp;M's) 캐릭터, 트윅스 (Twix) 핑거) to create immediate recognition and reinforce brand equity.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>비후원 브랜드, 단순 지출 아닌 진정성 있는 브랜딩으로 월드컵에서 승리하다.</h4>
+        <p>나이키 (Nike) 및 리바이스 (Levi's)와 같은 브랜드들이 공식 후원 없이 월드컵 광고에서 성공을 거두고 있으며, 이는 소비자들이 &quot;진정성 있는 브랜딩&quot;에 반응한다는 것을 시사합니다. 이는 매우 경쟁적인 광고 환경에서도 차별적 브랜드 자산과 일관된 브랜드 아이덴티티가 소음을 뚫고 인식을 확보하는 힘을 보여줍니다. 마즈 아시아 스낵킹은 모든 캠페인 자산이 스니커즈 (Snickers) 로고, 엠앤엠즈 (M&amp;M's) 캐릭터, 트윅스 (Twix) 핑거와 같은 강력한 차별적 브랜드 자산을 일관되게 활용하고 강화하여 즉각적인 인식을 만들고 브랜드 자산을 강화해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.cnbc.com/2026/06/26/world-cup-marketing-levis-nike-taco-bell.html" target="_blank" rel="noopener">CNBC →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#dc2626">
+      <span class="cat-icon">🍫</span>
+      <h3><span class="en-content">Mars &amp; Kellanova Brand News</span><span class="kr-content" style="display:none">마즈 &amp; 켈레노바 브랜드 뉴스</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">The strategic launch of Mars' Trü Frü into frozen snacks highlights a global push into new premium formats, signaling potential future category expansion for Mars Asia Snacking beyond traditional confectionery, while evolving sports marketing insights demand deeper, experiential consumer engagement strategies.</span><span class="kr-content" style="display:none">마즈의 Trü Frü 냉동 스낵 전략적 출시는 프리미엄 신규 포맷에 대한 글로벌 확장 움직임을 보여주며, 마즈 아시아 스낵킹의 전통 제과류를 넘어선 잠재적 카테고리 확장을 시사하고, 동시에 스포츠 마케팅의 변화는 깊이 있는 경험적 소비자 참여 전략을 요구합니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#dc2626">
+      
+      <span class="article-date">2026-06-25</span>
+      <div class="en-content">
+        <h4>Mars Expands Snacking Portfolio with Trü Frü Frozen Launch in Spain</h4>
+        <p>Mars has launched its international brand Trü Frü, known for frozen fruit snacks dipped in chocolate, into the Spanish market. This move signifies Mars' strategic diversification into the growing frozen snack segment and premium indulgence. For Mars Asia Snacking, it highlights the potential for innovation in new formats and categories beyond traditional confectionery, offering insights into future product development and market expansion strategies.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>마즈, 냉동 스낵 Trü Frü 스페인 출시로 스낵 포트폴리오 확장</h4>
+        <p>마즈가 초콜릿 코팅 냉동 과일 스낵 브랜드인 Trü Frü를 스페인 시장에 출시했습니다. 이는 마즈가 성장하는 냉동 스낵 및 프리미엄 인덜전스(indulgence) 부문으로 전략적 다각화를 꾀하고 있음을 보여줍니다. 마즈 아시아 스낵킹에게는 전통적인 제과류를 넘어선 새로운 형태 및 카테고리 혁신의 잠재력을 시사하며, 미래 제품 개발 및 시장 확장 전략에 대한 통찰을 제공합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMivwFBVV95cUxPaFRucjR5NXFJSjltR2M0TmNCY0tHaU92RHh5Tm5jVTIyRXFEYS1sZmw2R3oxNF9OSXJHSy1RWEx2U3lwLU5kZzNrVXVhN3ljYVBOVnZZQ3ZsYzNiWmtyRXU2ZHlQUVNFNXhDRV9EbWlERVo0aXdlOWJjRkhjc3haRTV6Nk15YmVzbjdMOG85U2toYW8tOFdjMTZtRUc2ZFRDMDF6NG4tNmRteFlkOFhneFlWWFFmR25IWS1zbjdza9IBxAFBVV95cUxQNXI2RUtGOF9HYTJvcnl1NFVnd19xQ3VQTWVkRFJsMmV6WDRiU25HRU9LS2ZHeldwOVk1dl9DaEZpVlhYWHM2X2h8dlZxaHlFZk05Sk93UDNuZmY4QkZpX242cGVaVEZXTG1uVE5HX2s2d3pxQkltaFJXbmY4ZXZ6cUJKaVBMSTNDWWE1SG1jZmladDhPZUdQVXJQa2JEcGF3ZXZwaUM3NHhBdnRkZDB5b1FWdXB0ckVHQ0tXbV82dUZWZlJv?oc=5" target="_blank" rel="noopener">Demócrata →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#dc2626">
+      
+      <span class="article-date">2026-06-27</span>
+      <div class="en-content">
+        <h4>Shift Sports Marketing to Memorable Moments, Beyond Awareness</h4>
+        <p>A recent ADWEEK piece argues that effective sports marketing should focus on creating memorable moments and deeper engagement rather than solely on brand awareness. For FMCG snacking brands, this implies a shift from passive logo placement to active, experiential campaigns that connect with consumer passions. Marketing leaders should evaluate current sports sponsorships for depth of engagement and potential for authentic, shareable experiences over mere visibility.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>스포츠 마케팅, 인지도 넘어 '기억에 남는 순간'에 집중하라</h4>
+        <p>ADWEEK 기사는 효과적인 스포츠 마케팅이 단순히 브랜드 인지도를 넘어 기억에 남는 순간과 깊은 참여를 창출하는 데 초점을 맞춰야 한다고 주장합니다. FMCG 스낵 브랜드의 경우, 이는 수동적인 로고 노출에서 소비자의 열정과 연결되는 적극적인 경험 캠페인으로의 전환을 의미합니다. 마케팅 리더들은 현재 스포츠 스폰서십의 참여 깊이와 단순한 가시성을 넘어 진정성 있고 공유 가능한 경험을 제공할 잠재력을 평가해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMipgFBVV95cUxQRWh3REh6NUphdEhacWlBU1lWTVduS0pudEttSnJLUTZEcng2YmdmUzNQVmJQT1FuUUNoOG9oS0JHbGRQcE9RampSZnFPWkx4UExPZXJybXd2OFZheWVqdGRBWGtWUG12YXJBcE1ZcmlPUlNTTi00U3Nma0wtNENmNDJwZjc4eWdPN0I3THpSVkRheDIxZlBWelhZOGt3djcwWi1SM1Nn?oc=5" target="_blank" rel="noopener">ADWEEK →</a>
+    </div></div>
+  </section>
+  </div>
+  <div class="region-panel" id="panel-asia">
+    
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#ec4899">
+      <span class="cat-icon">🔥</span>
+      <h3><span class="en-content">Viral on Social Media</span><span class="kr-content" style="display:none">바이럴 소셜 미디어</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Brands must prioritize authentic, creator-led emotional storytelling to achieve virality and deeper consumer connections across Asia.</span><span class="kr-content" style="display:none">아시아 전역에서 바이럴 효과와 깊은 소비자 유대감을 얻기 위해 브랜드는 진정성 있는 크리에이터 주도 감성 스토리텔링을 우선시해야 합니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#ec4899">
+      
+      <span class="article-date">2026-06-25</span>
+      <div class="en-content">
+        <h4>Creator economy surges: Brands shift budgets from traditional ads.</h4>
+        <p>The Cannes Lions Festival highlighted a significant shift in marketing budgets towards creators and influencers, moving away from traditional ad spend. This trend indicates a growing reliance on authentic, platform-native content for driving engagement and potential virality. Mars Asia Snacking should review current creator strategies and budget allocations to capitalize on this evolving landscape and maintain relevance with target audiences.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>크리에이터 경제 급부상: 브랜드, 전통 광고에서 예산 전환.</h4>
+        <p>칸 라이언즈 페스티벌에서 마케팅 예산이 전통 광고에서 크리에이터 및 인플루언서에게로 크게 전환되고 있음이 강조되었습니다. 이는 참여도와 바이럴 가능성을 높이기 위한 진정성 있는 플랫폼 네이티브 콘텐츠에 대한 의존도가 증가하고 있음을 시사합니다. 마즈 아시아 스낵킹은 변화하는 환경을 활용하고 타겟 고객과의 관련성을 유지하기 위해 현재의 크리에이터 전략과 예산 배분을 검토해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://mumbrella.com.au/creators-have-landed-in-cannes-and-they-are-stealing-budgets-927615" target="_blank" rel="noopener">Mumbrella →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#ec4899">
+      
+      <span class="article-date">2026-06-28</span>
+      <div class="en-content">
+        <h4>Emotional narratives drive viral success in China.</h4>
+        <p>A story of a devoted police dog waiting for its injured handler moved millions online in China, showcasing the immense power of emotional storytelling for virality. This highlights that deep human-animal connection narratives resonate strongly and can achieve massive organic reach in key Asian markets. Mars Asia Snacking can explore incorporating genuine, emotional storytelling into brand campaigns to foster deeper consumer connections and drive social media engagement.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>감성적 스토리텔링, 중국에서 바이럴 성공 견인.</h4>
+        <p>부상당한 핸들러를 기다리는 충성스러운 경찰견 이야기가 중국 온라인에서 수백만 명의 마음을 움직이며, 감성적 스토리텔링의 엄청난 바이럴 파워를 보여주었습니다. 이는 깊은 인간-동물 관계 서사가 강력하게 공명하며 주요 아시아 시장에서 대규모의 유기적 도달을 달성할 수 있음을 시사합니다. 마즈 아시아 스낵킹은 더 깊은 소비자 연결을 구축하고 소셜 미디어 참여를 유도하기 위해 브랜드 캠페인에 진정성 있는 감성적 스토리텔링을 통합하는 방안을 모색할 수 있습니다.</p>
+      </div>
+      <div class="metric">📊 millions online</div>
+      <a class="source-link" href="https://www.scmp.com/news/people-culture/trending-china/article/3358623/devoted-police-dog-moves-millions-china-waiting-injured-handler-refusing-food" target="_blank" rel="noopener">SCMP →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#10b981">
+      <span class="cat-icon">📈</span>
+      <h3><span class="en-content">Brand Activation &amp; Sales Surge</span><span class="kr-content" style="display:none">브랜드 액티베이션 &amp; 매출 급증</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#dc2626">
+      <span class="cat-icon">🍫</span>
+      <h3><span class="en-content">Mars &amp; Kellanova Brand News</span><span class="kr-content" style="display:none">마즈 &amp; 켈레노바 브랜드 뉴스</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  </div>
+  <div class="region-panel" id="panel-korea">
+    
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#ec4899">
+      <span class="cat-icon">🔥</span>
+      <h3><span class="en-content">Viral on Social Media</span><span class="kr-content" style="display:none">바이럴 소셜 미디어</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Korea's hyper-dynamic social media landscape, particularly TikTok and Instagram, is not only setting global Gen Z food trends with rapid lifecycles but also fundamentally reshaping how consumers discover products, demanding extreme agility and a shift to visual-first content strategies from Mars.</span><span class="kr-content" style="display:none">한국의 초역동적인 소셜 미디어 환경, 특히 틱톡과 인스타그램은 빠른 주기의 글로벌 Z세대 식품 트렌드를 설정할 뿐만 아니라 소비자가 제품을 발견하는 방식을 근본적으로 재편하고 있으며, 이는 마즈에게 극도의 민첩성과 시각 중심 콘텐츠 전략으로의 전환을 요구합니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#ec4899">
+      
+      <span class="article-date">2026-06-28</span>
+      <div class="en-content">
+        <h4>Korea: Global Food Trend Incubator with Rapid Viral Cycles</h4>
+        <p>Korea continues to be a global hotbed for viral food trends on TikTok and YouTube, exemplified by Tanghulu shops multiplying from ~50 to &gt;500 in months across Seoul in 2023. This demonstrates Korea's significant influence on global snacking culture and the power of social media to rapidly scale food crazes. However, these trends are highly volatile, reversing just as quickly, demanding extreme agility and quick adaptation from snacking brands.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>한국: 급변하는 바이럴 푸드 트렌드를 주도하는 글로벌 허브</h4>
+        <p>한국은 틱톡과 유튜브를 통해 글로벌 푸드 트렌드를 주도하며, 서울의 탕후루 전문점이 몇 달 만에 약 50개에서 500개 이상으로 급증한 사례로 이를 증명했습니다. 이는 한국이 글로벌 스낵 문화에 미치는 영향력과 소셜 미디어가 식품 유행을 빠르게 확산시키는 힘을 보여줍니다. 그러나 이러한 트렌드는 급격하게 소멸되므로, 스낵 브랜드는 극도의 민첩성과 빠른 적응력을 요구받습니다.</p>
+      </div>
+      <div class="metric">📊 Tanghulu shops ~50 to &gt;500 in months</div>
+      <a class="source-link" href="https://www.franvia.com/2026/06/korea-food-trend-machine-dubai-cookie.html" target="_blank" rel="noopener">Franvia →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#ec4899">
+      
+      <span class="article-date">2026-06-25</span>
+      <div class="en-content">
+        <h4>Gen Z Social Media Trends from Korea are Fast but Fleeting</h4>
+        <p>Korea is a key originator of global Gen Z social media trends, but individual viral moments now fade in weeks, emphasizing the short lifecycle of digital fads. This means 마즈 must shift focus from chasing fleeting viral content to understanding and adapting underlying 'templates' that shape how Gen Z creates content. Marketing leaders should invest in real-time trend monitoring and agile content creation to maintain relevance.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>한국발 Gen Z 소셜 미디어 트렌드, 빠르고 일시적</h4>
+        <p>한국은 글로벌 Z세대 소셜 미디어 트렌드의 주요 발원지이지만, 개별적인 바이럴 순간은 이제 몇 주 안에 사라지며 디지털 유행의 짧은 주기를 강조합니다. 이는 마즈가 일시적인 바이럴 콘텐츠를 쫓는 대신, Z세대가 콘텐츠를 생성하는 방식을 형성하는 근본적인 '템플릿'을 이해하고 적용하는 데 초점을 맞춰야 함을 의미합니다. 마케팅 리더는 관련성 유지를 위해 실시간 트렌드 모니터링 및 민첩한 콘텐츠 제작에 투자해야 합니다.</p>
+      </div>
+      <div class="metric">📊 fade in weeks</div>
+      <a class="source-link" href="https://www.franvia.com/2026/06/korean-digital-trendsetters-global-gen-z-influence.html" target="_blank" rel="noopener">Franvia →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#ec4899">
+      
+      <span class="article-date">2026-06-27</span>
+      <div class="en-content">
+        <h4>Instagram &amp; TikTok Eating into Traditional Discovery Platforms</h4>
+        <p>Instagram and TikTok are increasingly encroaching on traditional information discovery channels like Google Search and Maps, especially among younger demographics. This signals a fundamental shift in how consumers, particularly Gen Z, find products, locations, and information, moving from text-based search to visual and video-first platforms. Snacking brands must re-evaluate their digital presence to prioritize rich, engaging content on these dominant social platforms for visibility and consumer engagement.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>인스타그램 및 틱톡, 전통적 검색 및 지도 플랫폼 잠식</h4>
+        <p>인스타그램과 틱톡이 특히 젊은 층 사이에서 구글 검색 및 지도와 같은 전통적인 정보 탐색 채널을 점점 더 잠식하고 있습니다. 이는 소비자들이, 특히 Z세대가 제품, 장소 및 정보를 찾는 방식이 텍스트 기반 검색에서 시각 및 영상 중심 플랫폼으로 변화하고 있음을 시사합니다. 스낵 브랜드는 가시성과 소비자 참여를 위해 이러한 지배적인 소셜 플랫폼에서 풍부하고 매력적인 콘텐츠를 우선시하도록 디지털 전략을 재평가해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://outstanding.kr/category/news?page=4" target="_blank" rel="noopener">Outstanding.kr →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#10b981">
+      <span class="cat-icon">📈</span>
+      <h3><span class="en-content">Brand Activation &amp; Sales Surge</span><span class="kr-content" style="display:none">브랜드 액티베이션 &amp; 매출 급증</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Brands in Korea are successfully driving sales and engagement through a dual strategy of leveraging massive e-commerce events for sales surges and investing heavily in immersive, lifestyle-aligned experiential marketing to build deeper brand connections.</span><span class="kr-content" style="display:none">한국 브랜드들은 대규모 이커머스 행사를 통한 매출 증대와 몰입형 라이프스타일 기반 체험 마케팅에 대한 적극적인 투자를 통해 고객 참여를 유도하고 깊이 있는 브랜드 관계를 구축하고 있습니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#10b981">
+      
+      <span class="article-date">2026-06-25</span>
+      <div class="en-content">
+        <h4>Musinsa's Record Summer Sale Signals Robust E-commerce Demand</h4>
+        <p>Musinsa's 'Mujinjang Summer Black Friday' event achieved an all-time record, selling 7.75 million units in its latest run. This massive surge demonstrates robust consumer demand for large-scale online sales and deep discounts, particularly for seasonal items. Mars Asia Snacking should evaluate optimizing participation in similar major e-commerce events with strong promotional strategies to capture this demonstrated online purchasing power.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>무신사 역대 최대 여름 세일, 이커머스 강력한 수요 입증</h4>
+        <p>무신사의 '무진장 여름 블랙프라이데이' 행사가 역대 최대인 775만 개의 판매량을 기록했습니다. 이는 대규모 온라인 할인 행사와 깊은 할인에 대한 소비자의 강력한 수요를 보여주며, 특히 시즌성 상품에 대한 구매 욕구를 자극합니다. 마즈 아시아 스낵킹은 유사한 주요 이커머스 이벤트 참여와 강력한 프로모션 전략을 최적화하여 이러한 온라인 구매력을 활용할 방안을 모색해야 합니다.</p>
+      </div>
+      <div class="metric">📊 775만개</div>
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMiWkFVX3lxTE04LW0tc0puXy1xUXhfenVoYlYxQ21IQU5ldnVEWFJKcnpZZldHTmtFMWZzbHFCVkppZVRLQ0ZjRTZXLW5VRURnTEVBdlNhdk9fdlBMOE81U20wUdIBVEFVX3lxTFBhRm1JOUhZbmNLbElOb2lUUWMtVzZETjNSblQ3NVFTWFVoajlKM1dmMC1wdlR3LTZNSDhQR0N6MlVKUFhvcXc3dzRGTzdLajhJZ1FGag?oc=5" target="_blank" rel="noopener">한국경제 →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      
+      <span class="article-date">2026-06-29</span>
+      <div class="en-content">
+        <h4>Food Brands Leverage Running Boom with Immersive Experiential Marketing</h4>
+        <p>The food industry is actively embracing the 'running boom' through experiential marketing, creating 'activation zones' and 'recovery zones' for direct consumer engagement at events. This trend reflects consumers' desire for interactive brand experiences that align with active lifestyles and health-conscious choices. Mars Asia Snacking should explore integrating its brands like 스니커즈 or KIND into wellness-focused events, offering unique, interactive experiences that connect with active consumers.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>식품업계, 러닝 붐 활용 몰입형 체험 마케팅으로 전환</h4>
+        <p>식품업계는 '러닝 붐'에 올라타 체험형 마케팅을 적극 활용하며, 소비자 참여를 위한 '액티베이션 존'과 '리커버리 존'을 운영하고 있습니다. 이는 활동적인 라이프스타일과 건강 지향적 선택에 부합하는 인터랙티브한 브랜드 경험에 대한 소비자의 열망을 보여줍니다. 마즈 아시아 스낵킹은 스니커즈 또는 KIND와 같은 브랜드를 웰니스 중심의 이벤트에 통합하여 활동적인 소비자들과 소통할 수 있는 독특하고 인터랙티브한 경험을 제공하는 방안을 모색해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.sportsseoul.com/news/read/1619230?ref=naver" target="_blank" rel="noopener">스포츠서울 →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      
+      <span class="article-date">2026-06-25</span>
+      <div class="en-content">
+        <h4>Competitor Nongshim Drives New Product Engagement Via Experiential Festa</h4>
+        <p>Nongshim participated in 'MY K-Festa' to promote its new 신라면 로제 (Shin Ramyun Rosé) through diverse experiential activities, allowing attendees to directly taste and interact with the product. This proactive strategy by a key FMCG competitor highlights the effectiveness of direct product experience in new product launches and brand building. Mars Asia Snacking should benchmark such competitor activations, especially for new product introductions or flavor variations, to create impactful consumer touchpoints.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>경쟁사 농심, 체험형 페스타로 신제품 고객 참여 유도</h4>
+        <p>농심은 '마이케이 페스타'에 참가하여 신제품 신라면 로제 (Shin Ramyun Rosé)를 다양한 체험 활동으로 홍보하며, 관람객들이 제품을 직접 맛보고 상호작용하도록 유도했습니다. 핵심 FMCG 경쟁사의 이러한 적극적인 전략은 신제품 출시 및 브랜드 구축에 있어 직접적인 제품 경험의 효과를 강조합니다. 마즈 아시아 스낵킹은 신제품 출시나 새로운 맛 변형 시 이러한 경쟁사 활성화를 벤치마킹하여 영향력 있는 소비자 접점을 구축해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="http://www.queen.co.kr/news/articleView.html?idxno=459251" target="_blank" rel="noopener">queen.co.kr →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#f59e0b">
+      <span class="cat-icon">🏆</span>
+      <h3><span class="en-content">Award-Winning Campaigns</span><span class="kr-content" style="display:none">수상 마케팅 성공 사례</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Winning campaigns in Korea require a dual focus: leveraging advanced behavioral data for precision targeting and optimizing emerging e-commerce channels, while consistently engaging youth with sustained brand communication.</span><span class="kr-content" style="display:none">한국에서 성공적인 캠페인을 위해서는 정밀 타겟팅을 위한 고급 행동 데이터 활용과 새로운 이커머스 채널 최적화, 그리고 지속적인 브랜드 소통으로 젊은층을 꾸준히 공략하는 이중적인 접근이 필수적입니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#f59e0b">
+      
+      <span class="article-date">2026-06-25</span>
+      <div class="en-content">
+        <h4>New Behavioral Data Reveals Deep Consumer &amp; Ad Interaction Insights</h4>
+        <p>A new report highlights the increasing availability of 'real behavioral data' that captures daily consumer actions, including ad exposure. This data offers deeper insights into consumer flows and changes, crucial for effective marketing strategies. For Mars, leveraging such advanced data analytics can significantly enhance campaign targeting and measure actual advertising impact, optimizing media spend and creative development.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>새로운 행동 데이터로 소비자 흐름 및 광고 접점 심층 분석</h4>
+        <p>새로운 보고서는 광고 접촉을 포함한 일상적인 소비자 행동을 포착하는 '실제 행동 데이터'의 가용성이 증가하고 있음을 강조합니다. 이 데이터는 소비자 흐름과 변화에 대한 더 깊은 통찰력을 제공하여 효과적인 마케팅 전략에 필수적입니다. 마즈는 이러한 고급 데이터 분석을 활용하여 캠페인 타겟팅을 크게 개선하고 실제 광고 효과를 측정하여 미디어 지출 및 크리에이티브 개발을 최적화할 수 있습니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.openads.co.kr/content/contentDetail?contsId=19781" target="_blank" rel="noopener">OpenAds →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#f59e0b">
+      
+      <span class="article-date">2026-06-25</span>
+      <div class="en-content">
+        <h4>Temu's Local Seller Program Boosts Small Brands, Including Processed Foods</h4>
+        <p>E-commerce giant Temu is expanding its 'Local Seller Program,' demonstrating traction by boosting numerous small brands, including those in 'processed foods.' One electronics brand reported hundreds of orders, indicating significant sales potential on the platform. This signals an evolving e-commerce landscape where new channels can quickly become relevant for snacking categories, potentially increasing competitive pressure or offering new market access for Mars brands.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>테무 로컬 셀러 프로그램, 가공식품 포함 중소 브랜드 육성</h4>
+        <p>전자상거래 대기업 테무(Temu)가 '로컬 셀러 프로그램'을 확장하며, '가공식품'을 포함한 다수의 중소 브랜드를 육성하며 견인력을 얻고 있습니다. 한 전자제품 브랜드는 수백 건의 주문을 기록했는데, 이는 플랫폼의 상당한 판매 잠재력을 보여줍니다. 이는 스낵 카테고리에 빠르게 관련성을 갖는 새로운 채널의 전자상거래 환경이 진화하고 있음을 나타내며, 경쟁 압력을 높이거나 마즈 브랜드에 새로운 시장 접근을 제공할 수 있습니다.</p>
+      </div>
+      <div class="metric">📊 hundreds of orders</div>
+      <a class="source-link" href="https://en.asiatoday.co.kr/view.php?key=20260625000942133" target="_blank" rel="noopener">AsiaToday →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#f59e0b">
+      
+      <span class="article-date">2026-06-27</span>
+      <div class="en-content">
+        <h4>Coffee Brand Targets Youth with Sustained Communication &amp; Promotions</h4>
+        <p>A leading cup coffee brand is strategically reinforcing its market position by focusing on 're-recognizing the brand to young targets' through consistent brand communication and ongoing promotions. This approach highlights the importance of sustained engagement and tailored messaging to maintain relevance with younger demographics. Mars' snacking brands can apply this learning by investing in continuous, targeted campaigns and promotions to secure long-term loyalty and drive brand salience among youth in Asia.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>컵커피 브랜드, 영타겟 대상 지속적인 소통 및 프로모션 강화</h4>
+        <p>한 선도적인 컵커피 브랜드가 지속적인 브랜드 커뮤니케이션 활동과 프로모션을 통해 '영타겟에게 브랜드를 재인지시키는' 데 중점을 두어 시장 입지를 강화하고 있습니다. 이 접근 방식은 젊은층과의 관련성을 유지하기 위한 지속적인 참여와 맞춤형 메시지의 중요성을 강조합니다. 마즈의 스낵킹 브랜드는 아시아의 젊은층 사이에서 장기적인 충성도를 확보하고 브랜드 인지도를 높이기 위해 지속적이고 타겟팅된 캠페인 및 프로모션에 투자하여 이 학습을 적용할 수 있습니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.maeilholdings.com/ir/pdf/2016_04.pdf" target="_blank" rel="noopener">Maeil Holdings →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#dc2626">
+      <span class="cat-icon">🍫</span>
+      <h3><span class="en-content">Mars &amp; Kellanova Brand News</span><span class="kr-content" style="display:none">마즈 &amp; 켈레노바 브랜드 뉴스</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#e11d48;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="cat-icon">📊</span>
+        <h3>
+          <span class="en-content">Korea Search Trends — Naver DataLab</span>
+          <span class="kr-content" style="display:none">한국 검색 트렌드 — 네이버 데이터랩</span>
+        </h3>
+      </div>
+      <span style="font-size:11px;color:#94a3b8;white-space:nowrap">Jun 25 – Jun 28, 2026</span>
+    </div>
+    <div class="trend-grid">
+      <div class="trend-row">
+        <div class="trend-label">스낵/과자</div>
+        <div class="trend-bar-wrap">
+          <div class="trend-bar" style="width:100%;background:#ef4444;opacity:.85"></div>
+        </div>
+        <div class="trend-score">87.6</div>
+        <div class="trend-change" style="color:#ef4444">▼ -3.2%</div>
+      </div>
+      <div class="trend-row">
+        <div class="trend-label">스니커즈/M&amp;M</div>
+        <div class="trend-bar-wrap">
+          <div class="trend-bar" style="width:83%;background:#6366f1;opacity:.85"></div>
+        </div>
+        <div class="trend-score">72.9</div>
+        <div class="trend-change" style="color:#6366f1">→ +1.6%</div>
+      </div>
+      <div class="trend-row">
+        <div class="trend-label">초콜릿/캔디</div>
+        <div class="trend-bar-wrap">
+          <div class="trend-bar" style="width:77%;background:#10b981;opacity:.85"></div>
+        </div>
+        <div class="trend-score">67.8</div>
+        <div class="trend-change" style="color:#10b981">▲ +13.8%</div>
+      </div>
+      <div class="trend-row">
+        <div class="trend-label">시리얼/그래놀라</div>
+        <div class="trend-bar-wrap">
+          <div class="trend-bar" style="width:59%;background:#ef4444;opacity:.85"></div>
+        </div>
+        <div class="trend-score">52.1</div>
+        <div class="trend-change" style="color:#ef4444">▼ -17.6%</div>
+      </div>
+      <div class="trend-row">
+        <div class="trend-label">껌/젤리</div>
+        <div class="trend-bar-wrap">
+          <div class="trend-bar" style="width:50%;background:#ef4444;opacity:.85"></div>
+        </div>
+        <div class="trend-score">43.4</div>
+        <div class="trend-change" style="color:#ef4444">▼ -2.3%</div>
+      </div>
+    </div>
+    <div class="trend-footnote">
+      <span class="en-content">Naver relative search volume index (0–100). ▲▼ vs. Jun 21 – Jun 24.</span>
+      <span class="kr-content" style="display:none">네이버 상대 검색량 지수 (0–100). ▲▼ Jun 21 – Jun 24 대비.</span>
+    </div>
+  </section>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>
+    <span class="en-content">FMCG Marketing Intelligence Newsletter — Auto-generated weekly</span>
+    <span class="kr-content" style="display:none">FMCG 마케팅 인텔리전스 뉴스레터 — 매주 자동 생성</span>
+  </p>
+</footer>
+
+<script>
+(function(){
+  function setLang(lang){
+    document.querySelectorAll('.en-content').forEach(function(el){
+      el.style.display = lang==='en' ? '' : 'none';
+    });
+    document.querySelectorAll('.kr-content').forEach(function(el){
+      el.style.display = lang==='kr' ? '' : 'none';
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(el){
+      el.classList.remove('active');
+    });
+    var btn = document.getElementById('btn-'+lang);
+    if(btn) btn.classList.add('active');
+    try{ localStorage.setItem('fmcg_lang', lang); }catch(e){}
+  }
+
+  function setRegion(region){
+    document.querySelectorAll('.region-panel').forEach(function(el){
+      el.classList.remove('active');
+    });
+    var panel = document.getElementById('panel-'+region);
+    if(panel) panel.classList.add('active');
+    document.querySelectorAll('.region-tab').forEach(function(el){
+      el.classList.remove('active');
+    });
+    var tab = document.querySelector('.region-tab[data-region="'+region+'"]');
+    if(tab) tab.classList.add('active');
+    try{ localStorage.setItem('fmcg_region', region); }catch(e){}
+  }
+
+  window.setLang = setLang;
+  window.setRegion = setRegion;
+
+  var lang = 'en';
+  var region = 'global';
+  try{
+    lang = localStorage.getItem('fmcg_lang') || 'en';
+    region = localStorage.getItem('fmcg_region') || 'global';
+  }catch(e){}
+  setLang(lang);
+  setRegion(region);
+})();
+</script>
+</body>
+</html>
