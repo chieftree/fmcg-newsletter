@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FMCG Marketing Intelligence — Wednesday Issue — July 1, 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f4f8;color:#1a202c;line-height:1.6}
+a{color:#4f46e5;text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Header */
+.site-header{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 60%,#0f3460 100%);color:#fff;padding:32px 24px 0}
+.header-inner{max-width:1100px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:8px}
+.site-title{font-size:clamp(20px,4vw,28px);font-weight:700;letter-spacing:-0.5px}
+.site-subtitle{font-size:13px;opacity:.7;margin-top:4px}
+
+/* Language toggle */
+.lang-toggle{display:flex;gap:8px}
+.lang-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;cursor:pointer;transition:all .2s}
+.lang-btn.active,.lang-btn:hover{background:rgba(255,255,255,.9);color:#1a1a2e}
+
+/* Region tabs */
+.region-tabs{display:flex;gap:0;margin-top:24px;border-bottom:none}
+.region-tab{background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.7);padding:12px 24px;font-size:14px;font-weight:500;cursor:pointer;border-radius:8px 8px 0 0;transition:all .2s;margin-right:4px}
+.region-tab.active,.region-tab:hover{background:#fff;color:#1a1a2e}
+
+/* Content area */
+.content-area{max-width:1100px;margin:0 auto;padding:32px 24px 64px}
+.region-panel{display:none}
+.region-panel.active{display:block}
+
+/* Issue label */
+.issue-label{background:#fff;border-radius:0 0 12px 12px;padding:12px 24px;display:inline-block;font-size:13px;color:#64748b;margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.first-issue-badge{background:#f59e0b;color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;margin-left:8px;vertical-align:middle}
+
+/* Category section */
+.category-section{background:#fff;border-radius:12px;padding:24px;margin-bottom:24px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.cat-header{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:2px solid #e2e8f0;margin-bottom:16px}
+.cat-icon{font-size:22px}
+.cat-header h3{font-size:16px;font-weight:700;color:#1e293b}
+.global-badge{font-size:10px;font-weight:600;background:#6366f1;color:#fff;padding:2px 7px;border-radius:10px;margin-left:8px;vertical-align:middle}
+
+/* Section insight */
+.section-insight{font-size:13px;color:#475569;background:#f8fafc;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-style:italic;border-left:3px solid #e2e8f0}
+
+/* Article grid */
+.articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.article-card{border-left:3px solid #ccc;padding:14px 16px;background:#fafafa;border-radius:0 8px 8px 0;transition:box-shadow .2s}
+.article-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.1);background:#fff}
+.article-date{font-size:11px;color:#94a3b8;display:block;margin-bottom:6px}
+.article-card h4{font-size:14px;font-weight:600;color:#1e293b;margin-bottom:6px;line-height:1.4}
+.article-card p{font-size:13px;color:#475569;margin-bottom:10px;line-height:1.6}
+.metric{font-size:12px;font-weight:600;color:#0f766e;background:#f0fdf4;display:inline-block;padding:3px 8px;border-radius:6px;margin-bottom:8px}
+.source-link{font-size:12px;color:#4f46e5;font-weight:500;display:block;margin-top:6px}
+
+/* Subsection badge (Byron Sharp principle labels) */
+.subsection-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;background:#6366f1;color:#fff;display:inline-block;padding:2px 9px;border-radius:10px;margin-bottom:8px}
+
+/* No updates */
+.no-updates{font-size:13px;color:#94a3b8;font-style:italic;padding:8px 0}
+
+/* Footer */
+.site-footer{background:#1a1a2e;color:rgba(255,255,255,.5);text-align:center;padding:32px 24px;font-size:13px}
+.site-footer a{color:rgba(255,255,255,.7)}
+
+/* Trend block */
+.trend-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.trend-row{display:grid;grid-template-columns:130px 1fr 48px 76px;align-items:center;gap:10px}
+.trend-label{font-size:13px;color:#1e293b;font-weight:500}
+.trend-bar-wrap{background:#f1f5f9;border-radius:4px;height:8px;overflow:hidden}
+.trend-bar{height:100%;border-radius:4px}
+.trend-score{font-size:12px;color:#64748b;text-align:right;font-weight:500}
+.trend-change{font-size:12px;font-weight:700;text-align:right}
+.trend-footnote{font-size:11px;color:#94a3b8;margin-top:10px;padding-top:8px;border-top:1px solid #f1f5f9}
+
+@media(max-width:600px){
+  .header-top{flex-direction:column}
+  .articles-grid{grid-template-columns:1fr}
+  .region-tab{padding:10px 14px;font-size:13px}
+  .trend-row{grid-template-columns:90px 1fr 36px 60px;gap:6px}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div>
+        <div class="site-title">FMCG Marketing Intelligence</div>
+        <div class="site-subtitle">
+          <span class="en-content">Global · Asia · Korea — Curated weekly for FMCG marketers</span>
+          <span class="kr-content" style="display:none">글로벌 · 아시아 · 한국 — FMCG 마케터를 위한 주간 큐레이션</span>
+        </div>
+      </div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">🌐 English</button>
+        <button class="lang-btn" id="btn-kr" onclick="setLang('kr')">🇰🇷 한국어</button>
+      </div>
+    </div>
+    <div class="region-tabs">
+      <button class="region-tab active" data-region="global" onclick="setRegion('global')">🌍 Global</button>
+      <button class="region-tab" data-region="asia" onclick="setRegion('asia')">🌏 Asia</button>
+      <button class="region-tab" data-region="korea" onclick="setRegion('korea')">Korea</button>
+    </div>
+  </div>
+</header>
+
+<div class="content-area">
+  <div class="issue-label">
+    <span class="en-content">Wednesday Issue — July 1, 2026</span>
+    <span class="kr-content" style="display:none">2026-07-01 주간</span>
+    
+  </div>
+
+  <div class="region-panel active" id="panel-global">
+    
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#ec4899">
+      <span class="cat-icon">🔥</span>
+      <h3><span class="en-content">Viral on Social Media</span><span class="kr-content" style="display:none">바이럴 소셜 미디어</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">The rapid rise of Biscoff highlights the immense value of organic, virality-driven brand momentum, while the evolving creator economy and TikTok Shop expansion underscore the necessity for Mars to integrate authentic creator partnerships into a seamless, omnichannel commerce strategy across Asia to capture new growth.</span><span class="kr-content" style="display:none">비스코프의 급부상은 유기적이고 바이럴 중심의 브랜드 모멘텀이 가진 막대한 가치를 강조하며, 크리에이터 경제의 진화와 틱톡 샵의 확장은 마즈가 아시아 전역에서 새로운 성장을 포착하기 위해 진정성 있는 크리에이터 파트너십을 원활한 옴니채널 커머스 전략에 통합해야 할 필요성을 보여줍니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#ec4899">
+      
+      <span class="article-date">2026-07-01</span>
+      <div class="en-content">
+        <h4>Biscoff's KES 140 Billion Surge Signals Power of Organic Momentum</h4>
+        <p>Lotus Bakeries' stock surged as Biscoff became a KES 140 billion global phenomenon, indicating massive market growth. This underscores how viral appeal and strong brand affinity can rapidly scale a challenger snack brand to significant valuation. Mars Asia Snacking should analyze underlying drivers for such organic brand momentum to inform our own category strategies.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>비스코프 1,400억 케냐실링 가치 급등, 유기적 모멘텀의 힘 증명</h4>
+        <p>로투스 베이커리 주가가 비스코프의 1,400억 케냐실링 규모 글로벌 현상으로 급등하며 막대한 시장 성장을 나타냈습니다. 이는 바이럴 어필과 강력한 브랜드 선호도가 도전적인 스낵 브랜드를 빠르게 성장시켜 상당한 가치로 이끌 수 있음을 보여줍니다. 마즈 아시아 스낵킹은 이러한 유기적 브랜드 모멘텀의 근본 원인을 분석하여 자사 카테고리 전략에 반영해야 합니다.</p>
+      </div>
+      <div class="metric">📊 KES 140 Billion</div>
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMijwFBVV95cUxNUW04TEFmMG80T1lkcVJRMk01RVp3b19kZlZReDJTTjRPX1ZYQkVGLV8wMjVhZy1iWUFETUc3eTZqVjRCdi1wRC1hSy1CSGEzM2xqX0t3aFVrVjBNYlhrUUJUZFJMLUNXeU1nQTdOUkJuS0pINVZpSjc0SDliV1dEOTNzWTRkWDVkVS1sNEV2NA?oc=5" target="_blank" rel="noopener">streamlinefeed.co.ke →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#ec4899">
+      
+      <span class="article-date">2026-07-01</span>
+      <div class="en-content">
+        <h4>Creator Marketing Expands Beyond Social: Innovate Across Channels</h4>
+        <p>New research highlights that Instagram, TikTok, and YouTube remain dominant for influencer partnerships, but creators are now crucial across retail media and CTV. This signifies an evolution beyond traditional social media engagement, making creators central to full-funnel marketing strategies. Mars must integrate creators into an omnichannel approach, leveraging their authenticity for both brand building and commerce.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>크리에이터 마케팅, 소셜 넘어 채널 확장: 전방위 혁신 필요</h4>
+        <p>새로운 연구에 따르면 인스타그램, 틱톡, 유튜브가 여전히 인플루언서 파트너십에 지배적이지만, 크리에이터는 이제 리테일 미디어와 CTV에서도 핵심적입니다. 이는 전통적인 소셜 미디어 참여를 넘어 크리에이터가 풀-퍼널 마케팅 전략의 중심이 되고 있음을 의미합니다. 마즈는 크리에이터를 옴니채널 접근 방식에 통합하여 브랜드 구축과 커머스 모두에 그들의 진정성을 활용해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://digiday.com/marketing/digiday-research-the-marketers-2026-guide-to-creator-marketing-including-duolingo-ulta-and-youtube/?utm_campaign=digidaydis&amp;utm_medium=rss&amp;utm_source=general-rss" target="_blank" rel="noopener">digiday.com →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#ec4899">
+      
+      <span class="article-date">2026-06-30</span>
+      <div class="en-content">
+        <h4>Ulta's Omnichannel Success: TikTok Shop as Key Growth Driver</h4>
+        <p>Ulta's CMO reveals a growth playbook blending brand building with omnichannel strategies, prominently featuring TikTok Shop and cultural partnerships. This demonstrates TikTok Shop's crucial role in driving sales and engaging consumers within a holistic retail media and social commerce ecosystem. Mars should explore leveraging platforms like 틱톡 샵 for direct-to-consumer sales and cultural relevance across Asia Pacific markets.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>울타의 옴니채널 성공: 틱톡 샵이 핵심 성장 동력</h4>
+        <p>울타의 CMO는 틱톡 샵과 문화 파트너십을 핵심으로 하는 브랜드 구축 및 옴니채널 전략을 통한 성장 비결을 공개했습니다. 이는 틱톡 샵이 전체적인 리테일 미디어 및 소셜 커머스 생태계 내에서 매출을 증대하고 소비자와 소통하는 데 중요한 역할을 한다는 것을 보여줍니다. 마즈는 아시아 태평양 시장에서 직접 소비자 판매 및 문화적 관련성을 위해 틱톡 샵과 같은 플랫폼 활용을 모색해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.marketingdive.com/news/ulta-cmo-on-blending-brand-building-omnichannel-marketing/824056/" target="_blank" rel="noopener">marketingdive.com →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#10b981">
+      <span class="cat-icon">📈</span>
+      <h3><span class="en-content">Brand Activation &amp; Sales Surge</span><span class="kr-content" style="display:none">브랜드 액티베이션 &amp; 매출 급증</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Digital channels like TikTok Shop and creator collaborations are becoming essential for brand growth and innovation, while improving consumer sentiment opens doors for renewed discretionary spending in snacking.</span><span class="kr-content" style="display:none">틱톡 샵과 크리에이터 협업 같은 디지털 채널은 브랜드 성장과 혁신에 필수적이 되고 있으며, 개선된 소비자 심리는 스낵킹 분야에서 재량적 지출 증가의 기회를 제공합니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#10b981">
+      
+      <span class="article-date">2026-06-29</span>
+      <div class="en-content">
+        <h4>TikTok Shop Drives F&amp;B Sales &amp; Innovation, Mars Among Early Adopters</h4>
+        <p>TikTok Shop is emerging as a critical e-commerce and innovation platform for food and beverage brands, with companies like PepsiCo and Mars leveraging its features to boost sales and inform new product development. The platform’s head of food highlighted its growing influence in changing how major players approach market engagement. This indicates a significant shift towards social commerce as a primary sales and R&amp;D channel, demanding agile and responsive brand strategies. Marketing leaders should evaluate increasing investment in TikTok Shop for direct-to-consumer sales and real-time consumer insights in Asia Pacific.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>틱톡 샵, 식음료 판매 및 혁신 주도 — 마즈 등 선도적 활용</h4>
+        <p>틱톡 샵이 식음료 브랜드의 핵심 전자상거래 및 혁신 플랫폼으로 부상하고 있으며, 펩시코와 마즈 같은 기업들이 판매 증대 및 신제품 개발에 활용하고 있습니다. 틱톡 음식 부문 책임자는 이 플랫폼이 주요 플레이어들의 시장 접근 방식을 변화시키고 있다고 강조했습니다. 이는 소셜 커머스가 주요 판매 및 R&amp;D 채널로 전환되고 있음을 시사하며, 민첩하고 반응적인 브랜드 전략이 필요합니다. 마케팅 리더는 아시아 태평양 지역에서 D2C 판매 및 실시간 소비자 인사이트를 위해 틱톡 샵에 대한 투자를 늘리는 것을 고려해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.fooddive.com/news/big-food-companies-tik-tok-shop/823959/" target="_blank" rel="noopener">Food Dive →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      
+      <span class="article-date">2026-07-01</span>
+      <div class="en-content">
+        <h4>Unilever's Vaseline Soars Via Creators: A New Activation Blueprint</h4>
+        <p>Unilever's 155-year-old Vaseline brand has become one of its fastest-growing brands, largely attributed to the effective use of creators who bring flexibility in execution and culture. Unilever's CMO emphasized the importance of brands knowing what they stand for while remaining agile in their marketing approach. This highlights the creator economy's power in driving rapid brand growth and relevance, offering a compelling model for revitalizing established brands. Mars Asia Snacking should benchmark Unilever's success to refine its own creator-led activation strategies across its portfolio.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>유니레버 바세린, 크리에이터로 급성장 — 새로운 활성화 전략</h4>
+        <p>유니레버의 155년 된 바세린 브랜드가 크리에이터들의 효과적인 활용 덕분에 가장 빠르게 성장하는 브랜드 중 하나가 되었습니다. 유니레버 CMO는 브랜드가 자신의 가치를 알면서도 마케팅 접근 방식에 유연성을 유지하는 것의 중요성을 강조했습니다. 이는 크리에이터 경제가 브랜드 성장을 가속화하고 관련성을 높이는 강력한 힘을 가지고 있음을 보여주며, 기존 브랜드 활성화를 위한 매력적인 모델을 제시합니다. 마즈 아시아 스낵킹은 유니레버의 성공을 벤치마킹하여 자체 크리에이터 기반 활성화 전략을 개선해야 합니다.</p>
+      </div>
+      <div class="metric">📊 Unilever's fastest growing brands</div>
+      <a class="source-link" href="https://www.businessinsider.com/unilever-leandro-barreto-cmo-cannes-lions-2026-7" target="_blank" rel="noopener">Business Insider →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      
+      <span class="article-date">2026-06-30</span>
+      <div class="en-content">
+        <h4>Consumer Sentiment Rises: Inflation Peak Signals Market Opportunity</h4>
+        <p>U.S. consumer sentiment has risen from a record low, driven by the prospect of lower inflation, with economists suggesting inflation likely peaked in May following the 'war in Iran energy shock.' This shift signals a potential easing of consumer spending constraints and a return of confidence. For FMCG and snacking brands, improved consumer sentiment could translate into higher discretionary spending and openness to premium products. Marketing leaders should prepare for potential shifts in consumer purchasing behavior, focusing on value messaging and brand loyalty building as economic conditions stabilize.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>소비자 심리 개선: 인플레이션 정점 시사, 시장 기회 부상</h4>
+        <p>미국의 소비자 심리가 최저치에서 상승했으며, 낮은 인플레이션 전망이 주요 원인으로, 경제학자들은 '이란 전쟁 에너지 충격' 이후 5월에 인플레이션이 정점을 찍었을 가능성이 있다고 분석합니다. 이러한 변화는 소비자 지출 제약 완화 및 신뢰 회복 가능성을 시사합니다. FMCG 및 스낵 브랜드의 경우, 소비자 심리 개선은 더 높은 재량 지출 및 프리미엄 제품에 대한 개방성으로 이어질 수 있습니다. 마케팅 리더는 경제 상황이 안정화됨에 따라 소비자 구매 행동의 잠재적 변화에 대비하고, 가치 메시징 및 브랜드 충성도 구축에 집중해야 합니다.</p>
+      </div>
+      <div class="metric">📊 Inflation likely peaked in May</div>
+      <a class="source-link" href="https://www.retaildive.com/news/consumer-sentiment-record-low-prospect-lower-inflation-fed/823953/" target="_blank" rel="noopener">Retail Dive →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#6366f1">
+      <span class="cat-icon">🎓</span>
+      <h3><span class="en-content">Byron Sharp &amp; Laws of Growth</span><span class="kr-content" style="display:none">바이런 샤프 &amp; 성장의 법칙</span><span class="global-badge">Global</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Successful brands across categories consistently prioritize broad mental availability, extensive physical presence, and memorable distinctive assets to drive growth.</span><span class="kr-content" style="display:none">모든 카테고리의 성공적인 브랜드는 성장을 촉진하기 위해 광범위한 멘탈 어베일러빌리티, 광범위한 물리적 존재감, 그리고 기억에 남는 차별적 자산을 일관되게 우선시합니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#6366f1">
+      <span class="subsection-badge en-content">Mental Availability</span><span class="subsection-badge kr-content" style="display:none">멘탈 어베일러빌리티</span>
+      <span class="article-date">2026-06-30</span>
+      <div class="en-content">
+        <h4>HUL's continuous reinvention highlights mental availability's market leadership role.</h4>
+        <p>HUL, India's largest FMCG company, is actively &quot;reinventing marketing&quot; according to its Chairman Nitin Paranjpe. This exemplifies the ongoing, critical effort required for brands to maintain and grow mental availability by adapting to new consumer behaviors and ensuring consistent presence across numerous category entry points. Mars snacking brands must similarly evolve their marketing strategies to stay top-of-mind in Asia's dynamic, diverse markets.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>HUL의 지속적인 마케팅 혁신은 멘탈 어베일러빌리티의 중요성을 강조합니다.</h4>
+        <p>인도 최대 FMCG 기업인 HUL은 니틴 파란즈페 회장의 말에 따르면 &quot;마케팅을 재정비&quot;하고 있습니다. 이는 변화하는 소비자 행동에 적응하고 수많은 카테고리 진입점에서 일관된 존재감을 확보하여 브랜드가 멘탈 어베일러빌리티를 유지하고 성장시키는 데 필요한 지속적이고 중요한 노력을 보여줍니다. 마즈 스낵킹 브랜드도 아시아의 역동적이고 다양한 시장에서 항상 기억되도록 마케팅 전략을 유사하게 발전시켜야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMi3gFBVV95cUxPcFJaa05RbktLVGptMXpfWVQ5d00tQWdRVmd3aWczQ3E5dzdMclh3TUVnY0g5ZUI1cmdrR2g2T2xiMEV3RndnRnR3eVgxX2ozSnhZSGgzc3RuN0ZZWDZIZGVMNjItMmVmcklZb1duanlGVlpFTlF5Y3YtTVJLMWNqWXpfRnhKb0lIVzBFejdwckVmbWVKVDZPbzg0amVLOHZTZ0tOLTJIMzhva2dKdVRRNjlrYzJsQVlFZm1vbjhNN0h5eFdtajhQWmItZmNkd1FFcU9rRjV0SlpXMjdSS3fSAeMBQVVfeXFMT3J0VUw4VjAteHZNbjJKUWU5TEpTMkVhR1ZKaWdrb1lGUzMySmVSV0hZaHVETHhhNFVTZEFVVWFtX2FmLUk1OEp1TnRYeEJDaUc0VVBtN1RTSjd5bG5VVFlMSTRoQjU0V0ZGejhlR2lvRVFpS1pwOWs5Qlh0MEl1SkVhNmN2bkgwOEY5ZW91UG1Ib1k4RnFtVlNRakpQNDBjWE4zWEhFanVpMllmV2xRYWhGamtLX0twZlg1elFNQ1hLZ3BwU3g2VWgwcFJRdEZzMnR6THlhcDdKamlMNTY4cXRGRFU?oc=5" target="_blank" rel="noopener">Storyboard18 →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#6366f1">
+      <span class="subsection-badge en-content">Physical Availability</span><span class="subsection-badge kr-content" style="display:none">피지컬 어베일러빌리티</span>
+      <span class="article-date">2026-06-29</span>
+      <div class="en-content">
+        <h4>Weber Blackstone proves market leadership through superior physical availability.</h4>
+        <p>Weber Blackstone's CEO Roger Dahle has led the company to become &quot;the biggest name in grilling.&quot; This achievement strongly demonstrates the power of extensive physical availability, ensuring products are easily found and purchased in all relevant channels. Mars snacking brands should prioritize robust distribution networks and strong shelf presence to dominate their categories and reach more buyers.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>웨버 블랙스톤은 뛰어난 피지컬 어베일러빌리티로 시장을 선도합니다.</h4>
+        <p>웨버 블랙스톤의 로저 달 CEO는 회사를 &quot;그릴링 분야에서 가장 큰 이름&quot;으로 만들었습니다. 이 성과는 제품이 모든 관련 채널에서 쉽게 발견되고 구매될 수 있도록 하는 광범위한 피지컬 어베일러빌리티의 힘을 강력하게 보여줍니다. 마즈 스낵킹 브랜드는 카테고리를 장악하고 더 많은 구매자에게 도달하기 위해 강력한 유통망과 확실한 매대 존재감을 우선시해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.theverge.com/podcast/958790/weber-blackstone-ceo-roger-dahle-grilling-griddles-merger-outdoor-cooking" target="_blank" rel="noopener">The Verge →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#6366f1">
+      <span class="subsection-badge en-content">Distinctive Brand Assets</span><span class="subsection-badge kr-content" style="display:none">차별적 브랜드 자산</span>
+      <span class="article-date">2026-07-01</span>
+      <div class="en-content">
+        <h4>Great marketing mascots enhance brand recognition and emotional connection.</h4>
+        <p>The Drum highlights that effective marketing mascots foster strong brand recognition, create emotional connections, and build memorability. This underscores the power of distinctive brand assets (DBAs) like mascots in cutting through clutter and quickly identifying a brand. Mars snacking brands should continuously invest in and refresh their iconic characters and visual elements to ensure immediate recognition and reinforce positive associations.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>훌륭한 마케팅 마스코트는 브랜드 인지도와 감정적 연결을 강화합니다.</h4>
+        <p>더 드럼은 효과적인 마케팅 마스코트가 강력한 브랜드 인지도를 높이고, 감정적인 연결을 만들고, 기억력을 향상시킨다고 강조합니다. 이는 혼란 속에서 브랜드를 빠르게 식별하고 주목도를 높이는 마스코트와 같은 차별적 브랜드 자산(DBA)의 힘을 강조합니다. 마즈 스낵킹 브랜드는 즉각적인 인지도를 확보하고 긍정적인 연상을 강화하기 위해 상징적인 캐릭터와 시각적 요소에 지속적으로 투자하고 새롭게 해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMieEFVX3lxTE5KTmx0VnVYSHRYUUxMWEZOUkM1ZjhpT0dXdjBqNGoyMTl6clBEbC1sZFR0aDh3MjVEWUZ3d3VVbG1STGZ3WEdmLTNlWFdoY1dXQks1MDYzbHNmRC05MjBVZmd6WHZXS1pIVFJ0dXJfdll1RnMtVFRxRA?oc=5" target="_blank" rel="noopener">The Drum →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#dc2626">
+      <span class="cat-icon">🍫</span>
+      <h3><span class="en-content">Mars &amp; Kellanova Brand News</span><span class="kr-content" style="display:none">마즈 &amp; 켈레노바 브랜드 뉴스</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Mars Asia Snacking must strategically address both competitive moves in convenient formats and the fundamental shift towards AI-centric marketing to secure future growth.</span><span class="kr-content" style="display:none">마즈 아시아 스낵킹은 미래 성장을 위해 경쟁사의 간편식 확장과 AI 중심 마케팅으로의 근본적인 전환이라는 두 가지 전략적 과제를 해결해야 합니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#dc2626">
+      
+      <span class="article-date">2026-06-30</span>
+      <div class="en-content">
+        <h4>Kellanova Expands Grab &amp; Go Breakfast with New Eggo Waffles in US.</h4>
+        <p>Kellanova has launched Eggo Grab &amp; Go Liege-Style Waffles, a ready-to-eat breakfast item, in the US market. This move highlights a clear competitive focus on convenience and on-the-go snacking, a rapidly growing segment across all markets, including Asia. Mars Asia Snacking should monitor Kellanova's success and consider similar convenient formats or expansions for its own brands to capture evolving consumer needs.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>켈레노바, 미국 내 에고 와플로 간편식 아침 시장 확장.</h4>
+        <p>켈레노바가 미국 시장에 바로 먹을 수 있는 에고 Grab &amp; Go 리에주 스타일 와플을 출시했습니다. 이는 편의성과 이동 중 스낵킹에 대한 경쟁사의 명확한 집중을 보여주며, 아시아를 포함한 모든 시장에서 빠르게 성장하는 분야입니다. 마즈 아시아 스낵킹은 켈레노바의 성공을 주시하고, 자체 브랜드의 유사한 간편식 형태나 확장을 고려하여 변화하는 소비자 요구를 충족시켜야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMiwAFBVV95cUxONFFhODdLeFE0TXdMRk1kVFFvUHNnNUlSUVU1NWYwQjV5ZVRRcVRnVVhwOE5vMS1QZDdWZHVUdmtxSm5oUkR1ODlTZmw0dGxGWmlXOVc3OXgwTVlLYjRVZzBfUm5VdGx0VUFJRFVzV1dORkxCa0tUMWdHMzZXaG5iLTV0OURYVTRNdzh4UzQxUV9LUmwyb2hEUE01RkNHRnpEWEdGNUYtVGxGY0N5T3FDODVPUHBmaWthdm5falkYTGdE?oc=5" target="_blank" rel="noopener">AD HOC NEWS →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#dc2626">
+      
+      <span class="article-date">2026-06-27</span>
+      <div class="en-content">
+        <h4>Marketers Grapple with AI Visibility: New Imperative for Ad Strategy.</h4>
+        <p>At Cannes Lions, marketers discussed the evolving challenge of making advertising visible and influential to AI chatbots, not just human attention. This signifies a fundamental shift in digital marketing paradigms, where content optimization must now consider AI algorithms and how they mediate consumer discovery. Mars Asia Snacking must invest in understanding and adapting its content strategy to ensure brand visibility and relevance in an AI-driven future.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>마케터들 AI 가시성에 고심: 광고 전략의 새로운 필수 과제.</h4>
+        <p>칸 라이언즈에서 마케터들은 단순히 인간의 주의를 끄는 것을 넘어, AI 챗봇에 광고를 노출하고 영향을 미치는 새로운 과제를 논의했습니다. 이는 콘텐츠 최적화가 AI 알고리즘과 소비자의 발견을 중재하는 방식까지 고려해야 하는 디지털 마케팅 패러다임의 근본적인 변화를 의미합니다. 마즈 아시아 스낵킹은 AI 중심의 미래에서 브랜드 가시성과 관련성을 확보하기 위해 콘텐츠 전략을 이해하고 적용하는 데 투자해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.nytimes.com/2026/06/27/business/dealbook/ai-visibility.html" target="_blank" rel="noopener">The New York Times →</a>
+    </div></div>
+  </section>
+  </div>
+  <div class="region-panel" id="panel-asia">
+    
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#ec4899">
+      <span class="cat-icon">🔥</span>
+      <h3><span class="en-content">Viral on Social Media</span><span class="kr-content" style="display:none">바이럴 소셜 미디어</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Brands are increasingly leveraging diverse social media personalities and existing viral content, from local internet sensations to global K-pop stars, to drive authentic engagement and local relevance across Asia's dynamic digital landscape while competitors actively refresh brand strategies to capture market share.</span><span class="kr-content" style="display:none">브랜드들은 경쟁사들이 시장 점유율 확보를 위해 브랜드 전략을 적극적으로 재정비하는 가운데, 아시아의 역동적인 디지털 환경에서 진정성 있는 참여와 현지 관련성을 유도하기 위해 지역 인터넷 센세이션부터 글로벌 K-팝 스타에 이르기까지 다양한 소셜 미디어 인물과 기존 바이럴 콘텐츠를 활용하고 있습니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#ec4899">
+      
+      <span class="article-date">2026-07-01</span>
+      <div class="en-content">
+        <h4>Flipkart Leverages Viral Animal for GOAT Sale, Boosting Campaign Cut-Through</h4>
+        <p>E-commerce giant Flipkart engaged &quot;Don&quot; the viral buffalo in its new &quot;GOAT Sale&quot; campaign, playfully adding 'Bhains of Luck' to its messaging. This move highlights a growing trend of brands leveraging organic viral internet phenomena and local cultural references to create highly relatable and shareable marketing content. Mars Asia Snacking should explore identifying and integrating local viral sensations or meme culture into targeted campaigns to boost authenticity and immediate consumer engagement, especially in diverse markets like India.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>플립카트, 바이럴 동물 활용해 GOAT 세일 캠페인 차별화 및 효과 증폭</h4>
+        <p>전자상거래 대기업 플립카트가 바이럴 버팔로 &quot;돈&quot;을 'GOAT 세일' 캠페인에 참여시키며 'Bhains of Luck'이라는 유머러스한 메시지를 더했습니다. 이는 브랜드가 유기적으로 발생한 바이럴 인터넷 현상과 지역 문화적 요소를 활용하여 높은 공감대와 공유 가능성을 가진 마케팅 콘텐츠를 만드는 추세가 확산되고 있음을 보여줍니다. 마즈 아시아 스낵킹은 인도와 같이 다양한 시장에서 현지 바이럴 센세이션이나 밈 문화를 캠페인에 통합하여 진정성과 즉각적인 소비자 참여를 유도하는 방안을 모색해야 합니다.</p>
+      </div>
+      <div class="metric">📊 viral buffalo Don</div>
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMiuAFBVV95cUxNWWJoX1M5b1RPaXdtbkJGUURXQzJ4MEtOOXEwTmhQZVlsWjQ5dFJYYzRNWHJoWWI5c3ZaNmJJd0tEUXVjSDZHQ21obnhuWVRiNUtobTZrUldTbmsxX2k5NDIzNFZaYU9PTkV1d253LW1KR2hJM1R0SW5KYXRmbXlScjlSU0k3UXpiTmtqYnh6SWVWclBBdExENWhYWE9GZ1J6dk41YkpQUWRHQ0JRdDZ6cEhmeVh4Q2Jr?oc=3" target="_blank" rel="noopener">marketech apac →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#ec4899">
+      
+      <span class="article-date">2026-07-01</span>
+      <div class="en-content">
+        <h4>Bhuja Relaunch Challenges Snack Category, Eyes Global Mainstream Appeal</h4>
+        <p>Indian-Australian snack brand Bhuja has undergone its first brand overhaul in 40 years, aiming to broaden appeal and capture mainstream Australian consumers with a &quot;global platform&quot; ambition. This significant competitive move signals heightened activity in the snacking category, likely accompanied by substantial social media and digital marketing investments to generate buzz and re-introduce the brand. Mars Asia Snacking should monitor Bhuja's relaunch strategy and its social media engagement closely to understand competitive tactics for market expansion and consumer acquisition, particularly in the savory snack segment.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>부자 스낵 리런칭, 스낵 시장 도전 및 글로벌 주류 시장 공략</h4>
+        <p>인도-호주 스낵 브랜드 부자(Bhuja)가 40년 만에 첫 번째 브랜드 개편을 단행하며, '글로벌 플랫폼'이라는 목표로 호주 주류 소비자의 폭넓은 매력을 확보하고자 합니다. 이러한 중요한 경쟁사의 움직임은 스낵 카테고리 내 활동 증가를 시사하며, 브랜드 리런칭과 홍보를 위한 상당한 소셜 미디어 및 디지털 마케팅 투자가 수반될 것으로 예상됩니다. 마즈 아시아 스낵킹은 부자의 리런칭 전략과 소셜 미디어 참여를 면밀히 주시하여 시장 확장 및 소비자 확보를 위한 경쟁 전술을 이해해야 합니다. 특히 짭짤한 스낵 부문에서 중요합니다.</p>
+      </div>
+      <div class="metric">📊 first brand overhaul in 40 years</div>
+      <a class="source-link" href="https://mumbrella.com.au/bhuja-cmo-on-snack-brands-big-relaunch-this-is-a-global-platform-928039" target="_blank" rel="noopener">mumbrella.com.au →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#ec4899">
+      
+      <span class="article-date">2026-07-01</span>
+      <div class="en-content">
+        <h4>K-Pop Endorsements Drive Buzz for Brands, Crucial for Asia's Youth</h4>
+        <p>Korean fast-food chain Mom's Touch is leveraging the immense popularity of K-pop group Le Sserafim for its re-entry into the Singapore market, featuring them prominently on promotional banners. This strategic move underscores the unparalleled power of K-pop idols to generate significant social media buzz and engage young, digitally-native consumers across Asia. Mars Asia Snacking must continually evaluate opportunities to partner with relevant K-pop artists or integrate K-pop cultural elements to maintain brand relevance and drive viral discussions among key demographics.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>K-팝 엔도스먼트, 브랜드에 대한 버즈 유발, 아시아 젊은 세대에게 필수적</h4>
+        <p>한국 패스트푸드 체인 맘스터치가 K-팝 그룹 르세라핌의 막대한 인기를 활용하여 싱가포르 시장에 재진입하며 홍보 배너에 이들을 크게 내세우고 있습니다. 이러한 전략적 움직임은 K-팝 아이돌이 아시아 전역의 젊고 디지털에 능숙한 소비자들의 참여를 유도하고 상당한 소셜 미디어 버즈를 생성하는 독보적인 힘을 가지고 있음을 보여줍니다. 마즈 아시아 스낵킹은 브랜드 관련성을 유지하고 주요 인구 통계층 사이에서 바이럴 논의를 촉진하기 위해 관련 K-팝 아티스트와 협력하거나 K-팝 문화 요소를 통합할 기회를 지속적으로 평가해야 합니다.</p>
+      </div>
+      <div class="metric">📊 K-pop group Le Sserafim</div>
+      <a class="source-link" href="https://www.channelnewsasia.com/dining/moms-touch-returning-singapore-le-sserafim-6224211" target="_blank" rel="noopener">channelnewsasia.com →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#10b981">
+      <span class="cat-icon">📈</span>
+      <h3><span class="en-content">Brand Activation &amp; Sales Surge</span><span class="kr-content" style="display:none">브랜드 액티베이션 &amp; 매출 급증</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Rapidly evolving Asian consumer palates, driven by both viral online food trends and the global spread of regional cuisines, present clear opportunities for Mars Asia Snacking to innovate with new flavors and textures for brand activation.</span><span class="kr-content" style="display:none">바이럴 온라인 푸드 트렌드와 지역 요리의 세계적 확산으로 빠르게 변화하는 아시아 소비자 입맛은 마즈 아시아 스낵킹에게 브랜드 활성화를 위한 새로운 맛과 질감 혁신의 명확한 기회를 제공합니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#10b981">
+      
+      <span class="article-date">2026-06-29</span>
+      <div class="en-content">
+        <h4>Viral Crunchy Butter Cakes Highlight Power of Social Media Food Trends.</h4>
+        <p>Crunchy, buttery rice cakes have become a major viral sensation online, driving widespread interest and replication in home kitchens globally. This trend underscores the immense power of social media to rapidly activate consumer cravings and preferences for specific textures and flavor profiles. Mars Asia Snacking should monitor such internet-driven food phenomena for inspiration in product development, flavor innovation, and real-time marketing campaigns.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>바이럴 바삭 버터 케이크, 소셜 미디어 푸드 트렌드의 힘 부각.</h4>
+        <p>바삭하고 고소한 버터 라이스 케이크가 온라인에서 큰 바이럴 센세이션을 일으키며, 전 세계적으로 가정 요리에서의 관심과 재현을 이끌고 있습니다. 이 트렌드는 소셜 미디어가 특정 질감과 맛 프로필에 대한 소비자 욕구를 빠르게 활성화시키는 엄청난 힘을 보여줍니다. 마즈 아시아 스낵킹은 이러한 인터넷 기반 푸드 현상을 제품 개발, 플레이버 혁신, 실시간 마케팅 캠페인에 대한 영감으로 활용해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://cooking.nytimes.com/article/how-to-make-crunchy-butter-rice-cakes" target="_blank" rel="noopener">The New York Times Cooking →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      
+      <span class="article-date">2026-06-27</span>
+      <div class="en-content">
+        <h4>Emerging Burmese Cuisine Signals Shifting Asian Consumer Palates.</h4>
+        <p>Burmese cuisine is gaining international visibility and accessibility, driven by an exodus from Myanmar that has expanded its global presence and consumer exposure. This increasing mainstream acceptance of previously niche Asian flavors highlights evolving consumer adventurousness and a growing demand for diverse culinary experiences across the region. Mars Asia Snacking should explore the potential for integrating unique Asian flavor notes into existing brands or new product innovations to tap into these expanding palates.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>부상하는 미얀마 요리, 변화하는 아시아 소비자 입맛의 신호.</h4>
+        <p>미얀마 요리가 미얀마 이주민의 영향으로 국제적인 가시성과 접근성을 얻으며 세계적 인지도를 높이고 있습니다. 이처럼 이전에 틈새 시장이었던 아시아 플레이버들이 주류로 편입되는 경향은 아시아 지역 전반의 소비자 모험심 증가와 다양한 미식 경험에 대한 수요 확대를 시사합니다. 마즈 아시아 스낵킹은 이러한 확장되는 입맛에 맞춰 기존 브랜드나 신제품 혁신에 독특한 아시아 플레이버를 통합할 가능성을 모색해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.nytimes.com/2026/06/27/world/asia/burmese-food-myanmar.html" target="_blank" rel="noopener">The New York Times →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#dc2626">
+      <span class="cat-icon">🍫</span>
+      <h3><span class="en-content">Mars &amp; Kellanova Brand News</span><span class="kr-content" style="display:none">마즈 &amp; 켈레노바 브랜드 뉴스</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Snacking growth vectors are clearly shifting towards convenient, functional options via impulse channels, demanding our portfolio adapt with innovation and targeted distribution.</span><span class="kr-content" style="display:none">스낵 성장 동력은 충동 구매 채널을 통해 편리하고 기능적인 옵션으로 명확히 전환되고 있으며, 이는 당사 포트폴리오의 혁신과 타겟 유통 전략 변화를 요구합니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#dc2626">
+      
+      <span class="article-date">2026-06-30</span>
+      <div class="en-content">
+        <h4>Asia Pacific Energy Bar Market Surges: Health &amp; Convenience Drive Snacking Shift</h4>
+        <p>The Asia Pacific energy bar market is projected for significant growth, driven by increasing health consciousness, active lifestyles, and demand for convenient, nutritious snacks. This trend highlights a broader consumer shift towards functional, on-the-go snacking solutions that our core brands must monitor for competitive threats. Marketing leaders should evaluate how our existing portfolio can either compete with or tap into this 'healthy convenience' trend through product innovation or tailored messaging.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>아태 에너지 바 시장 급성장: 건강과 편의성이 스낵 트렌드 주도</h4>
+        <p>아태 에너지 바 시장이 건강 의식 증대, 활동적인 라이프스타일, 편리하고 영양가 있는 스낵 수요에 힘입어 크게 성장할 것으로 전망됩니다. 이는 기능성, 온더고 스낵 솔루션으로의 광범위한 소비자 트렌드 변화를 의미하며, 당사 핵심 브랜드들은 이를 경쟁 위협으로 면밀히 주시해야 합니다. 마케팅 리더들은 기존 포트폴리오가 '건강한 편의성' 트렌드에 어떻게 대응하거나 활용할 수 있을지, 제품 혁신 또는 맞춤형 메시징을 통해 검토해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMiogFBVV95cUxNRlRjWmhXSVNFQmF2UTQ0TmtMVnZ4VTZzNjh6SUJVUmN6UmdUVGJtSFhGc0EzN2FpNjFNTXc2RzQzalZzOFl5aW5hS2V5UktyM2VpT29WeTVTSkRZMHJCa24wam9lenhiYUliSHFWTm5DSjFWaVRELUhER0loUTNhZGw0a05vVk02bFVGSWtOTDJXVFVwOUp0dkd5eXVoQW9UX0E?oc=5" target="_blank" rel="noopener">openPR.com →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#dc2626">
+      
+      <span class="article-date">2026-06-28</span>
+      <div class="en-content">
+        <h4>Convenience Channel Critical for Snacking: Capturing Impulse &amp; Top-up Purchases</h4>
+        <p>Convenience stores are emerging as a vital retail channel, driven by increasing consumer demand for impulse and top-up purchases, particularly among younger demographics. This trend indicates a significant opportunity for Mars Asia Snacking to optimize its distribution and visibility within convenience retail to capture immediate consumer needs. Marketing leaders should prioritize tailored merchandising and promotional strategies for the convenience channel to maximize sales of quick-snacking brands like 스니커즈 and 엠앤엠즈.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>편의점 채널, 스낵 충동구매 및 보충 구매에 필수적 성장</h4>
+        <p>편의점은 특히 젊은층 사이에서 충동구매 및 보충 구매 수요 증가에 힘입어 중요한 유통 채널로 부상하고 있습니다. 이는 마즈 아시아 스낵킹이 즉각적인 소비자 니즈를 포착하기 위해 편의점 유통 및 가시성을 최적화할 중요한 기회를 시사합니다. 마케팅 리더들은 스니커즈, 엠앤엠즈와 같은 퀵 스낵 브랜드의 매출 극대화를 위해 편의점 채널에 맞는 머천다이징 및 프로모션 전략을 우선적으로 수립해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMigwFBVV95cUxPWVlNNHpCWXNtUV9xWi1hMndtcFVpVk5uTC15WF9DMG16ZGlJOGF1YnhuSm1xX3dOa1ljRklHS2VLbEJoTmpYQkRUU00ycHh4T0xRNHlvQzR0NVRsZTVQdnFQaWpkbHFRcmc2dFJCaWdaenlrY0lLbU9DQjlJMmVVcHVTRQ?oc=5" target="_blank" rel="noopener">Asian Trader →</a>
+    </div></div>
+  </section>
+  </div>
+  <div class="region-panel" id="panel-korea">
+    
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#ec4899">
+      <span class="cat-icon">🔥</span>
+      <h3><span class="en-content">Viral on Social Media</span><span class="kr-content" style="display:none">바이럴 소셜 미디어</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Mars Asia Snacking must strategically embed viral-ready content, especially short-form and user-generated experiences, into its marketing mix while developing strategies to convert fleeting online hype into sustainable brand loyalty.</span><span class="kr-content" style="display:none">마즈 아시아 스낵킹은 바이럴에 적합한 콘텐츠, 특히 숏폼 및 사용자 생성 경험을 마케팅 믹스에 전략적으로 포함하는 동시에, 일시적인 온라인 화제를 지속 가능한 브랜드 충성도로 전환하기 위한 전략을 개발해야 합니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#ec4899">
+      
+      <span class="article-date">2026-06-29</span>
+      <div class="en-content">
+        <h4>K-Beauty masters short-form, creators for viral global success.</h4>
+        <p>K-beauty brands are demonstrating strong capabilities in content marketing, leveraging short-form platforms like TikTok and Instagram for viral growth, especially in the US market. Their success hinges on creator collaborations, live commerce, and user-generated content, serving as a blueprint for rapid market entry and brand awareness. Mars Asia Snacking should evaluate adapting these agile, consumer-centric digital marketing strategies to drive engagement and virality for our brands.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>K-뷰티, 숏폼·크리에이터 활용해 바이럴 글로벌 성공 견인.</h4>
+        <p>K-뷰티 브랜드들은 틱톡, 인스타그램 등 숏폼 플랫폼을 활용한 콘텐츠 마케팅에서 강점을 보이며 미국 시장에서 바이럴 성장을 주도하고 있습니다. 크리에이터 협업, 라이브 커머스, 사용자 후기 기반 콘텐츠가 이들의 성공 요인으로 꼽히며, 이는 빠른 시장 진입과 브랜드 인지도 향상을 위한 청사진을 제시합니다. 마즈 아시아 스낵킹은 이러한 민첩하고 소비자 중심적인 디지털 마케팅 전략을 벤치마킹하여 브랜드 참여 및 바이럴을 촉진하는 방안을 검토해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://news.google.com/rss/articles/CBMiYEFVX3lxTFBDai16bGlZZzJIZFB6MGgyaV90UG5ma2tDOFBhMGlsT0ZHR0J3VnNkY2pIbUgyektObmZhZW8zV3dhQ3VNcTh0bG5zUlI3WHVjdU10RFhOY1FjV3h0MkhMbNIBeEFVX3lxTE10Z1VvLXR3SXl2eXIzMmlHeUJ2N1FxZ0JBa29aQ0tmTFhhOVYzNHZrNy1OMWpmSnZwOGJOdEQ5Mm9QVUQwWThLNmF6VV9uYk40LTJmRTY2UzhOMXMyT2tIOEVnRDJXY3owUV93SzlzSWRzR0Npbmc4bQ?oc=5" target="_blank" rel="noopener">뉴시스 →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#ec4899">
+      
+      <span class="article-date">2026-06-30</span>
+      <div class="en-content">
+        <h4>Viral reach doesn't guarantee K-Pop's long-term staying power.</h4>
+        <p>Small K-pop agencies are effectively using TikTok, YouTube, and fan-edited clips to achieve global virality quickly, demonstrating the power of short-form and UGC in reaching vast audiences. However, the article cautions that viral moments do not guarantee sustained success, highlighting the challenge of converting transient trends into lasting brand loyalty. Mars Asia Snacking must focus on integrating viral tactics within a broader strategy that builds consistent brand value, rather than chasing fleeting hype.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>K-팝 바이럴 확산, 장기적 지속력 보장하지 않아.</h4>
+        <p>소규모 K-팝 기획사들이 틱톡, 유튜브 및 팬 제작 클립을 통해 빠르게 글로벌 바이럴을 달성하며 숏폼 콘텐츠와 UGC의 영향력을 보여줍니다. 그러나 기사는 바이럴이 지속적인 성공을 보장하지 않음을 경고하며, 일시적인 트렌드를 장기적인 브랜드 충성도로 전환하는 것이 중요하다고 지적합니다. 마즈 아시아 스낵킹은 단기적인 유행을 쫓기보다 일관된 브랜드 가치를 구축하는 광범위한 전략 내에서 바이럴 전술을 통합하는 데 집중해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.koreatimes.co.kr/entertainment/k-pop/20260630/rescenes-rise-proves-small-k-pop-agencies-still-have-a-chance" target="_blank" rel="noopener">Korea Times →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#ec4899">
+      
+      <span class="article-date">2026-07-01</span>
+      <div class="en-content">
+        <h4>Dessert brand leverages viral trend for significant brand buzz in Korea.</h4>
+        <p>A specific dessert brand, known as 'Chinese towel cake,' previously achieved significant viral status in Korea, showcasing the potential for food products to capture public imagination and generate widespread buzz. This example highlights how unique product concepts or presentation can become powerful viral content, even if the product itself isn't entirely new. Marketing leaders should explore novel product formats or serving suggestions that are inherently shareable and can spark organic online conversation for 마즈' brands.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>디저트 브랜드, 바이럴 트렌드로 한국 내 상당한 브랜드 인지도 구축.</h4>
+        <p>'중국 수건케이크'로 알려진 특정 디저트 브랜드가 한국에서 엄청난 바이럴을 기록하며, 식품 제품이 대중의 관심을 사로잡고 광범위한 인지도를 생성할 수 있는 잠재력을 보여주었습니다. 이 사례는 제품 자체가 완전히 새롭지 않더라도 독특한 제품 컨셉이나 프레젠테이션이 강력한 바이럴 콘텐츠가 될 수 있음을 강조합니다. 마케팅 리더들은 마즈 브랜드에 내재적으로 공유 가능하고 유기적인 온라인 대화를 촉발할 수 있는 새로운 제품 형식이나 서빙 방식을 모색해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://in.naver.com/youngkeyworld/challenge" target="_blank" rel="noopener">네이버 인플루언서 →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#10b981">
+      <span class="cat-icon">📈</span>
+      <h3><span class="en-content">Brand Activation &amp; Sales Surge</span><span class="kr-content" style="display:none">브랜드 액티베이션 &amp; 매출 급증</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Brands are increasingly leveraging unique experiential activations, from pop-up stores in key retail channels to cross-industry FMCG collaborations, to drive engagement, though event-based marketing carries significant external risks.</span><span class="kr-content" style="display:none">브랜드들은 핵심 유통 채널 내 팝업스토어부터 이종 산업 FMCG 협업에 이르기까지 독특한 체험형 활성화를 통해 고객 참여를 유도하고 있으나, 이벤트 기반 마케팅은 상당한 외부 리스크를 안고 있습니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#10b981">
+      
+      <span class="article-date">2026-06-29</span>
+      <div class="en-content">
+        <h4>Event Marketing Risks Exposed: Brands Pivot After World Cup Exit</h4>
+        <p>Major beverage brands like Cass (official sponsor) and HiteJinro invested heavily in the 2026 World Cup, deploying limited editions, experiential pop-up stores, viewing pubs, and consumer events. The early elimination of the Korean team has abruptly cut short these campaigns, impacting expected sales and promotional momentum. This highlights the high-stakes nature of event-driven marketing, where external performance directly influences brand activation success, demanding agile contingency planning for Mars Asia Snacking.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>월드컵 탈락에 이벤트 마케팅 리스크 노출: 브랜드, 전략 전환 모색</h4>
+        <p>카스(공식 스폰서)와 하이트진로 등 주요 음료 브랜드는 2026 월드컵에 한정판 출시, 체험형 팝업스토어, 뷰잉펍, 소비자 참여 이벤트를 통해 대규모 마케팅을 전개했습니다. 한국 축구팀의 조별리그 탈락으로 이 캠페인들이 조기 종료되어 예상 매출과 프로모션 동력에 영향을 미치고 있습니다. 이는 외부 요인이 브랜드 활성화 성공에 직접 영향을 미치는 이벤트 중심 마케팅의 고위험성을 보여주므로, 마즈 아시아 스낵킹은 민첩한 비상 계획 수립을 고려해야 합니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.megaeconomy.co.kr/news/newsview.php?ncode=1065592973389327" target="_blank" rel="noopener">메가경제 →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      
+      <span class="article-date">2026-06-29</span>
+      <div class="en-content">
+        <h4>Novel Brand Activation: Manufacturers Tap FMCG for Experiential Reach</h4>
+        <p>A growing trend sees major manufacturers like SK Hynix ('HBM칩스') and Hyundai ('현차는 빵빵') collaborating with FMCG brands to create consumable products. These collaborations serve as unique brand touchpoints, allowing consumers to naturally encounter and experience industrial brands in everyday contexts. This innovative approach offers Mars Asia Snacking a blueprint for extending brand presence and fostering engagement beyond traditional channels, especially when targeting younger, trend-sensitive consumers.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>신규 브랜드 활성화: 제조업체, FMCG 협업 통해 체험 접점 확대</h4>
+        <p>SK하이닉스('HBM칩스')와 현대차('현차는 빵빵') 등 주요 제조업체들이 FMCG 브랜드와 협력하여 소비재 제품을 만드는 추세가 확산되고 있습니다. 이러한 협업은 소비자들이 일상생활 속에서 산업 브랜드를 자연스럽게 접하고 체험할 수 있는 독특한 브랜드 접점 역할을 합니다. 마즈 아시아 스낵킹은 전통적인 채널을 넘어 브랜드 존재감을 확장하고 참여를 유도할 수 있는 혁신적인 활성화 전략의 청사진으로 활용할 수 있습니다.</p>
+      </div>
+      
+      <a class="source-link" href="https://www.huffingtonpost.kr/article/258300" target="_blank" rel="noopener">허프포스트 →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#10b981">
+      
+      <span class="article-date">2026-06-30</span>
+      <div class="en-content">
+        <h4>Experiential Pop-ups Drive Engagement in Key Retail Channels</h4>
+        <p>Clinical cosmetic brand Wellage successfully concluded an experiential pop-up store at Olive Young, a prominent health and beauty retailer. The event, featuring brand ambassador Kani and interactive elements, received positive consumer feedback, indicating strong engagement through direct product experience. This reinforces the effectiveness of targeted, experiential activations within key retail environments to drive consumer interest and build brand affinity for Mars Asia Snacking.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>핵심 유통 채널에서 체험형 팝업스토어, 고객 참여 유도 성공</h4>
+        <p>클리니컬 코스메틱 브랜드 웰라쥬는 주요 H&amp;B 스토어인 올리브영에서 체험형 팝업스토어를 성공적으로 마쳤습니다. 브랜드 앰버서더 카니와 인터랙티브 요소를 활용한 이 행사는 소비자들로부터 긍정적인 반응을 얻으며, 직접적인 제품 경험을 통한 높은 참여도를 입증했습니다. 이는 마즈 아시아 스낵킹이 핵심 소매 환경 내에서 타겟 체험형 활성화를 통해 소비자 관심을 유도하고 브랜드 친밀도를 구축하는 데 효과적임을 시사합니다.</p>
+      </div>
+      
+      <a class="source-link" href="http://www.doctorstimes.com/news/articleView.html?idxno=238814" target="_blank" rel="noopener">닥터스 타임즈 →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#f59e0b">
+      <span class="cat-icon">🏆</span>
+      <h3><span class="en-content">Award-Winning Campaigns</span><span class="kr-content" style="display:none">수상 마케팅 성공 사례</span></h3>
+    </div>
+    <div class="section-insight"><span class="en-content">Successful campaigns in Korea are leveraging cultural trends, demonstrating consistent brand excellence in key channels, and excelling in localized, content-driven social media engagement, which Mars must prioritize for sustained growth.</span><span class="kr-content" style="display:none">한국의 성공적인 캠페인들은 문화적 트렌드를 활용하고, 주요 채널에서 꾸준한 브랜드 우수성을 보이며, 현지화된 콘텐츠 중심의 소셜 미디어 참여에서 탁월한 성과를 내고 있습니다. 이는 마즈의 지속적인 성장을 위해 우선시해야 할 요소입니다.</span></div>
+    <div class="articles-grid">
+    <div class="article-card" style="border-left-color:#f59e0b">
+      
+      <span class="article-date">2026-06-29</span>
+      <div class="en-content">
+        <h4>Global Korean Food Craze Offers Localization, Channel Partnership Opportunities</h4>
+        <p>A recent survey highlights Korean food as the most preferred globally, expanding to 1,800 international locations across 60 countries and permeating formats like convenience stores. This sustained cultural phenomenon demonstrates the power of national branding and regional appeal, influencing global consumer tastes. Mars Asia Snacking should explore deeper localization strategies, co-promotion with popular Korean flavors or brands, and leveraging convenience store trends.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>글로벌 한식 열풍, 현지화 및 채널 파트너십 기회 제공</h4>
+        <p>최근 설문조사에 따르면 한식이 세계적으로 가장 선호되는 음식으로 부상했으며, 60개국 1,800개 매장으로 확산되어 편의점 등 다양한 형태로 침투하고 있습니다. 이러한 지속적인 문화 현상은 국가 브랜딩과 지역적 매력의 힘을 보여주며 글로벌 소비자 취향에 영향을 미칩니다. 마즈 아시아 스낵킹은 심층적인 현지화 전략, 인기 한국 맛 또는 브랜드와의 공동 프로모션, 그리고 편의점 트렌드 활용을 모색해야 합니다.</p>
+      </div>
+      <div class="metric">📊 1,800 international locations across 60 countries</div>
+      <a class="source-link" href="https://www.franvia.com/2026/06/korean-food-culture-why-world-loves-it.html" target="_blank" rel="noopener">franvia.com →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#f59e0b">
+      
+      <span class="article-date">2026-07-01</span>
+      <div class="en-content">
+        <h4>S-OIL's Consistent Brand &amp; Channel Excellence Signals Robust Strategies</h4>
+        <p>S-OIL has been recognized with '2023 National Industry Awards' for 4 consecutive years in Brand Strategy and 3 consecutive years in the Gas Station category. This consistent recognition highlights a strong, sustained brand strategy and effective management within a key retail channel. For Mars Asia Snacking, it underscores the value of long-term brand building, consistent channel excellence, and strategic partnerships, particularly in high-frequency purchase environments like gas stations.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>에쓰오일의 꾸준한 브랜드 및 채널 우수성, 견고한 전략 시사</h4>
+        <p>에쓰오일(S-OIL)이 ‘2023 국가산업대상’에서 4년 연속 브랜드전략 부문 1위, 3년 연속 주유소 부문 1위에 선정되었습니다. 이러한 꾸준한 수상은 강력하고 지속적인 브랜드 전략과 핵심 유통 채널 내 효과적인 관리를 보여줍니다. 마즈 아시아 스낵킹에게는 장기적인 브랜드 구축, 일관된 채널 우수성, 특히 주유소와 같은 고빈도 구매 환경에서의 전략적 파트너십의 중요성을 강조합니다.</p>
+      </div>
+      <div class="metric">📊 4년 연속 브랜드전략 부문 1위, 3년 연속 주유소 부문 1위</div>
+      <a class="source-link" href="http://www.weeklypeople.co.kr/news/index.php?code=20230331091905_7864" target="_blank" rel="noopener">weeklypeople.co.kr →</a>
+    </div>
+    <div class="article-card" style="border-left-color:#f59e0b">
+      
+      <span class="article-date">2026-07-01</span>
+      <div class="en-content">
+        <h4>Busan Tourism Wins SNS Award, Highlighting Content-Driven Engagement</h4>
+        <p>Haeundae Blueline Park won the '대한민국 SNS 대상' (Korea SNS Award), alongside other tourism accolades, attracting 20 million tourists to Busan, driven by content competitiveness and promotional prowess on social media. This success underscores the critical role of compelling digital content and strong SNS engagement in driving consumer interest and visitation. Mars Asia Snacking should learn from this to enhance brand storytelling, localized content creation, and active community building on platforms popular with Asian consumers, particularly for regional initiatives.</p>
+      </div>
+      <div class="kr-content" style="display:none">
+        <h4>부산 관광 SNS 대상 수상, 콘텐츠 기반 참여 강조</h4>
+        <p>해운대블루라인파크가 ‘대한민국 SNS 대상’ 등 다수의 관광 부문 수상을 통해 부산 관광객 2천만 시대를 견인하며 콘텐츠 경쟁력과 홍보 역량을 입증했습니다. 이러한 성공은 소비자 흥미와 방문을 유도하는 매력적인 디지털 콘텐츠와 강력한 SNS 참여의 중요성을 강조합니다. 마즈 아시아 스낵킹은 이를 통해 브랜드 스토리텔링, 현지화된 콘텐츠 제작, 그리고 아시아 소비자들에게 인기 있는 플랫폼에서의 활발한 커뮤니티 구축을 강화해야 합니다.</p>
+      </div>
+      <div class="metric">📊 대한민국 SNS 대상</div>
+      <a class="source-link" href="https://www.mk.co.kr/news/business/12087832" target="_blank" rel="noopener">mk.co.kr →</a>
+    </div></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#dc2626">
+      <span class="cat-icon">🍫</span>
+      <h3><span class="en-content">Mars &amp; Kellanova Brand News</span><span class="kr-content" style="display:none">마즈 &amp; 켈레노바 브랜드 뉴스</span></h3>
+    </div>
+    
+    <div class="no-updates"><span class="en-content">No significant updates this period.</span><span class="kr-content" style="display:none">이번 기간 주요 업데이트 없음.</span></div>
+  </section>
+  <section class="category-section">
+    <div class="cat-header" style="border-color:#e11d48;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="cat-icon">📊</span>
+        <h3>
+          <span class="en-content">Korea Search Trends — Naver DataLab</span>
+          <span class="kr-content" style="display:none">한국 검색 트렌드 — 네이버 데이터랩</span>
+        </h3>
+      </div>
+      <span style="font-size:11px;color:#94a3b8;white-space:nowrap">Jun 28 – Jul 01, 2026</span>
+    </div>
+    <div class="trend-grid">
+      <div class="trend-row">
+        <div class="trend-label">스낵/과자</div>
+        <div class="trend-bar-wrap">
+          <div class="trend-bar" style="width:100%;background:#ef4444;opacity:.85"></div>
+        </div>
+        <div class="trend-score">86.0</div>
+        <div class="trend-change" style="color:#ef4444">▼ -8.8%</div>
+      </div>
+      <div class="trend-row">
+        <div class="trend-label">스니커즈/M&amp;M</div>
+        <div class="trend-bar-wrap">
+          <div class="trend-bar" style="width:93%;background:#10b981;opacity:.85"></div>
+        </div>
+        <div class="trend-score">79.6</div>
+        <div class="trend-change" style="color:#10b981">▲ +4.9%</div>
+      </div>
+      <div class="trend-row">
+        <div class="trend-label">초콜릿/캔디</div>
+        <div class="trend-bar-wrap">
+          <div class="trend-bar" style="width:82%;background:#10b981;opacity:.85"></div>
+        </div>
+        <div class="trend-score">70.7</div>
+        <div class="trend-change" style="color:#10b981">▲ +2.9%</div>
+      </div>
+      <div class="trend-row">
+        <div class="trend-label">시리얼/그래놀라</div>
+        <div class="trend-bar-wrap">
+          <div class="trend-bar" style="width:69%;background:#10b981;opacity:.85"></div>
+        </div>
+        <div class="trend-score">59.4</div>
+        <div class="trend-change" style="color:#10b981">▲ +7.0%</div>
+      </div>
+      <div class="trend-row">
+        <div class="trend-label">껌/젤리</div>
+        <div class="trend-bar-wrap">
+          <div class="trend-bar" style="width:51%;background:#ef4444;opacity:.85"></div>
+        </div>
+        <div class="trend-score">43.9</div>
+        <div class="trend-change" style="color:#ef4444">▼ -5.3%</div>
+      </div>
+    </div>
+    <div class="trend-footnote">
+      <span class="en-content">Naver relative search volume index (0–100). ▲▼ vs. Jun 24 – Jun 27.</span>
+      <span class="kr-content" style="display:none">네이버 상대 검색량 지수 (0–100). ▲▼ Jun 24 – Jun 27 대비.</span>
+    </div>
+  </section>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>
+    <span class="en-content">FMCG Marketing Intelligence Newsletter — Auto-generated weekly</span>
+    <span class="kr-content" style="display:none">FMCG 마케팅 인텔리전스 뉴스레터 — 매주 자동 생성</span>
+  </p>
+</footer>
+
+<script>
+(function(){
+  function setLang(lang){
+    document.querySelectorAll('.en-content').forEach(function(el){
+      el.style.display = lang==='en' ? '' : 'none';
+    });
+    document.querySelectorAll('.kr-content').forEach(function(el){
+      el.style.display = lang==='kr' ? '' : 'none';
+    });
+    document.querySelectorAll('.lang-btn').forEach(function(el){
+      el.classList.remove('active');
+    });
+    var btn = document.getElementById('btn-'+lang);
+    if(btn) btn.classList.add('active');
+    try{ localStorage.setItem('fmcg_lang', lang); }catch(e){}
+  }
+
+  function setRegion(region){
+    document.querySelectorAll('.region-panel').forEach(function(el){
+      el.classList.remove('active');
+    });
+    var panel = document.getElementById('panel-'+region);
+    if(panel) panel.classList.add('active');
+    document.querySelectorAll('.region-tab').forEach(function(el){
+      el.classList.remove('active');
+    });
+    var tab = document.querySelector('.region-tab[data-region="'+region+'"]');
+    if(tab) tab.classList.add('active');
+    try{ localStorage.setItem('fmcg_region', region); }catch(e){}
+  }
+
+  window.setLang = setLang;
+  window.setRegion = setRegion;
+
+  var lang = 'en';
+  var region = 'global';
+  try{
+    lang = localStorage.getItem('fmcg_lang') || 'en';
+    region = localStorage.getItem('fmcg_region') || 'global';
+  }catch(e){}
+  setLang(lang);
+  setRegion(region);
+})();
+</script>
+</body>
+</html>
